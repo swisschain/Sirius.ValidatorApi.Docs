@@ -1,0 +1,190 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.SmartContractInvocations";
+
+import "common.proto";
+import "smart_contracts.common.proto";
+import "smart_connect.data_model.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.smart_contract_invocations;
+
+service SmartContractInvocations {
+    rpc Search (SmartContractInvocationsSearchRequest) returns (SmartContractInvocationsSearchResponse);
+    rpc Estimate (SmartContractInvocationEstimateRequest) returns (SmartContractInvocationEstimateResponse);
+    rpc Invoke (SmartContractInvocationInvokeRequest) returns (SmartContractInvocationInvokeResponse);
+    rpc GetUpdates (SmartContractInvocationGetUpdatesRequest) returns (stream SmartContractInvocationGetUpdatesResponse);
+}
+
+// Search
+
+message SmartContractInvocationsSearchRequest {
+    google.protobuf.Int64Value smart_contract_id = 1;
+    google.protobuf.Int64Value smart_contract_invocation_id = 2;
+    google.protobuf.StringValue smart_contract_address = 3;
+    google.protobuf.StringValue method_name = 4;
+    google.protobuf.StringValue method_address = 5;
+    google.protobuf.StringValue blockchain_id = 6;
+    google.protobuf.Int64Value invoker_broker_account_id = 7;
+    NullableSmartContractInvocationState state = 8;
+    swisschain.sirius.api.common.PaginationInt64 pagination = 9;
+}
+
+message SmartContractInvocationsSearchResponse {
+    oneof result {
+        SmartContractInvocationsSearchBody body = 1;
+        swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    }
+}
+
+message SmartContractInvocationsSearchBody {
+    swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+    repeated SmartContractInvocation items = 2;
+}
+
+message SmartContractInvocation {
+    int64 id = 1;
+    int64 smart_contract_id = 2;
+    string smart_contract_name = 3;
+    string smart_contract_address = 4;
+    string blockchain_id = 5;
+    string blockchain_name = 6;
+    string method_name = 7;
+    google.protobuf.StringValue method_address = 8;
+    int64 invoker_broker_account_id = 9;
+    string invoker_broker_account_name = 10;
+    string invoker_broker_account_address = 11;
+    int64 invoker_broker_account_details_id = 12;
+    smart_contracts.common.Payment payment = 13;
+    repeated smart_connect.data_model.Argument arguments = 14;
+    SmartContractInvocationState state = 15;
+    common.TransactionInfo transaction_info = 16;
+    SmartContractInvocationContext invocation_context = 17;
+    google.protobuf.Int64Value invocation_operation_id = 18;
+    common.ValidatorContext validator_context = 19;
+    int64 sequence = 20;
+    smart_contracts.common.SmartContractError error = 21;
+    google.protobuf.Timestamp created_at = 22;
+    google.protobuf.Timestamp updated_at = 23;
+    repeated swisschain.sirius.api.common.Fee expectedFees = 24;
+    repeated swisschain.sirius.api.common.Fee actualFees = 25;
+}
+
+// Estimate
+
+message SmartContractInvocationEstimateRequest {
+    string request_id = 1;
+    int64 smart_contract_id = 2;
+    string method_name = 3;
+    string method_address = 4;
+    int64 broker_account_id = 5;
+    repeated smart_connect.data_model.Argument arguments = 6;
+    smart_contracts.common.Payment payment = 7;
+}
+
+message SmartContractInvocationEstimateResponse {
+    oneof body {
+        SmartContractInvocationEstimateResponseBody result = 1;
+        common.ErrorResponseBody error = 2;
+    }
+}
+
+message SmartContractInvocationEstimateResponseBody {
+    common.Fee fee = 1;
+}
+
+// Invoke
+
+message SmartContractInvocationInvokeRequest {
+    string request_id = 1;
+    string document = 2;
+    string signature = 3;
+    int64 smart_contract_id = 4;
+}
+
+message SmartContractInvocationInvokeResponse {
+    oneof result {
+        SmartContractInvocationInvokeResponseBody body = 1;
+        common.ErrorResponseBody error = 2;
+    }
+}
+
+message SmartContractInvocationInvokeResponseBody {
+    SmartContractInvocation smart_contract_invocation = 1;
+}
+
+// GetUpdates
+
+message SmartContractInvocationGetUpdatesRequest {
+    google.protobuf.Int64Value smart_contract_id = 1;
+    google.protobuf.Int64Value smart_contract_invocation_id = 2;
+    google.protobuf.StringValue smart_contract_address = 3;
+    google.protobuf.StringValue method_name = 4;
+    google.protobuf.StringValue method_address = 5;
+    google.protobuf.StringValue blockchain_id = 6;
+    google.protobuf.Int64Value invoker_broker_account_id = 7;
+    NullableSmartContractInvocationState state = 8;
+    google.protobuf.Int64Value cursor = 9;
+    google.protobuf.StringValue stream_id = 10;
+}
+
+message SmartContractInvocationGetUpdatesResponse {
+    repeated SmartContractInvocationUpdate items = 1;
+}
+
+message SmartContractInvocationUpdate {
+    int64 id = 1;
+    int64 smart_contract_invocation_id = 2;
+    int64 smart_contract_id = 3;
+    string smart_contract_name = 4;
+    string smart_contract_address = 5;
+    string blockchain_id = 6;
+    string blockchain_name = 7;
+    string method_name = 8;
+    google.protobuf.StringValue method_address = 9;
+    int64 invoker_broker_account_id = 10;
+    string invoker_broker_account_name = 11;
+    string invoker_broker_account_address = 12;
+    int64 invoker_broker_account_details_id = 13;
+    smart_contracts.common.Payment payment = 14;
+    repeated smart_connect.data_model.Argument arguments = 15;
+    SmartContractInvocationState state = 16;
+    common.TransactionShortInfo transaction_info = 17;
+    SmartContractInvocationContext invocation_context = 18;
+    google.protobuf.Int64Value invocation_operation_id = 19;
+    common.ValidatorContext validator_context = 20;
+    int64 sequence = 21;
+    smart_contracts.common.SmartContractError error = 22;
+    google.protobuf.Timestamp created_at = 23;
+    google.protobuf.Timestamp updated_at = 24;
+}
+
+// Common
+
+enum SmartContractInvocationState {
+    PROCESSING = 0;
+    VALIDATING = 1;
+    SIGNING = 2;
+    SENT = 3;
+    ON_CHAIN = 4;
+    COMPLETED = 5;
+    FAILED = 6;
+    REJECTED = 7;
+}
+
+message NullableSmartContractInvocationState {
+    oneof kind {
+        google.protobuf.NullValue null = 1;
+        SmartContractInvocationState state = 2;
+    }
+}
+
+message SmartContractInvocationContext {
+    google.protobuf.StringValue reference_id = 1;
+    string document = 2;
+    string signature = 3;
+    string code_hash = 4;
+    common.RequestContext request_context = 5;
+}

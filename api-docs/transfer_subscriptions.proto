@@ -1,0 +1,93 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.TransactionSubscriptions";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.transactionSubscriptions;
+
+service TransferSubscriptions {
+  rpc Search (TransactionSubscriptionSearchRequest) returns (TransactionSubscriptionSearchResponse);
+
+  rpc Create (TransactionSubscriptionCreateRequest) returns (TransactionSubscriptionCreateResponse);
+
+  rpc Remove (TransactionSubscriptionRemoveRequest) returns (TransactionSubscriptionRemoveResponse);
+}
+
+message TransactionSubscriptionResponse {
+
+  int64 id = 1;
+
+  string blockchain_id = 2;
+
+  string asset_symbol = 3;
+
+  google.protobuf.StringValue asset_address = 4;
+
+  int64 asset_id = 5;
+
+  google.protobuf.Timestamp created_at = 6;
+}
+
+message TransactionSubscriptionSearchRequest {
+  
+  google.protobuf.Int64Value id = 1;
+
+  google.protobuf.StringValue blockchain_id = 2;
+
+  google.protobuf.StringValue asset_symbol = 3;
+
+  google.protobuf.StringValue asset_address = 4;
+
+  google.protobuf.Int64Value asset_id = 5;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 6;
+}
+
+message TransactionSubscriptionSearchResponse {
+    oneof result {
+      TransactionSubscriptionSearchResponseBody body = 1;
+      swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    } 
+}
+
+message TransactionSubscriptionSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated TransactionSubscriptionResponse items = 2;
+}
+
+message TransactionSubscriptionCreateRequest {
+  string request_id = 1;
+
+  int64 asset_id = 2;
+}
+
+message TransactionSubscriptionCreateResponse {
+  oneof result {
+    TransactionSubscriptionResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message TransactionSubscriptionResponseBody {
+  TransactionSubscriptionResponse subscription = 1;
+}
+
+message TransactionSubscriptionRemoveRequest {
+  string request_id = 1;
+
+  int64 transaction_subscription_id = 2;
+}
+
+message TransactionSubscriptionRemoveResponse {
+  oneof result {
+    TransactionSubscriptionResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message TransactionSubscriptionRemoveResponseBody {
+}

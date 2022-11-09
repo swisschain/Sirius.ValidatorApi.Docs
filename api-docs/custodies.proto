@@ -1,0 +1,183 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.Custody";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.custodies;
+
+service Custodies {
+  rpc Search (CustodySearchRequest) returns (CustodySearchResponse);
+  rpc Create (CustodyCreateRequest) returns (CustodyCreateResponse);
+  rpc Update (CustodyUpdateRequest) returns (CustodyUpdateResponse);
+  rpc SearchApiKeys (CustodySearchApiKeyRequest) returns (CustodySearchApiKeyResponse);
+  rpc AddApiKey (CustodyAddApiKeyRequest) returns (CustodyAddApiKeyResponse);
+  rpc RevokeApiKey (CustodyRevokeApiKeyRequest) returns (CustodyRevokeApiKeyResponse);
+}
+
+// Search
+
+message CustodySearchRequest {
+  google.protobuf.Int64Value id = 1;
+  google.protobuf.StringValue name = 2;
+  repeated CustodyType type = 3;
+  swisschain.sirius.api.common.PaginationInt64 pagination = 4;
+}
+
+message CustodySearchResponse {
+  oneof result {
+    CustodySearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodySearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+  repeated CustodyResponse items = 2;
+}
+
+// Create
+
+message CustodyCreateRequest {
+  string request_id = 1;
+  string name = 2;
+  CustodyType type = 3;
+}
+
+message CustodyCreateResponse {
+  oneof result {
+    CustodyCreateResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodyCreateResponseBody {
+  CustodyResponse custody = 1;
+}
+
+// Update
+
+message CustodyUpdateRequest {
+  string request_id = 1;
+  int64 custody_id = 2;
+  string name = 3;
+}
+
+message CustodyUpdateResponse {
+  oneof result {
+    CustodyUpdateResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodyUpdateResponseBody {
+  CustodyResponse custody = 1;
+}
+
+// SearchApiKeys
+
+message CustodySearchApiKeyRequest {
+  google.protobuf.Int64Value id = 1;
+  google.protobuf.StringValue name = 2;
+  repeated CustodyType type = 3;
+  int64 custody_id = 4;
+  google.protobuf.BoolValue is_revoked = 5;
+  swisschain.sirius.api.common.PaginationInt64 pagination = 6;
+}
+
+message CustodySearchApiKeyResponse {
+  oneof result {
+    CustodySearchApiKeyResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodySearchApiKeyResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+  repeated CustodyApiKeyResponse items = 2;
+}
+
+message CustodyApiKeyResponse {
+  int64 id = 1;
+  int64 custody_id = 2;
+  string name = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  google.protobuf.Timestamp issued_at = 5;
+  bool is_revoked = 6;
+}
+
+// AddApiKey
+
+message CustodyAddApiKeyRequest {
+  string request_id = 1;
+  int64 custody_id = 2;
+  string Name = 3;
+  google.protobuf.Timestamp expires_at =4;
+}
+
+message CustodyAddApiKeyResponse {
+  oneof result {
+    CustodyAddApiKeyResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodyAddApiKeyResponseBody {
+  int64 id = 1;
+  int64 custody_id = 2;
+  string name = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  google.protobuf.Timestamp issued_at = 5;
+  bool is_revoked = 6;
+  string token = 7;
+}
+
+// RevokeApiKey
+
+message CustodyRevokeApiKeyRequest {
+  string request_id = 1;
+  int64 custody_id = 2;
+  int64 api_key_id = 3;
+}
+
+message CustodyRevokeApiKeyResponse {
+  oneof result {
+    CustodyRevokeApiKeyResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message CustodyRevokeApiKeyResponseBody {
+  int64 id = 1;
+  int64 custody_id = 2;
+  string name = 3;
+  google.protobuf.Timestamp expires_at = 4;
+  google.protobuf.Timestamp issued_at = 5;
+  bool is_revoked = 6;
+}
+
+// Common
+
+enum CustodyType
+{
+  SELF_MANAGED = 0;
+  SHARED = 1;
+}
+
+enum CustodyStatus{
+  OFFLINE = 0;
+  INITIALIZING = 1;
+  ACTIVATING = 2;
+  RUNNING = 3;
+}
+
+message CustodyResponse {
+  int64 id = 1;
+  string name = 2;
+  CustodyType type = 3;
+  CustodyStatus status = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}

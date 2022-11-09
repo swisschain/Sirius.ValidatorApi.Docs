@@ -1,0 +1,258 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.BrokerAccount";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.brokerAccounts;
+
+service BrokerAccounts {
+  rpc Create (BrokerAccountCreateRequest) returns (BrokerAccountCreateResponse);
+
+  rpc Update (BrokerAccountUpdateRequest) returns (BrokerAccountUpdateResponse);
+
+  rpc Search (BrokerAccountSearchRequest) returns (BrokerAccountSearchResponse);
+
+  rpc SearchDetails (BrokerAccountDetailsSearchRequest) returns (BrokerAccountDetailsSearchResponse);
+
+  rpc GetDetails (BrokerAccountGetDetailsRequest) returns (BrokerAccountGetDetailsResponse);
+
+  rpc GetBalances (BrokerAccountGetBalancesRequest) returns (BrokerAccountGetBalancesResponse);
+
+  rpc GetUpdates (BrokerAccountUpdateSearchRequest) returns (stream BrokerAccountUpdateArrayResponse);
+}
+
+enum BrokerAccountState
+{
+  CREATING = 0;
+  ACTIVE = 1;
+  BLOCKED=2;
+  UPDATING = 3;
+}
+
+message BrokerAccountCreateRequest {
+  string request_id = 1;
+  
+  string name = 2;
+
+  int64 custody_id = 3;
+
+  repeated string blockchain_ids = 4;
+
+  repeated int64 aml_connection_ids = 5;
+}
+
+message BrokerAccountCreateResponse {
+    oneof result {
+      BrokerAccountCreateResponseBody body = 1;
+      swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    } 
+}
+
+message BrokerAccountCreateResponseBody {
+  BrokerAccountResponse broker_account = 1;
+}
+
+message BrokerAccountUpdateRequest {
+  string request_id = 1;
+
+  int64 broker_account_id = 2;
+
+  repeated string blockchain_ids = 3;
+
+  repeated int64 aml_connections_ids = 4;
+}
+
+message BrokerAccountUpdateResponse {
+  oneof result {
+    BrokerAccountUpdateActionResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message BrokerAccountUpdateActionResponseBody {
+  BrokerAccountResponse broker_account = 1;
+}
+
+message BrokerAccountSearchRequest {
+  google.protobuf.Int64Value id = 1;
+  
+  google.protobuf.StringValue name = 2;
+
+  google.protobuf.Int64Value custody_id = 3;
+
+  repeated BrokerAccountState state = 4;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 5;
+}
+
+message BrokerAccountSearchResponse {
+  oneof result {
+    BrokerAccountSearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message BrokerAccountSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated BrokerAccountResponse items = 2;
+}
+
+message BrokerAccountGetDetailsRequest {
+  int64 brokerAccountId = 1;
+  int64 assetId = 2;
+}
+
+message BrokerAccountGetDetailsResponse {
+  oneof result {
+    BrokerAccountGetDetailsResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message BrokerAccountGetDetailsResponseBody {
+  BrokerAccountDetailsResponse broker_account_details = 1;
+}
+
+message BrokerAccountDetailsSearchRequest {
+
+  int64 broker_account_id = 1;
+
+  google.protobuf.Int64Value id = 2;
+
+  google.protobuf.Int64Value assetId = 3;
+
+  google.protobuf.StringValue blockchainId = 4;
+
+  google.protobuf.StringValue address = 5;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 6;
+}
+
+message BrokerAccountDetailsSearchResponse {
+  oneof result {
+    BrokerAccountDetailsSearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message BrokerAccountDetailsSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated BrokerAccountDetailsResponse items = 2;
+}
+
+message BrokerAccountGetBalancesRequest {
+
+  int64 broker_account_id = 1;
+
+  google.protobuf.Int64Value assetId = 2;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 3;
+}
+
+message BrokerAccountGetBalancesResponse {
+  oneof result {
+    BrokerAccountGetBalancesResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message BrokerAccountGetBalancesResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated BrokerAccountBalancesResponse items = 2;
+}
+
+message BrokerAccountResponse {
+  string name = 1;
+
+  int64 id = 2;
+
+  BrokerAccountState state = 3;
+
+  int64 accounts_count = 4;
+
+  int64 blockchains_count = 5;
+
+  google.protobuf.Timestamp created_at = 6;
+
+  google.protobuf.Timestamp updated_at = 7;
+
+  int64 custody_id = 8;
+
+  string custody_name = 9;
+
+  repeated string blockchain_ids = 10;
+
+  repeated int64 aml_connection_ids = 11;
+}
+
+message BrokerAccountUpdateItemResponse {
+  string name = 1;
+
+  int64 broker_account_id = 2;
+
+  BrokerAccountState state = 3;
+
+  google.protobuf.Timestamp created_at = 4;
+
+  google.protobuf.Timestamp updated_at = 5;
+
+  int64 custody_id = 6;
+
+  google.protobuf.StringValue custody_name = 7;
+
+  repeated string blockchain_ids = 8;
+
+  int64 broker_account_update_id = 9;
+}
+
+message BrokerAccountDetailsResponse {
+  int64 id = 1;
+
+  int64 broker_account_id = 2;
+
+  google.protobuf.Timestamp created_at = 3;
+
+  string address = 4;
+
+  string blockchain_id = 5;
+}
+
+message BrokerAccountBalancesResponse
+{
+  int64 id = 1;
+  int64 broker_account_id = 2;
+  int64 asset_id = 3;
+  swisschain.sirius.api.common.BigDecimal owned_balance = 4;
+  swisschain.sirius.api.common.BigDecimal available_balance = 5;
+  swisschain.sirius.api.common.BigDecimal pending_balance = 6;
+  swisschain.sirius.api.common.BigDecimal reserved_balance = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  string asset_symbol = 10;
+  google.protobuf.StringValue asset_address = 11;
+  string blockchain_name = 12;
+}
+
+message BrokerAccountUpdateSearchRequest {
+  google.protobuf.Int64Value broker_account_id = 1;
+  
+  google.protobuf.StringValue name = 2;
+
+  google.protobuf.Int64Value custody_id = 3;
+
+  repeated BrokerAccountState state = 4;
+
+  google.protobuf.Int64Value cursor = 5;
+  
+  google.protobuf.StringValue stream_id = 6;
+}
+
+message BrokerAccountUpdateArrayResponse{
+  repeated BrokerAccountUpdateItemResponse items = 1;
+}

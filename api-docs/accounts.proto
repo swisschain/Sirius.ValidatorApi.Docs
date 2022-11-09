@@ -1,0 +1,199 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.Account";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.accounts;
+
+service Accounts {
+  rpc Search (AccountSearchRequest) returns (AccountSearchResponse);
+
+  rpc Create (AccountCreateRequest) returns (AccountCreateResponse);
+
+  rpc GetDetails (AccountGetDetailsRequest) returns (AccountGetDetailsResponse);
+
+  rpc SearchDetails (AccountDetailsSearchRequest) returns (AccountDetailsSearchResponse);
+
+  rpc GetUpdates (AccountUpdateSearchRequest) returns (stream AccountUpdateArrayResponse);
+}
+
+enum AccountStateModel {
+  CREATING = 0;
+  ACTIVE = 1;
+  BLOCKED = 2;
+}
+
+message AccountResponse {
+  int64 id = 1;
+
+  google.protobuf.StringValue reference_id = 2;
+
+  int64 broker_account_id = 3;
+
+  AccountStateModel state = 4;
+
+  google.protobuf.Timestamp createdAt = 5;
+
+  google.protobuf.Timestamp updatedAt = 6;
+
+  google.protobuf.Int64Value user_id = 7;
+
+  google.protobuf.StringValue user_native_id = 8;
+}
+
+message AccountUpdateResponse {
+  int64 account_update_id = 1;
+
+  int64 account_id = 2;
+
+  google.protobuf.StringValue reference_id = 3;
+
+  int64 broker_account_id = 4;
+
+  AccountStateModel state = 5;
+
+  google.protobuf.Timestamp createdAt = 6;
+
+  google.protobuf.Timestamp updatedAt = 7;
+
+  google.protobuf.Int64Value user_id = 8;
+
+  google.protobuf.StringValue user_native_id = 9;
+}
+
+message AccountDetailsResponse {
+  int64 id = 1;
+
+  int64 account_id = 2;
+
+  google.protobuf.Timestamp createdAt = 3;
+
+  string address = 4;
+
+  string blockchain_id = 5;
+
+  google.protobuf.StringValue tag = 6;
+
+  swisschain.sirius.api.common.NullableTagType tag_type = 7;
+}
+
+message AccountSearchRequest {
+  
+  google.protobuf.Int64Value id = 1;
+  
+  google.protobuf.Int64Value broker_account_id = 2;
+
+  repeated AccountStateModel state = 3;
+
+  google.protobuf.StringValue reference_id = 4;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 5;
+
+  google.protobuf.Int64Value user_id = 6;
+
+  google.protobuf.StringValue user_native_id = 7;
+}
+
+message AccountUpdateSearchRequest {
+  
+  google.protobuf.Int64Value account_id = 1;
+  
+  google.protobuf.Int64Value broker_account_id = 2;
+
+  repeated AccountStateModel state = 3;
+
+  google.protobuf.StringValue reference_id = 4;
+
+  google.protobuf.Int64Value cursor = 5;
+
+  google.protobuf.Int64Value user_id = 6;
+
+  google.protobuf.StringValue user_native_id = 7;
+  google.protobuf.StringValue stream_id = 8;
+}
+
+message AccountUpdateArrayResponse{
+  repeated AccountUpdateResponse items = 1;
+}
+
+message AccountSearchResponse {
+    oneof result {
+      AccountSearchResponseBody body = 1;
+      swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    } 
+}
+
+message AccountSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated AccountResponse items = 2;
+}
+
+message AccountCreateRequest {
+  
+  string request_id = 1;
+
+  int64 broker_account_id = 2;
+  
+  google.protobuf.StringValue reference_id = 3;
+
+  google.protobuf.Int64Value user_id = 4;
+}
+
+message AccountCreateResponse {
+  oneof result {
+    AccountCreateResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message AccountCreateResponseBody {
+  AccountResponse account = 1;
+}
+
+message AccountGetDetailsRequest {
+
+  int64 account_id = 1;
+
+  int64 asset_id = 2;
+}
+
+message AccountGetDetailsResponse {
+  oneof result {
+    AccountGetDetailsResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message AccountGetDetailsResponseBody {
+    AccountDetailsResponse account_detail = 1;
+}
+
+message AccountDetailsSearchRequest {  
+  google.protobuf.Int64Value id = 1;
+  google.protobuf.Int64Value broker_account_id = 2;
+  google.protobuf.Int64Value account_id = 3;   
+  google.protobuf.StringValue reference_id = 4;
+  google.protobuf.Int64Value asset_id = 5;
+  google.protobuf.StringValue blockchain_id = 6;
+  google.protobuf.StringValue address = 7;
+  google.protobuf.StringValue tag = 8;
+  repeated .swisschain.sirius.api.common.NullableTagType tag_type = 9;
+  swisschain.sirius.api.common.PaginationInt64 pagination = 10;
+  google.protobuf.StringValue user_native_id = 11;
+}
+
+message AccountDetailsSearchResponse {
+  oneof result {
+    AccountDetailsSearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message AccountDetailsSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+  repeated AccountDetailsResponse items = 2;
+}

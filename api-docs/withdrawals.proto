@@ -1,0 +1,231 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.Withdrawal";
+
+import "aml.proto";
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.withdrawals;
+
+service Withdrawals {
+    rpc Search (WithdrawalSearchRequest) returns (WithdrawalSearchResponse);
+    rpc Execute (WithdrawalExecuteRequest) returns (WithdrawalExecuteResponse);
+    rpc GetUpdates (WithdrawalUpdateSearchRequest) returns (stream WithdrawalUpdateArrayResponse);
+    rpc Estimate(WithdrawalEstimateRequest) returns (EstimateTransactionResponse);
+}
+
+// Search
+
+message WithdrawalSearchRequest {
+    google.protobuf.Int64Value id = 1;
+    google.protobuf.Int64Value broker_account_id = 2;
+    google.protobuf.Int64Value account_id = 3;
+    google.protobuf.Int64Value asset_id = 4;
+    google.protobuf.StringValue blockchain_id = 5;
+    repeated WithdrawalState state = 6;
+    google.protobuf.StringValue transaction_id = 7;
+    repeated WithdrawalErrorCode error_code = 8;
+    google.protobuf.Int64Value operation_id = 9;
+    google.protobuf.StringValue destination_address = 10;
+    google.protobuf.StringValue destination_tag = 11;
+    swisschain.sirius.api.common.NullableTagType destination_tag_type = 12;
+    swisschain.sirius.api.common.PaginationInt64 pagination = 13;
+    google.protobuf.StringValue account_reference_id = 14;
+    google.protobuf.Int64Value user_id = 15;
+    google.protobuf.StringValue user_native_id = 16;
+}
+
+message WithdrawalSearchResponse {
+    oneof result {
+        WithdrawalSearchResponseBody body = 1;
+        swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    }
+}
+
+message WithdrawalSearchResponseBody {
+    swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+    repeated WithdrawalResponse items = 2;
+}
+
+// Execute
+
+message WithdrawalExecuteRequest {
+    string request_id = 1;
+    // JSON: version; brokerAccountId; accountId; assetId; amount; destinationDetails; accountReferenceId; withdrawalReferenceId; userNativeId
+    string document = 2;
+    string signature = 3;
+}
+
+message WithdrawalExecuteResponse {
+    oneof result {
+        WithdrawalExecuteResponseBody body = 1;
+        WithdrawalExecuteErrorResponseBody error = 2;
+    }
+}
+
+message WithdrawalExecuteResponseBody {
+    WithdrawalResponse withdrawal = 1;
+}
+
+message WithdrawalExecuteErrorResponseBody {
+
+    enum ErrorCode {
+        UNKNOWN = 0;
+        INVALID_PARAMETERS = 1;
+        IS_NOT_AUTHORIZED = 2;
+        NOT_FOUND = 3;
+        NOT_ENOUGH_BALANCE = 4;
+        INVALID_ADDRESS = 5;
+        AMOUNT_IS_TOO_LOW = 6;
+    }
+
+    ErrorCode error_code = 1;
+    string error_message = 2;
+}
+
+// GetUpdates
+
+message WithdrawalUpdateSearchRequest {
+    google.protobuf.Int64Value withdrawal_id = 1;
+    google.protobuf.Int64Value broker_account_id = 2;
+    google.protobuf.Int64Value account_id = 3;
+    google.protobuf.Int64Value asset_id = 4;
+    google.protobuf.StringValue blockchain_id = 5;
+    repeated WithdrawalState state = 6;
+    google.protobuf.StringValue transaction_id = 7;
+    repeated WithdrawalErrorCode error_code = 8;
+    google.protobuf.Int64Value operation_id = 9;
+    google.protobuf.StringValue destination_address = 10;
+    google.protobuf.StringValue destination_tag = 11;
+    swisschain.sirius.api.common.NullableTagType destination_tag_type = 12;
+    google.protobuf.Int64Value withdrawal_update_id = 13;
+    google.protobuf.Int64Value cursor = 14;
+    google.protobuf.StringValue account_reference_id = 15;
+    google.protobuf.Int64Value user_id = 16;
+    google.protobuf.StringValue user_native_id = 17;
+    google.protobuf.StringValue stream_id = 18;
+}
+
+message WithdrawalUpdateArrayResponse {
+    repeated WithdrawalUpdateResponse items = 1;
+}
+
+message WithdrawalUpdateResponse {
+    int64 withdrawal_update_id = 1;
+    WithdrawalResponse withdrawal = 2;
+}
+
+// Common
+
+enum WithdrawalState {
+  PROCESSING = 0;
+  EXECUTING = 1;
+  SENT = 2;
+  COMPLETED = 3;
+  FAILED = 4;
+  POLICY_VALIDATION = 5;
+  SIGNING = 6;
+  REJECTED = 7;
+  AML_VALIDATION = 8;
+  AML_FAILED = 9;
+  AML_REVIEWED = 10;
+  NOTIFYING_AML = 11;
+  REFUNDED = 12;
+  AML_FAILURE_ACCEPTING = 13;
+}
+
+message DestinationDetails {
+    string address = 1;
+    google.protobuf.StringValue tag = 2;
+    swisschain.sirius.api.common.NullableTagType tag_type = 3;
+}
+
+enum WithdrawalErrorCode {
+    NOT_ENOUGH_BALANCE = 0;
+    INVALID_DESTINATION_ADDRESS = 1;
+    DESTINATION_TAG_REQUIRED = 2;
+    TECHNICAL_PROBLEM = 3;
+    VALIDATION_REJECTED = 4;
+    SIGNING_REJECTED = 5;
+    AMOUNT_IS_TOO_SMALL = 6;
+    FEE_LIMIT_EXCEEDED = 7;
+    TRANSACTION_EXPIRED = 8;
+    FEE_TOO_LOW = 9;
+    INVALID_PARAMETERS = 10;
+}
+
+message WithdrawalError {
+    WithdrawalErrorCode code = 1;
+    string message = 2;
+}
+
+message WithdrawalResponse {
+    int64 id = 1;
+    int64 broker_account_id = 2;
+    string broker_account_name = 3;
+    swisschain.sirius.api.common.BrokerAccountDetails broker_account_details = 4;
+    google.protobuf.Int64Value account_id = 5;
+    google.protobuf.StringValue account_reference_id = 7;
+    int64 asset_id = 8;
+
+    google.protobuf.StringValue asset_address = 10;
+    swisschain.sirius.api.common.BigDecimal amount = 11;
+    string blockchain_id = 12;
+    string blockchain_name = 13;
+    repeated swisschain.sirius.api.common.Fee actualFees = 14;
+    DestinationDetails destination_details = 15;
+    WithdrawalState state = 16;
+    swisschain.sirius.api.common.TransactionInfo transaction_info = 17;
+    WithdrawalError error = 18;
+    google.protobuf.Int64Value operation_id = 19;
+    int64 required_confirmations_count = 20;
+    TransferContext transfer_context = 21;
+    ValidatorContext validator_context = 22;
+    google.protobuf.Timestamp created_at = 23;
+    google.protobuf.Timestamp updated_at = 24;
+    google.protobuf.Int64Value user_id = 25;
+    google.protobuf.StringValue user_native_id = 26;
+    swisschain.sirius.api.aml.AmlChecks aml_checks = 27;
+    repeated swisschain.sirius.api.common.Fee expectedFees = 28;
+}
+
+message TransferContext {
+    google.protobuf.StringValue account_reference_id = 1;
+    google.protobuf.StringValue withdrawal_reference_id = 2;
+    google.protobuf.StringValue document = 3;
+    google.protobuf.StringValue signature = 4;
+    RequestContext request_context = 5;
+}
+
+message RequestContext {
+    google.protobuf.StringValue user_id = 1;
+    google.protobuf.StringValue api_key_id = 2;
+    google.protobuf.StringValue ip = 3;
+    google.protobuf.Timestamp timestamp = 4;
+}
+
+message ValidatorContext {
+    google.protobuf.StringValue document = 1;
+    google.protobuf.StringValue signature = 2;
+}
+
+message WithdrawalEstimateRequest {
+    string request_id = 1;
+    int64 broker_account_id = 2;
+    int64 asset_id = 3;
+    swisschain.sirius.api.common.BigDecimal amount = 4;
+    DestinationDetails destination_details = 5;
+}
+
+message EstimateTransactionResponse {
+  oneof body {
+    EstimateTransactionResponseBody result = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message EstimateTransactionResponseBody {
+  swisschain.sirius.api.common.Fee fee = 1;
+}

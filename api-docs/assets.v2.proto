@@ -1,0 +1,116 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.V2.ApiContract.Asset";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.v2.assets;
+
+service Assets {
+  rpc Search (AssetSearchRequest) returns (AssetSearchResponse);
+  rpc AddAttributes (AddAssetAttributesRequest) returns (AddAssetAttributesResponse);
+}
+
+// Search
+
+message AssetSearchRequest {
+  google.protobuf.Int64Value id = 1;
+  google.protobuf.StringValue blockchain_id = 2;
+  google.protobuf.StringValue symbol = 3;
+  google.protobuf.StringValue token_id = 4;
+  google.protobuf.StringValue address = 5;
+  google.protobuf.Int32Value accuracy = 6;
+  swisschain.sirius.api.common.PaginationInt64 pagination = 7;
+}
+
+message AssetSearchResponse {
+  oneof result {
+    AssetSearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message AssetSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+  repeated Asset items = 2;
+}
+
+// AddAttributes
+
+message AddAssetAttributesRequest {
+  string request_id = 1;
+  int64 asset_id = 2;
+  BrokerageAssetAttributesCreateInfo brokerage = 3;
+  AmlAssetAttributesCreateInfo aml = 4;
+}
+
+message BrokerageAssetAttributesCreateInfo {
+  swisschain.sirius.api.common.BigDecimal min_deposit_threshold = 1;
+  swisschain.sirius.api.common.BigDecimal min_withdrawal_amount = 2;
+}
+
+message AmlAssetAttributesCreateInfo {
+  AmlChainalysisAssetAttributesInfo chainalysis = 1;
+  AmlMerkleScienceAssetAttributesInfo merkle_science = 2;
+}
+
+message AddAssetAttributesResponse {
+  oneof body{
+    Asset response = 1;
+    common.ErrorResponseBody error = 2;
+  }
+}
+
+// Common
+
+message Asset {
+  int64 id = 1;
+  string blockchain_id = 2;
+  google.protobuf.StringValue symbol = 3;
+  google.protobuf.StringValue address = 4;
+  google.protobuf.StringValue token_id = 5;
+  int32 accuracy = 6;
+  google.protobuf.StringValue name = 7;
+  google.protobuf.StringValue metadata_url = 8;
+  google.protobuf.StringValue type = 9;
+  BrokerageAssetAttributesInfo brokerage = 10;
+  AmlAssetAttributesInfo aml = 11;
+}
+
+message BrokerageAssetAttributesInfo {
+  int64 id = 1;
+  swisschain.sirius.api.common.BigDecimal min_deposit_threshold = 2;
+  swisschain.sirius.api.common.BigDecimal min_withdrawal_amount = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message AmlAssetAttributesInfo {
+  int64 id = 1;
+  AmlChainalysisAssetAttributesInfo chainalysis = 2;
+  AmlMerkleScienceAssetAttributesInfo merkle_science = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message AmlChainalysisAssetAttributesInfo {
+  google.protobuf.StringValue symbol = 1;
+  bool is_check_withdrawals_enabled = 2;
+  bool is_check_deposits_enabled = 3;
+  bool is_notify_withdrawals_enabled = 4;
+  ChainalysisTransferFormat transfer_format = 5;
+}
+
+enum ChainalysisTransferFormat {
+  HASH_AND_INDEX = 0;
+  HASH_AND_ADDRESS = 1;
+  HASH = 2;
+}
+
+message AmlMerkleScienceAssetAttributesInfo {
+  google.protobuf.StringValue symbol = 1;
+  int32 currency = 2;
+  bool is_disabled = 3;
+}
