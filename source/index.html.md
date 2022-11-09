@@ -3,15 +3,10 @@ title: Sirius API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - protobuf
-  - json
-
-toc_footers:
-  - API V1
-  - <a href='/v2'>API V2</a>
 
 meta:
 - name: description
-  content: Sirius API Reference
+  content: Sirius Validator API Reference
 
 includes:
   - introduction.md
