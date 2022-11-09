@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.SmartContractEvents";
+
+import "common.proto";
+import "smart_connect.data_model.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.smart_contract_events;
+
+service SmartContractEvents {
+    rpc Search (SmartContractEventSearchRequest) returns (SmartContractEventSearchResponse);
+    rpc GetUpdates (SmartContractEventGetUpdatesRequest) returns (stream SmartContractEventGetUpdatesResponse);
+}
+
+// Search
+
+message SmartContractEventSearchRequest {
+    google.protobuf.Int64Value smart_contract_id = 1;
+    google.protobuf.Int64Value smart_contract_event_id = 2;
+    google.protobuf.StringValue smart_contract_address = 3;
+    google.protobuf.StringValue name = 4;
+    google.protobuf.StringValue address = 5;
+    google.protobuf.StringValue blockchain_id = 6;
+    NullableSmartContractEventState state = 7;
+    swisschain.sirius.api.common.PaginationInt64 pagination = 8;
+}
+
+message SmartContractEventSearchResponse {
+    oneof result {
+        SmartContractEventSearchResponseBody body = 1;
+        swisschain.sirius.api.common.ErrorResponseBody error = 2;
+    }
+}
+
+message SmartContractEventSearchResponseBody {
+    swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+    repeated SmartContractEvent items = 2;
+}
+
+message SmartContractEvent {
+    int64 id = 1;
+    string blockchain_id = 2;
+    string blockchain_name = 3;
+    string name = 4;
+    string address = 5;
+    int64 smart_contract_id = 6;
+    string smart_contract_name = 7;
+    string smart_contract_address = 8;
+    repeated smart_connect.data_model.Field fields = 9;
+    SmartContractEventState state = 10;
+    common.TransactionInfo transaction_info = 11;
+    int64 sequence = 12;
+    google.protobuf.Timestamp created_at = 13;
+    google.protobuf.Timestamp updated_at = 14;
+}
+
+// GetUpdates
+
+message SmartContractEventGetUpdatesRequest {
+    google.protobuf.Int64Value smart_contract_id = 1;
+    google.protobuf.Int64Value smart_contract_event_id = 2;
+    google.protobuf.StringValue smart_contract_address = 3;
+    google.protobuf.StringValue name = 4;
+    google.protobuf.StringValue address = 5;
+    google.protobuf.StringValue blockchain_id = 6;
+    NullableSmartContractEventState state = 7;
+    google.protobuf.Int64Value cursor = 8;
+    google.protobuf.StringValue stream_id = 9;
+}
+
+message SmartContractEventGetUpdatesResponse {
+    repeated SmartContractEventUpdate items = 1;
+}
+
+message SmartContractEventUpdate {
+    int64 id = 1;
+    int64 smart_contract_event_id = 2;
+    string blockchain_id = 3;
+    string blockchain_name = 4;
+    string name = 5;
+    string address = 6;
+    int64 smart_contract_id = 7;
+    string smart_contract_name = 8;
+    string smart_contract_address = 9;
+    repeated smart_connect.data_model.Field fields = 10;
+    SmartContractEventState state = 11;
+    common.TransactionShortInfo transaction_info = 12;
+    int64 sequence = 13;
+    google.protobuf.Timestamp created_at = 14;
+    google.protobuf.Timestamp updated_at = 15;
+}
+
+// Common
+
+enum SmartContractEventState {
+    DETECTED = 0;
+    COMPLETED = 1;
+    CANCELLED = 2;
+}
+
+message NullableSmartContractEventState {
+    oneof kind {
+        google.protobuf.NullValue null = 1;
+        SmartContractEventState state = 2;
+    }
+}

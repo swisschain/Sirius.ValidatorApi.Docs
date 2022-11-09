@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.SmartContracts.Common";
+
+import "common.proto";
+
+package swisschain.sirius.api.smart_contracts.common;
+
+message Payment {
+  int64 asset_id = 1;
+  swisschain.sirius.api.common.BigDecimal amount = 2;
+}
+
+message SmartContractError {
+  enum SmartContractErrorCode {
+    NOT_ENOUGH_BALANCE = 0;
+    TECHNICAL_PROBLEM = 1;
+    VALIDATION_REJECTED = 2;
+    SIGNING_REJECTED = 3;
+    INVALID_ARGUMENTS = 4;
+    INVALID_DESTINATION_ADDRESS = 5;
+    AMOUNT_IS_TOO_SMALL = 6;
+    FEE_LIMIT_EXCEEDED = 7;
+    TRANSACTION_EXPIRED = 8;
+    FEE_TOO_LOW = 9;
+    INVALID_PARAMETERS = 10;
+  }
+
+  SmartContractErrorCode code = 1;
+  string message = 2;
+}

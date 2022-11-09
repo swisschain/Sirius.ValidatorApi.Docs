@@ -1,0 +1,1049 @@
+FORMAT: 1A
+HOST: https://sirius-validator.swisschain.io/
+
+# Sirius - Brokerage API 
+
+Sirius Validator API
+
+# API usage
+
+## Allowed HTTP Verbs
+
+- `PUT` : Updates a resource 
+- `POST` : Creates a resource
+- `GET` : Gets a resource or list of resources
+- `DELETE` : Deletes a resource
+
+## Description Of Usual Server Responses
+
+- 200 `OK` : the request was successful.
+- 201 `Created` : the request was successful and a resource was created.
+- 204 `No Content` : the request was successful but there is no representation to return.
+- 400 `Bad Request` : the request has invalid or missing required parameters.
+- 401 `Unauthorized` : authentication failed.
+- 403 `Forbidden` : access denied.
+- 404 `Not Found` : resource was not found.
+
+## Authentication
+
+Sirius API uses `Bearer` authentication. To get the token, register in our [Universe portal](https://universe.swisschain.io),
+create a subscription and create an API key. We use JWT as the API key, so you can explore which
+claims particular token contains using [jwt.io](http://jwt.io) online service.
+
+## Pagination
+
+Sirius API uses cursor-based pagination model in all endpoints which can return loads of items.
+
+Pagination parameters are passed via query string. The parameters can be:
+
+- `order` : (optional, [Order](#/data-structures/0/order)) - sorting order of the result. Items always sorted by the ID.
+- `cursor` : (optional) ID of the item, after which result should be returned. Type of the cursor is the same
+as the ID type of the queried items.
+- `limit` : (optional, number) specifies how many items should be returned at maximum.
+
+The response is:
+
+### Paginated (object)
+
++ `pagination` - pagination state.
+    + `cursor` - current cursor.
+    + `count` (number) - count of the items in the response.
+    + `order` ([Order](#/data-structures/0/order)) - current order.
+    + `nextUrl` (string) - relative URL of the next items page.
++ `items` (array[object]) - the array of the queried items.
+
+## Error responses
+
+Until other is specified for the particular endpoint and HTTP status code, the error response model is:
+
++ `errors` - errors map, where key is a request field name.
+    + `""` (array[string]) - (the key is empty string) the array of the summary errors which are not associated with any request fields directly.
+    + `propertyName` (array[string]) - the array of the errors associated with the `propertyName` field of the request.
+
+## Data structures
+
+### Order (enum)
+
+Order of the sorting
+
++ `asc` - Ascending sorting order
++ `desc` - Descending sorting order
+
+### NetworkType (enum)
+
+Type of a blockchain network
+
++ `private` - Private blockchain visible only for particular customer.
++ `test` - Public test blockchain.
++ `public` - Public mainnet blockchain.
+
+### BrokerAccountState (enum)
+
+State of the broker account
+
++ `creating` - The broker account is not fully created yet, you need to wait a bit, while Sirius complete its creation. You can create accounts within it, but not receive or send transfers.
++ `active` - The broker account is active and can be used as usual.
++ `blocked` - The broker account is blocked - processing of all deposits and withdrawals is on hold.
+
+### AccountState (enum)
+
+State of the account
+
++ `creating` - The account is not fully created yet, you need to wait a bit, while Sirius complete its creation. You can't receive or send transfers.
++ `active` - The account is active and can be used as usual.
++ `blocked` - The account is blocked - processing of all deposits and withdrawals is on hold.
+
+### TagType (enum)
+
+Tag type of the account. Tag is an additional information associated with particular account, 
+which can be specified in the blockchain transaction. This allows to use single blockchain 
+address to handle many accounts on it. This feature is available only on some blockchains: 
+(Ripple, Stellar, Eos...). In some blockchains different types of the tag are supported
+and you have to specify exact type in this case.
+
++ `text` - text tag
++ `number` - numeric tag
+
+### BrokerAccountDetails (object)
+
+Details of the broker account
+
++ `id` - Unique ID.
++ `brokerAccountId` - Broker account ID.
++ `createdAt` - Creation time of the details.
++ `address` - Blockchain address of the details.
++ `blockchainId` - Blockchain ID of the details.
+
+### BrokerAccountDetailsBrief (object)
+
+Brief broker account details
+
++ `id` - Unique ID.
++ `address` - Blockchain address of the details.
+
+### AccountDetails (object)
+
+Details of the account
+
++ `id` - Unique ID.
++ `accountId` - Account ID.
++ `createdAt` - Creation time of the details.
++ `address` - Blockchain address of the details.
++ `blockchainId` - Blockchain ID of the details.
++ `tag` (optional) - Tag of the details.
++ `tagType` ([TagType](#/data-structures/0/tag-type)) - Type of the details tag.
+
+### AccountDetailsBrief (object)
+
+Brief details of the account
+
++ `id` - Unique ID.
++ `address` - Blockchain address of the details.
++ `tag` (optional) - Tag of the details.
++ `tagType` ([TagType](#/data-structures/0/tag-type)) - Type of the details tag.
+
+### BrokerAccountBalances (object)
+
+Balances of the broker account in a particular asset. We distinguish 4 different balances
+for each asset in each broker account.
+
++ `id` - Unique ID.
++ `brokerAccountId` - Broker account ID.
++ `assetId` - Asset ID.
++ `ownedBalance` - Balance owned by the broker.
++ `availableBalance` - Balance available for a withdrawal.
++ `pendingBalance` - Balance which is being deposited, but not completely transferred yet.
++ `reservedBalance` - Balance which is being withdrawn, but not completely transferred yet.
++ `createdAt` - Creation time of the balances.
++ `updatedAt` - The update time of the balances.
+
+## Blockchain [/api/blockchains{?id,name,protocolCode,protocolName,networkType,order,cursor,limit}]
+
+We distinguish _Blockchain_, _Protocol_, and _Network Type_. 
+
+_Blockchain_ is not just _Bitcoin_ or _Ethereum_, it's a particular network. For example _Bitcoin MainNet_, 
+_Ethereum Ropsten_ are blockchains, whilst _Bitcoin_ and _Ethereum_ are protocols which are used by these blockchains.
+Networks can be one of the types - `private`, `test`, `public`. So _Blockchain_ has a protocol and network type.
+
+- _Blockchain_ is an "instance" of the protocol - Ethereum Ropsten, Bitcoin Mainnet, Ethereum Mainnet.
+- _Protocol_ is a set of rules on how blockchain nodes interact with each other - Bitcoin, Ethereum, Ripple.
+- _Network type_ can be private, test, or public.
+
+---
+
++ Attributes
+    + id: `bitcoin-mainnet` - unique identifier. 
+    + name: `Bitcoin MainNet` - Name of the blockchain.
+    + networkType: `public` (NetworkType) - Type of the network
+    + protocol - Protocol of the blockchain.
+        + code: `bitcoin` - Unique code of the protocol.
+        + name: `Bitcoin` - Name of the protocol.
+
+### Search blockchains [GET]
+
+`GET /api/blockchains`
+
+Searches blockchains.
+
++ Request
+    + Headers
+        
+            Authorization: Bearer Your-JWT-Token
+
++ Parameters
+    + id : `bitcoin-mainnet` (optional, string) - Exact ID of the blockchain to search
+    + name : `Bit` (optional, string) - Text to search in the name of the blockchain
+    + protocolCode : `bitcoin` (optional, string) - Exact ode of the protocol to search
+    + protocolName : `coin` (optional, string) - Text to search in the name of the protocol
+    + networkType : `public` (optional, array[NetworkType]) - List of the network types to search
+    + order : `asc` (optional, Order) - Result items sorting order
+    + cursor : `bitcoin-mainnet` (optional, string) - Cursor to continue the search
+    + limit : `20` (optional, number) - Maximum number of items to return in the search results
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": "bitcoin-mainnet",
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/blockchains?order=asc&cursor=ripple-mainnet&limit=2"
+              },
+              "items": [
+                {
+                  "name": "Litecoin - MainNet",
+                  "id": "litecoin-mainnet",
+                  "networkType": "public",
+                  "protocol": {
+                    "code": "litecoin",
+                    "name": "Litecoin"
+                  }
+                },
+                {
+                  "name": "Ripple - MainNet",
+                  "id": "ripple-mainnet",
+                  "networkType": "public",
+                  "protocol": {
+                    "code": "ripple",
+                    "name": "Ripple"
+                  }
+                },
+              ]
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+
+## Asset [/api/assets{?id,blockchainId,symbol,address,accuracy,order,cursor,limit}]
+
+Asset represents crypto currency or token in particular _Blockchain_.
+
+---
+
++ Attributes
+    + id: 100346 (number) - Unique identifier.
+    + blockchainId: `ethereum-mainnet` - uniqueue identifier of the blockchain to which the asset is related to. 
+    + symbol: `USDT` - Symbol of the asset.
+    + address: `0xdac17f958d2ee523a2206206994597c13d831ec7` (optional, string) - Address of the asset in the blockchain, if any.
+    + accuracy: 6 (number) - Maximum number of digits after the decimal point which are supported by the asset.
+
+### Search assets [GET]
+
+`GET /api/assets`
+
+Searches assets.
+
++ Request
+    + Headers
+        
+            Authorization: Bearer Your-JWT-Token
+
++ Parameters
+    + id: 100346 (number) - Exact ID of the asset to search
+    + blockchainId: `ethereum-mainnet` - Exact ID of the blockchain to search
+    + symbol: `USDT` - Text to search in the symbol of the asset
+    + address: `0xdac17f958d2ee523a2206206994597c13d831ec7` (optional, string) - Exact address of the asset to search
+    + accuracy: 6 (number) - Exact accuracy of the asset to search
+    + order : `asc` (optional, Order) - Result items sorting order
+    + cursor : `bitcoin-mainnet` (optional, string) - Cursor to continue the search
+    + limit : `20` (optional, number) - Maximum number of items to return in the search results
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100428,
+                "count": 3,
+                "order": "asc",
+                "nextUrl": "/api/assets?order=asc&cursor=100431&limit=3"
+              },
+              "items": [
+                {
+                  "id": 100429,
+                  "blockchainId": "bitcoin-testnet",
+                  "symbol": "BTC",
+                  "address": null,
+                  "accuracy": 8
+                },
+                {
+                  "id": 100430,
+                  "blockchainId": "bitcoin-mainnet",
+                  "symbol": "BTC",
+                  "address": null,
+                  "accuracy": 8
+                },
+                {
+                  "id": 100431,
+                  "blockchainId": "ethereum-mainnet",
+                  "symbol": "USDT",
+                  "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                  "accuracy": 6
+                }
+              ]
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+
+## Broker Account [/api/broker-accounts]
+
+_Broker account_ allows you to receive deposits and send withdrawals in all supported blockchains. Broker account has accounts associated with it.
+
+Each deposit and withdrawal can be associated with particular account and each account can be associated with
+anything you need to. Thanks to this, you can identify to which of your user, contract, bill or whatever particular transfer is related to.
+
+---
+
++ Attributes
+    + id: 100555 (number) - unique identifier. 
+    + name: `Clients` - Name of the broker account.
+    + state: `active` (BrokerAccountState) - Current state of the broker account.
+    + createdAt: `2020-03-24T15:27:51.9313772Z` - Creation time of the broker account.
+    + updatedAt: `2020-03-24T15:27:51.9313772Z` - The update time of the broker account.
+
+### Create a broker account [POST]
+
+`POST /api/broker-accounts`
+
+Creates a new broker account.
+
++ Request (application/json)
+    + Headers
+
+            X-Request-ID: Unique request ID. Use the same ID if you lost response and want to retry the request
+            Authorization: Bearer Your-JWT-Token
+    
+    + Body
+
+            {
+                "name": "Exchange clients"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "name": "Exchange clients",
+              "id": 100106,
+              "state": "creating",
+              "createdAt": "2020-03-24T15:27:51.9313772Z",
+              "updatedAt": "2020-03-24T15:27:51.9313772Z"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "name": [
+                  "Name is required"
+                ],
+                "X-Request-ID": [
+                  "Duplicate request ID detected. Try to use another value"
+                ]
+              }
+            }
+            
+### Search broker accounts [GET /api/broker-accounts{?id,name,state,order,cursor,limit}]
+
+`GET /api/broker-accounts`
+
+Searches broker accounts.
+
++ Parameters
+    + id: 100106 (optional, number) - Exact ID of the broker account to search
+    + name: "clients" (optional, string) - Text to search in the name of the broker accounts
+    + state: "active" (optional, array[BrokerAccountState]) - List of the broker account states to search
+    + order: "asc" (optional, Order) - Result items sorting order
+    + cursor: 100105 (optional, number) - Cursor to continue the search
+    + limit: 20 (optional, number) - Maximum number of items to return in the search results
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100105,
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/broker-accounts?order=asc&cursor=100108&limit=2"
+              },
+              "items": [
+                {
+                  "name": "Exchange clients",
+                  "id": 100106,
+                  "state": "active",
+                  "createdAt": "2020-03-24T17:06:58.464Z",
+                  "updatedAt": "2020-03-24T17:06:58.464Z"
+                },
+                {
+                  "name": "Corporate",
+                  "id": 100108,
+                  "state": "active",
+                  "createdAt": "2020-03-24T17:06:28.464Z",
+                  "updatedAt": "2020-03-24T17:06:58.464Z"
+                }
+              ]
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+            
+### Get actual broker account details [GET /api/broker-accounts/{brokerAccountId}/details/by-asset-id/{assetId}]
+
+`GET /api/broker-accounts/{brokerAccountId}/details/by-asset-id/{assetId}`
+
+Gets actual [broker account details](#/data-structures/0/broker-account-details).
+
++ Parameters
+    + brokerAccountId: 100106 (number) - ID of the broker account
+    + assetId: 100348 (number) - ID of the asset
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id": 100870,
+              "brokerAccountId": 100106,
+              "createdAt": "2020-03-28T22:35:28.558Z",
+              "address": "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP",
+              "blockchainId": "bitcoin-mainnet"
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+
++ Response 403 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Tenant doesn't own specified broker account"
+                ]
+              }
+            }
+
++ Response 404 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Broker account not found"
+                ]
+              }
+            }
+
+### Search broker account details [GET /api/broker-accounts/{brokerAccountId}/details{?id,assetId,blockchainId,address,order,cursor,limit}]
+
+`GET /api/broker-accounts/{brokerAccountId}/details`
+
+Searches [broker account details](#/data-structures/0/broker-account-details).
+
++ Parameters
+    + brokerAccountId: 100106 (number) - ID of the broker account to search
+    + id: 100856 (optional, number) - ID of the broker account details to searh
+    + assetId: 100348 (optional, number) - ID of the asset to search
+    + blockchainId: "bitcoin-mainnet" (optional, string) - ID of the blockchain to search
+    + address: "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP" (optional, string) - Exact address to search
+    + order: "asc" (optional, Order) - Result items sorting order
+    + cursor: 100869 (optional, number) - Cursor to continue the search
+    + limit: 20 (optional, number) - Maximum number of items to return in the search results
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100869,
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/broker-accounts/100106/details?order=asc&cursor=100872&limit=2"
+              },
+              "items": [
+                {
+                  "id": 100870,
+                  "brokerAccountId": 100106,
+                  "createdAt": "2020-03-28T22:35:28.558Z",
+                  "address": "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP",
+                  "blockchainId": "bitcoin-mainnet"
+                },
+                {
+                  "id": 100871,
+                  "brokerAccountId": 100106,
+                  "createdAt": "2020-03-28T22:35:28.558Z",
+                  "address": "0x30804040d4d84482b73e5c655298276d276d0ca3",
+                  "blockchainId": "ethereum-mainnet"
+                },
+              ]
+            }
+
+            
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+
++ Response 403 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Tenant doesn't own specified broker account"
+                ]
+              }
+            }
+
++ Response 404 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Broker account not found"
+                ]
+              }
+            }
+
+### Search broker account balances [GET /api/broker-accounts/{brokerAccountId}/balances{?assetId,order,cursor,limit}]
+
+`GET /api/broker-accounts/{brokerAccountId}/balances`
+
+Searches [broker account balances](#/data-structures/0/broker-account-balances).
+
++ Parameters
+    + brokerAccountId: 100106 (number) - ID of the broker account to search
+    + assetId: 100348 (optional, number) - ID of the asset to search
+    + order: "asc" (optional, Order) - Result items sorting order
+    + cursor: 100869 (optional, number) - Cursor to continue the search
+    + limit: 20 (optional, number) - Maximum number of items to return in the search results
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100866,
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/broker-accounts/100106/balances?order=asc&cursor=100869&limit=2"
+              },
+              "items": [
+                {
+                    "id": 1000867,
+                    "brokerAccountId": 100106,
+                    "assetId": 100000,
+                    "ownedBalance": 100,
+                    "availableBalance": 90,
+                    "pendingBalance": 2,
+                    "reservedBalance": 10,
+                    "createdAt": "2020-04-27T06:28:42.595Z",
+                    "updatedAt": "2020-04-27T06:28:42.595Z"
+                },
+                {
+                    "id": 1000868,
+                    "brokerAccountId": 100106,
+                    "assetId": 100001,
+                    "ownedBalance": 58,
+                    "availableBalance": 57,
+                    "pendingBalance": 5,
+                    "reservedBalance": 1,
+                    "createdAt": "2020-04-27T06:28:42.595Z",
+                    "updatedAt": "2020-04-27T06:28:42.595Z"
+                },
+              ]
+            }
+
+            
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+
++ Response 403 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Tenant doesn't own specified broker account"
+                ]
+              }
+            }
+
++ Response 404 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Broker account not found"
+                ]
+              }
+            }
+
+
+## Account [/api/accounts]
+
+_Account_ allows you to distinguish deposits by the received _Broker account_ and withdrawals sent from it 
+between your business objects (users, bills, contracts). While creating an _Account_ you can pass a _Reference ID_
+which is ID of the object in your system associated with thi _Account_. Receiving deposits to this account,
+API will pass you this _Reference ID_, so you can easily determine recipient in your system. When you execute
+a withdrawal you can specify _Account_ to which this withdrawal is related to. API will notify you that
+withdrawal related to particular _Account_ and _Reference ID_ is complete of failed. Also _Refernce ID_ can
+be useful in analytics reports in our _Universe_ portal.
+
+---
+
++ Attributes
+    + id: 100123 (number) - unique identifier. 
+    + brokerAccountId: 100555 (number) - unique identifier of the broker account, which owns the account. 
+    + referenceId: "105585e04f354c79a781bf8cb812a4de" (optional, string) - unique identifier of the object in your system, associated with the account. Can be associated with several accounts.
+    + state: "active" (AccountState) - Current state of the account.
+    + createdAt: "2020-03-24T15:27:51.9313772Z" (string) - Creation time of the account.
+    + updatedAt: "2020-03-24T15:27:51.9313772Z" (string) - The update time of the account.
+
+### Create an account [POST]
+
+`POST /api/accounts`
+
+Creates a new account within specified broker account.
+
++ Request (application/json)
+    + Headers
+
+            X-Request-ID: Unique request ID. Use the same ID if you lost response and want to retry the request
+            Authorization: Bearer Your-JWT-Token
+    
+    + Body
+
+            {
+                "brokerAccountId": 100106
+                "referenceId": "105585e04f354c79a781bf8cb812a4de"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id": 100345,
+              "referenceId": "105585e04f354c79a781bf8cb812a4de",
+              "brokerAccountId": 100106,
+              "state": "creating",
+              "createdAt": "2020-03-24T15:27:51.9313772Z",
+              "updatedAt": "2020-03-24T15:27:51.9313772Z"
+            }
+
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "name": [
+                  "Broker account is not found"
+                ],
+                "X-Request-ID": [
+                  "Duplicate request ID detected. Try to use another value"
+                ]
+              }
+            }
+            
+### Search accounts [GET /api/accounts{?id,brokerAccountId,referenceId,state,order,cursor,limit}]
+
+`GET /api/accounts`
+
+Searches accounts.
+
++ Parameters
+    + id: 100345 (optional, number) - Exact ID of the account to search
+    + brokerAccountId: 100106 (optional, number) - Exact ID of the broker account to search
+    + referenceId: "105585e04f354c79a781bf8cb812a4de" (optional, string) - Exact reference ID to search
+    + state: "active" (optional, array[AccountState]) - List of the account states to search
+    + order: "asc" (optional, Order) - Result items sorting order
+    + cursor: 100105 (optional, number) - Cursor to continue the search
+    + limit: 20 (optional, number) - Maximum number of items to return in the search results
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100345,
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/accounts?order=asc&cursor=100347&limit=2"
+              },
+              "items": [
+                {
+                  "id": 100346,
+                  "referenceId": null,
+                  "brokerAccountId": 100106,
+                  "state": "active",
+                  "createdAt": "2020-03-24T17:06:58.464Z",
+                  "updatedAt": "2020-03-24T17:06:58.464Z"
+                },
+                {
+                  "id": 100347,
+                  "referenceId": "105585e04f354c79a781bf8cb812a4de",
+                  "brokerAccountId": 100106,
+                  "state": "active",
+                  "createdAt": "2020-03-24T17:06:28.464Z",
+                  "updatedAt": "2020-03-24T17:06:38.464Z"
+                }
+              ]
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+            
+### Get actual account details [GET /api/accounts/{accountId}/details/by-asset-id/{assetId}]
+
+`GET /api/accounts/{accountId}/details/by-asset-id/{assetId}`
+
+Gets actual [account details](#/data-structures/0/account-details).
+
++ Parameters
+    + accountId: 100106 (number) - ID of the account
+    + assetId: 100348 (number) - ID of the asset
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "id": 100870,
+              "accountId": 100106,
+              "createdAt": "2020-03-28T22:35:28.558Z",
+              "address": "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP",
+              "blockchainId": "bitcoin-mainnet",
+              "tag": null,
+              "tagType": null
+            }
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+            
++ Response 403 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Tenant doesn't own specified Accounaccount"
+                ]
+              }
+            }
+            
++ Response 404 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "accountId": [
+                  "Account not found"
+                ]
+              }
+            }
+
+### Search account details [GET /api/accounts/{accountId}/details{?id,referenceId,assetId,blockchainId,address,tag,tagType,order,cursor,limit}]
+
+`GET /api/accounts/{accountId}/details`
+
+Searches [account details](#/data-structures/0/account-details).
+
++ Parameters
+    + accountId: 100106 (number) - ID of the account to search
+    + id: 100789 (optional, number) - ID of the account details to search
+    + referenceId: "105585e04f354c79a781bf8cb812a4de" (optional, string) - Exact reference ID to search
+    + assetId: 100348 (optional, number) - ID of the asset to search
+    + blockchainId: "bitcoin-mainnet" (optional, string) - ID of the blockchain to search
+    + address: "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP" (optional, string) - Exact address to search
+    + tag: "12345612412" (optional, string) - Exact tag to search
+    + tagType: "text" (optional, array[TagType]) - List of the tag types to search
+    + order: "asc" (optional, Order) - Result items sorting order
+    + cursor: 100105 (optional, number) - Cursor to continue the search
+    + limit: 20 (optional, number) - Maximum number of items to return in the search results
+
++ Request (application/json)
+    + Headers
+    
+            Authorization: Bearer Your-JWT-Token
+    
++ Response 200 (application/json)
+    + Body
+
+            {
+              "pagination": {
+                "cursor": 100869,
+                "count": 2,
+                "order": "asc",
+                "nextUrl": "/api/accounts/100106/details?order=asc&cursor=100872&limit=2"
+              },
+              "items": [
+                {
+                  "id": 100870,
+                  "accountId": 100106,
+                  "createdAt": "2020-03-28T22:35:28.558Z",
+                  "address": "35hK24tcLEWcgNA4JxpvbkNkoAcDGqQPsP",
+                  "blockchainId": "bitcoin-mainnet",
+                  "tag": null,
+                  "tagType": null
+                },
+                {
+                  "id": 100871,
+                  "accountId": 100106,
+                  "createdAt": "2020-03-28T22:35:28.558Z",
+                  "address": "0x30804040d4d84482b73e5c655298276d276d0ca3",
+                  "blockchainId": "ethereum-mainnet",
+                  "tag": null,
+                  "tagType": null
+                }
+              ]
+            }
+            
+            
++ Response 400 (application/json)
+
+    + Body
+
+            {
+              "errors": {
+                "order": [
+                  "Invalid order"
+                ],
+                "limit": [
+                  "Limit should be in the range 1..1000"
+                ]
+              }
+            }
+            
++ Response 403 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "brokerAccountId": [
+                  "Tenant doesn't own specified Accounaccount"
+                ]
+              }
+            }
+            
++ Response 404 (application/json)
+    + Body
+
+            {
+              "errors": {
+                "accountId": [
+                  "Account not found"
+                ]
+              }
+            }
+            
+            
+            
+            
+            
+## Deposit [/api/deposits]
+
+_Deposit_ is an incoming transfer to an _Account_ or a _Borker account_. If a deposit was made to the particular account within the broker account, then you can match it to your business entity (user, contract, invoice, etc).
+Deposits directly to the broker account make sense if you want to provide assets on your broker account for operating.
+
+If you have specified ID of your user (or contract, invoice, etc) in the `referenceId` when the account is being created, then the deposit to this account will contain this ID in the `referenceId` field. 
+So you able to match the deposit to your business object even without storing a mapping on your side.
+
+---
+
++ Attributes
+    + id: 100555 (number) - Unique identifier. 
+    + brokerAccountId: 100567 (number) - ID of the broker account received the deposit.
+    + brokerAccountDetails: (BrokerAccountDetailsBrief) - The broker account details received the deposit.
+    + accountId: 100200 (number, optional) - ID of the account received the deposit. Specified only if the deposit was made to an account within the broker account.
+    + referenceId: `d612bb47ff14476f90572a4319181f11` (string, optional) - Customer`s business object ID specified in the account received the deposit. Specified only if the deposit was made to an account within the broker account.
+    + accountDetails: (AccountDetailsBrief, optional) - The account details received the deposit. Specified only if the deposit was made to an account within the broker account.
+    + assetId: 100300 (number) - ID of the deposit asset.
+    + blockchainId: `bitcoin-main` (string) - ID of the deposit blockchain.
+    + amount: 10.123 (number) - Amount of the deposit.
+
+TODO:
+            
+            
+            
+            
+
+## Is Alive [/api/isalive]
+
+Validates service availability.
+
+### API info [GET]
+
++ Response 200 (application/json)
+    + Body
+
+            {
+              "name": "Api",
+              "version": "1.0.0.0",
+              "env": null,
+              "hostName": "api-6d9cf8c746-qz478",
+              "isDebug": false,
+              "startedAt": "2020-03-23T13:45:41.5860463Z",
+              "stateIndicators": []
+            }

@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.SmartContractRegistrations";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.smart_contract_registrations;
+
+service SmartContractRegistrations {
+  rpc Search (SmartContractRegistrationsSearchRequest) returns (SmartContractRegistrationsSearchResponse);
+  rpc Register (SmartContractRegistrationRegisterRequest) returns (SmartContractRegistrationRegisterResponse);
+}
+
+// Search
+
+message SmartContractRegistrationsSearchRequest {
+  google.protobuf.Int64Value smart_contract_registration_id = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.StringValue address = 3;
+  google.protobuf.StringValue blockchain_id = 4;
+  repeated SmartContractRegistrationState state = 5;
+  api.common.PaginationInt64 pagination = 6;
+}
+
+message SmartContractRegistrationsSearchResponse {
+  oneof result {
+    SmartContractSearchResponseBody body = 1;
+    api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message SmartContractSearchResponseBody {
+  api.common.PaginatedInt64Response pagination = 1;
+  repeated SmartContractRegistration items = 2;
+}
+
+// Register
+
+message SmartContractRegistrationRegisterRequest {
+  string request_id = 1;
+  string name = 2;
+  string address = 3;
+  string blockchain_id = 4;
+  bytes code = 5;
+}
+
+message SmartContractRegistrationRegisterResponse {
+  oneof result {
+    SmartContractRegistrationRegisterResponseBody body = 1;
+    api.common.ErrorResponseBody error = 2;
+  }
+}
+
+message SmartContractRegistrationRegisterResponseBody {
+  SmartContractRegistration smart_contract_registration = 1;
+}
+
+// Common
+
+enum SmartContractRegistrationState {
+  PROCESSING = 0;
+  COMPLETED = 5;
+}
+
+message SmartContractRegistration {
+  int64 id = 1;
+  string name = 2;
+  string address = 3;
+  string blockchain_id = 4;
+  string code_hash = 5;
+  SmartContractRegistrationState state = 6;
+  int64 sequence = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}

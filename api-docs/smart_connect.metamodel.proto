@@ -1,0 +1,221 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.SmartConnect.Metamodel";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.smart_connect.metamodel;
+
+message SmartContractInfo {
+    ConstructorInfo ctor = 1;
+    repeated ReadFunctionInfo read_functions = 2;
+    repeated WriteFunctionInfo write_functions = 3;
+    repeated EventInfo events = 4;
+    bytes code = 5; 
+}
+
+// Functions
+
+message ConstructorInfo {
+    string address = 1;
+    bool is_payable = 2;
+    repeated ParameterInfo parameters = 3;
+}
+
+message ReadFunctionInfo {
+    string name = 1;
+    string address = 2;
+    repeated ParameterInfo parameters = 3;
+    ReturnInfo return = 4;
+}
+
+message WriteFunctionInfo {
+    string name = 1;
+    string address = 2;
+    bool is_payable = 3;
+    repeated ParameterInfo parameters = 4;
+    ReturnInfo return = 5;
+}
+
+message ParameterInfo {
+    string name = 1;
+    TypeInfo type = 2;
+    ParameterDirection direction = 3;
+}
+
+enum ParameterDirection {
+    IN = 0;
+    OUT = 1;
+}
+
+message ReturnInfo {
+    google.protobuf.StringValue name = 1;
+    TypeInfo type = 2;
+}
+
+// Events
+
+message EventInfo {
+    string name = 1;
+    string address = 2;
+    repeated FieldInfo fields = 3;
+}
+
+// Types
+
+message TypeInfo {
+  google.protobuf.StringValue native_type = 1;
+  PrototypeInfo prototype = 2;
+  repeated Constraint constraints = 3;
+}
+
+message PrototypeInfo {
+  oneof kind {
+    EnumTypeInfo enum = 1;
+    AddressTypeInfo address = 2;
+    BoolTypeInfo bool = 3;
+    BytesTypeInfo bytes = 4;
+    DecimalTypeInfo decimal = 5;
+    IntTypeInfo int = 6;
+    StringTypeInfo string = 7;
+    TimestampTypeInfo timestamp = 8;
+    VoidTypeInfo void = 9;
+    ArrayTypeInfo array = 10;
+    CompositeTypeInfo composite = 11;
+    EitherTypeInfo either = 12;
+    MapTypeInfo map = 13;
+  }
+}
+
+message EnumTypeInfo {
+    repeated EnumFieldInfo fields = 1;
+}
+
+message EnumFieldInfo {
+    string name = 1;
+    int32 value = 2;
+}
+
+message AddressTypeInfo {
+}
+
+message BoolTypeInfo {
+}
+
+message BytesTypeInfo {
+}
+
+message DecimalTypeInfo {
+}
+
+message IntTypeInfo {
+}
+
+message StringTypeInfo {
+}
+
+message TimestampTypeInfo {
+}
+
+message VoidTypeInfo {
+}
+
+message ArrayTypeInfo {
+  TypeInfo element_type = 1;
+  repeated ArrayBoundaries dimension_boundaries = 2;
+}
+
+message ArrayBoundaries {
+  int32 min = 1;
+  int32 max = 2;
+}
+
+message CompositeTypeInfo {
+  repeated FieldInfo components = 1;
+}
+
+message FieldInfo {
+  string name = 1;
+  TypeInfo type = 2;
+}
+
+message EitherTypeInfo {
+    repeated FieldInfo options = 1;
+}
+
+message MapTypeInfo {
+    TypeInfo key_type = 1;
+    TypeInfo value_type = 2;
+}
+
+// Constraints
+
+message Constraint {
+    ConstraintType type = 1;
+    string error_message = 2;
+}
+
+message ConstraintType {
+    oneof kind {
+        LengthConstraint length = 1;
+        MaxDateConstraint max_date = 2;
+        MinDateConstraint min_date = 3;
+        MaxDecimalConstraint max_decimal = 4;
+        MinDecimalConstraint min_decimal = 5;
+        MaxIntConstraint max_int = 6;
+        MinIntConstraint min_int = 7;
+        MaxLengthConstraint max_length = 8;
+        MinLengthConstraint min_length = 9;
+        RegexConstraint regex = 10;
+        RequiredConstraint required = 11;
+        UniqueItemsConstraint unique_items = 12;
+    }
+}
+
+message LengthConstraint {
+  int32 length = 1;
+}
+
+message MaxDateConstraint {
+  google.protobuf.Timestamp max = 1;
+}
+
+message MinDateConstraint {
+  google.protobuf.Timestamp min = 1;
+}
+
+message MaxDecimalConstraint {
+  common.BigDecimal max = 1;
+}
+
+message MinDecimalConstraint {
+  common.BigDecimal min = 1;
+}
+
+message MaxIntConstraint {
+  common.BigInt max = 1;
+}
+
+message MinIntConstraint {
+  common.BigInt min = 1;
+}
+
+message MaxLengthConstraint {
+  int32 max = 1;
+}
+
+message MinLengthConstraint {
+  int32 min = 1;
+}
+
+message RegexConstraint {
+  string regex = 1;
+}
+
+message RequiredConstraint {  
+}
+
+message UniqueItemsConstraint {
+}

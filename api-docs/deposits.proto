@@ -1,0 +1,235 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.Api.ApiContract.Deposit";
+
+import "common.proto";
+import "aml.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+package swisschain.sirius.api.deposits;
+
+service Deposits {
+  rpc Search (DepositSearchRequest) returns (DepositSearchResponse);
+
+  rpc GetUpdates (DepositUpdateSearchRequest) returns (stream DepositUpdateArrayResponse);
+}
+
+enum DepositErrorCode {
+  TECHNICAL_PROBLEM = 0;
+  VALIDATION_REJECTED = 1;
+  SIGNING_REJECTED = 2;
+  NOT_ENOUGH_BALANCE_TO_PROVISION = 3;
+}
+
+message DepositError {
+  DepositErrorCode code = 1;
+  string message = 2;
+}
+
+message DepositUpdateArrayResponse{
+  repeated DepositUpdateResponse items = 1;
+}
+
+message DepositUpdateResponse {
+  int64 deposit_id = 1;
+
+  int64 broker_account_id = 2;
+
+  swisschain.sirius.api.common.BrokerAccountDetails broker_account_details = 3;
+
+  google.protobuf.Int64Value account_id = 4;
+
+  google.protobuf.StringValue reference_id = 5;
+
+  swisschain.sirius.api.common.AccountDetails account_details = 6;
+
+  int64 asset_id = 7;
+
+  string blockchain_id = 8;
+  
+  repeated swisschain.sirius.api.common.Fee fees = 9;
+
+  swisschain.sirius.api.common.TransactionInfo transaction_info = 10;
+  
+  DepositState state = 11;
+
+  repeated DepositSource sources = 12;
+
+  swisschain.sirius.api.common.BigDecimal amount =13;
+
+  google.protobuf.Timestamp created_at = 14;
+
+  google.protobuf.Timestamp updated_at = 15;
+        
+  int64 required_confirmations_count = 16;
+  
+  google.protobuf.StringValue asset_address = 18;
+
+  string blockchain_name = 19;
+
+  string broker_account_name = 20;
+
+  int64 deposit_update_id = 21;
+
+  DepositType deposit_type = 22;
+
+  swisschain.sirius.api.aml.AmlChecks aml_checks = 23;
+
+  google.protobuf.Int64Value user_id = 24;
+
+  google.protobuf.StringValue user_native_id = 25;
+
+  DepositError error = 26;
+}
+
+enum DepositState
+{
+  DETECTED = 0;
+  CONFIRMED = 1;
+  COMPLETED = 2;
+  FAILED = 3;
+  CANCELLED = 4;
+  PROVISIONED = 5;
+  UNKNOWN_ASSET = 6;
+  AML_VALIDATION = 7;
+  AML_FAILED = 8;
+  AML_REVIEWED = 9;
+  AML_FAILURE_ACCEPTING = 10;
+  REFUNDING = 11;
+  REFUNDING_PROVISIONED = 12;
+  REFUNDED = 13;
+}
+
+enum DepositType
+{
+  TINY = 0;
+  BROKER = 1;
+  REGULAR = 2;
+  TOKEN = 3;
+  TINY_TOKEN = 4;
+}
+
+message DepositSource
+{
+  string address = 1;
+
+  swisschain.sirius.api.common.BigDecimal amount = 2;
+}
+
+message DepositResponse {
+  int64 id = 1;
+
+  int64 broker_account_id = 2;
+
+  swisschain.sirius.api.common.BrokerAccountDetails broker_account_details = 3;
+
+  google.protobuf.Int64Value account_id = 4;
+
+  google.protobuf.StringValue reference_id = 5;
+
+  swisschain.sirius.api.common.AccountDetails account_details = 6;
+
+  int64 asset_id = 7;
+
+  string blockchain_id = 8;
+  
+  repeated swisschain.sirius.api.common.Fee fees = 9;
+
+  swisschain.sirius.api.common.TransactionInfo transaction_info = 10;
+  
+  DepositState state = 11;
+
+  repeated DepositSource sources = 12;
+
+  swisschain.sirius.api.common.BigDecimal amount =13;
+
+  google.protobuf.Timestamp created_at = 14;
+
+  google.protobuf.Timestamp updated_at = 15;
+        
+  int64 required_confirmations_count = 16;
+
+  google.protobuf.StringValue asset_address = 18;
+
+  string blockchain_name = 19;
+
+  string broker_account_name = 20;
+
+  DepositType deposit_type = 21;
+
+  swisschain.sirius.api.aml.AmlChecks aml_checks = 22;
+
+  google.protobuf.Int64Value user_id = 23;
+
+  google.protobuf.StringValue user_native_id = 24;
+
+  DepositError error = 25;
+}
+
+message DepositUpdateSearchRequest {
+  
+  google.protobuf.Int64Value deposit_id = 1;
+
+  google.protobuf.Int64Value broker_account_id = 2;
+
+  google.protobuf.Int64Value account_id = 3;
+
+  google.protobuf.StringValue reference_id = 4;
+
+  google.protobuf.Int64Value asset_id = 5;
+
+  google.protobuf.StringValue blockchain_id = 6;
+
+  repeated DepositState state = 7;
+
+  google.protobuf.Int64Value deposit_update_id = 8;
+
+  google.protobuf.Int64Value cursor = 9;
+
+  repeated DepositType deposit_type = 10;
+
+  google.protobuf.Int64Value user_id = 11;
+
+  google.protobuf.StringValue user_native_id = 12;
+  
+  google.protobuf.StringValue stream_id = 13;
+}
+
+message DepositSearchRequest {
+  
+  google.protobuf.Int64Value id = 1;
+
+  google.protobuf.Int64Value broker_account_id = 2;
+
+  google.protobuf.Int64Value account_id = 3;
+
+  google.protobuf.StringValue reference_id = 4;
+
+  google.protobuf.Int64Value asset_id = 5;
+
+  google.protobuf.StringValue blockchain_id = 6;
+
+  repeated DepositState state = 7;
+
+  swisschain.sirius.api.common.PaginationInt64 pagination = 8;
+
+  repeated DepositType deposit_type = 9;
+
+  google.protobuf.Int64Value user_id = 10;
+
+  google.protobuf.StringValue user_native_id = 11;
+}
+
+message DepositSearchResponse {
+  oneof result {
+    DepositSearchResponseBody body = 1;
+    swisschain.sirius.api.common.ErrorResponseBody error = 2;
+  } 
+}
+
+message DepositSearchResponseBody {
+  swisschain.sirius.api.common.PaginatedInt64Response pagination = 1;
+
+  repeated DepositResponse items = 2;
+}
