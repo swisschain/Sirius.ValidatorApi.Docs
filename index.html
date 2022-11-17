@@ -326,9 +326,6 @@
                   <li>
                     <a href="#api-usage-pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
                   </li>
-                  <li>
-                    <a href="#api-usage-models" class="toc-h2 toc-link" data-title="Models">Models</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -416,110 +413,44 @@
 <h1 id='feedback'>Feedback</h1>
 <p>In the case, if you have found an issue in this <a href="https://sirius-validator.swisschain.io">API</a> or in this documentation, please give us feedback by adding a <a href="https://github.com/swisschain/Sirius.Public/issues/new">GitHub issue</a>. Thank you!</p>
 <h1 id='api-usage'>API usage</h1>
-<p>Sirius Validator API is a gRPC API. To get proto files please follow https://github.com/swisschain/Sirius.ValidatorApi.Docs/tree/master/.proto</p>
+<p>Sirius Validator API is a gRPC API. To get proto files please follow <a href="https://github.com/swisschain/Sirius.ValidatorApi.Docs/tree/master/.proto">our GitHub</a></p>
 
-<p>To learn more about gRPC please follow https://grpc.io</p>
+<p>To learn more about gRPC please follow <a href="https://grpc.io">grpc.io</a></p>
 <h2 id='api-usage-pagination'>Pagination</h2>
-<p>Sirius API uses cursor-based pagination model in all endpoints which can return loads of items.</p>
-<h3 id='api-usage-pagination-request'>Request</h3><div class="highlight"><pre class="highlight csharp tab-csharp"><code>
-<span class="kt">var</span> <span class="n">pagination</span> <span class="p">=</span> <span class="k">new</span> <span class="n">PaginationInt64</span>
-<span class="p">{</span>
-    <span class="n">Cursor</span> <span class="p">=</span> <span class="m">10008</span><span class="p">,</span>
-    <span class="n">Limit</span> <span class="p">=</span> <span class="m">100</span><span class="p">,</span>
-    <span class="n">Order</span> <span class="p">=</span> <span class="n">PaginationOrder</span><span class="p">.</span><span class="n">Asc</span>
+<p>Some API endpoint that potentially returns a lot of items have pagination option. Request object of such an endpoint has <em><a href="#api-usage-pagination-page-object">Page</a></em> field with name <code>page</code>.</p>
+<h3 id='api-usage-pagination-rage-object'>Rage object</h3><div class="highlight"><pre class="highlight proto tab-protobuf"><code><span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
+    <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="kd">message</span> <span class="nc">ARequest</span> <span class="p">{</span>
+    <span class="n">Page</span> <span class="na">page</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 <table><thead>
 <tr>
 <th>name</th>
 <th>type</th>
 <th>description</th>
+<th>contraints</th>
 <th>example</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><code>cursor</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Cursor to continue the search</td>
-<td>stellar-test</td>
-</tr>
-<tr>
-<td><code>limit</code></td>
-<td><em>optional</em>, <em>int</em></td>
-<td>Maximum number of items to return in the search results</td>
+<td><code>index</code></td>
+<td><em>in32</em></td>
+<td>Zero-based index of the page to query</td>
+<td>index &gt;= 0</td>
 <td>10</td>
 </tr>
 <tr>
-<td><code>order</code></td>
-<td><em>optional</em>, <em><a href="#api-usage-models-order-enum">Order</a></em></td>
-<td>Result items sorting order</td>
-<td>asc</td>
+<td><code>size</code></td>
+<td><em>int32</em></td>
+<td>Maximum number of items to return in the results</td>
+<td>size &gt;= 0 and size &lt;= 100</td>
+<td>50</td>
 </tr>
 </tbody></table>
-<h3 id='api-usage-pagination-response'>Response</h3><div class="highlight"><pre class="highlight csharp tab-csharp"><code>
-<span class="kt">var</span> <span class="n">items</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">Items</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">pagination</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">Pagination</span><span class="p">;</span>
-
-</code></pre></div>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>Items</code></td>
-<td><em>List<T></em></td>
-<td>The array of an objects</td>
-</tr>
-<tr>
-<td><code>Pagination</code></td>
-<td><em><a href="#api-usage-models-pagination-information">Pagination</a></em></td>
-<td>Pagination state to continue search</td>
-</tr>
-</tbody></table>
-<h2 id='api-usage-models'>Models</h2><h3 id='api-usage-models-pagination-information'>Pagination information</h3><div class="highlight"><pre class="highlight csharp tab-csharp"><code>
-<span class="kt">var</span> <span class="n">cursor</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">Pagination</span><span class="p">.</span><span class="n">Cursor</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">count</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">Pagination</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span>
-<span class="kt">var</span> <span class="n">order</span> <span class="p">=</span> <span class="n">response</span><span class="p">.</span><span class="n">Body</span><span class="p">.</span><span class="n">Pagination</span><span class="p">.</span><span class="n">Order</span><span class="p">;</span>
-
-</code></pre></div>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>Cursor</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Cursor to continue the search</td>
-<td>stellar-test</td>
-</tr>
-<tr>
-<td><code>Count</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td>Number of items in the current page</td>
-<td>10</td>
-</tr>
-<tr>
-<td><code>Order</code></td>
-<td><em>optional</em>, <em><a href="#order-enum">Order</a></em></td>
-<td>Result items sorting order</td>
-<td>asc</td>
-</tr>
-</tbody></table>
-<h3 id='api-usage-models-order-enum'>Order (enum)</h3>
-<p>Order of the sorting</p>
-
-<ul>
-<li><code>asc</code> - Ascending sorting order</li>
-<li><code>desc</code> - Descending sorting order</li>
-</ul>
 <h1 id='protocol-description'>Protocol description</h1><h2 id='protocol-description-authentication'>Authentication</h2>
 <p>Sirius API uses <code>Bearer authentication</code>. To get the token, <a href="mailto:info@swisschain.io">contact us</a> to get invitation code, then register in our <a href="https://universe.swisschain.io/">Universe portal</a>, create a subscription and create an API key. We use JWT as the API key, so you can explore which claims particular token contains using <a href="https://jwt.io">jwt.io</a> online service.</p>
 
