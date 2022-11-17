@@ -7,8 +7,8 @@ To learn more about gRPC please follow [grpc.io](https://grpc.io)
 ## Authentication
 
 Sirius Validator API uses `Bearer authentication`. Authentication token that a client needs to send with a request is a JWT token.
-The token can be obtained during Validation registration process that can should be initiated via [Universe portal](https://universe.swisschain.io).
-See *[Invites](invites)* section to get more details.
+The token can be obtained during the Validator registration process that can be initiated via [Universe portal](https://universe.swisschain.io).
+See *[Invites](#invites)* section to get more details.
 
 > Request Header
 
@@ -21,7 +21,7 @@ See *[Invites](invites)* section to get more details.
 Some API endpoint that potentially returns a lot of items have pagination option. Request object of such an endpoint has *[Page](#api-usage-pagination-page-object)* field with name `page`.
 
 
-### Rage object
+### Page object
 
 ```proto
 message Page {
