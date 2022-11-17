@@ -1,26 +1,8 @@
 # API usage
 
-There are several ways to use Sirius API. The most convenient is the .NET API client library.
+Sirius Validator API is a gRPC API. To get proto files please follow https://github.com/swisschain/Sirius.ValidatorApi.Docs/tree/master/.proto
 
-Nuget Package: [![Nuget Package](https://img.shields.io/nuget/v/Swisschain.Sirius.Api.ApiClient.svg)](https://www.nuget.org/packages/Swisschain.Sirius.Api.ApiClient/)
-
-## Client registration
-
-```csharp
-
-var options = new SiriusApiOptions
-{
-    ServerGrpcUrl = new Uri("<sirius api url>"),
-    ApiKey = "<you api key>",
-    Timeout = TimeSpan.FromSeconds(60)
-};
-
-services.AddSiriusApiClient(options);
-
-```
-
-In Startup on ConfigureServices add API client using IServiceCollection extension method.
-
+To learn more about gRPC please follow https://grpc.io
 
 ## Pagination
 

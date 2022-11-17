@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option java_package = "io.swisschain.sirius.keykeeperapi.generated.approvalprocess.common";
+option csharp_namespace = "Swisschain.Sirius.KeyKeeperApi.ApiContract.ApprovalProcess.Common";
+
+package swisschain.sirius.keykeeperapi.approvalprocess.common;
+
+enum ApprovalProcessType {
+  APPROVAL_PROCESS_TYPE_UNKNOWN = 0;
+  APPROVAL_PROCESS_TYPE_TRANSFER = 1;
+  APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT = 2;
+  APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION = 3;
+  APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION = 4;
+  APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION = 5;
+}
+
+enum ApprovalProcessStatus {
+  APPROVAL_PROCESS_STATUS_UNKNOWN = 0;
+  APPROVAL_PROCESS_STATUS_PENDING = 1;
+  APPROVAL_PROCESS_STATUS_APPROVED = 2;
+  APPROVAL_PROCESS_STATUS_REJECTED = 3;
+}
+
+enum Decision {
+  DECISION_UNKNOWN = 0;
+  DECISION_APPROVED = 1;
+  DECISION_REJECTED = 2;
+}

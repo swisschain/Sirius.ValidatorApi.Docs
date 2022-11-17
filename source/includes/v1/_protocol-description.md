@@ -1,21 +1,4 @@
-# REST Protocol description
-
-## Allowed HTTP Verbs
-
-- `PUT` : Updates a resource.
-- `POST` : Creates a resource.
-- `GET` : Gets a resource or a list of resources.
-- `DELETE` : Deletes a resource.
-
-## Description Of HTTP Server Responses
-
-- 200 `OK` : the request was successful.
-- 201 `Created` : the request was successful and a resource was created.
-- 204 `No Content` : the request was successful but there is no representation to return.
-- 400 `Bad Request` : the request has invalid or missing required parameters.
-- 401 `Unauthorized` : authentication failed.
-- 403 `Forbidden` : access denied.
-- 404 `Not Found` : resource was not found.
+# Protocol description
 
 ## Authentication
 
@@ -89,17 +72,5 @@ In the `Rest API`, the decimal type is presented as a number with strict precisi
 {
     "price": 222231.33420001911,
     "volume": 0.0000001
-}
-```
-
-## Timestamp
-
-`iso 8601` is used for the timestamps in the form `2020-08-04T08:05:09.039924+00:00`
-
-> Timestamp example 
-
-```json
-{
-   "Timestamp": "2020-08-04T08:05:09.039924+00:00"
 }
 ```

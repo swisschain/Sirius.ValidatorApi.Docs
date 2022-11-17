@@ -1,0 +1,285 @@
+syntax = "proto3";
+
+option java_package = "io.swisschain.sirius.keykeeperapi.generated.approvalrequest";
+option csharp_namespace = "Swisschain.Sirius.KeyKeeperApi.ApiContract.ApprovalRequests";
+
+package swisschain.sirius.keykeeperapi.approvalrequest;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+import "approval_process_common.proto";
+
+service ApprovalRequests {
+  rpc List (ListApprovalRequestsRequest) returns (ListApprovalRequestsResponse);
+  rpc Get (GetApprovalRequestRequest) returns (GetApprovalRequestResponse);
+  rpc Acknowledge (AcknowledgeApprovalRequestRequest) returns (AcknowledgeApprovalRequestResponse);
+  rpc Read (ReadApprovalRequestRequest) returns (ReadApprovalRequestResponse);
+  rpc Approve (ApproveApprovalRequestRequest) returns (ApproveApprovalRequestResponse);
+  rpc Reject (RejectApprovalRequestRequest) returns (RejectApprovalRequestResponse);
+}
+
+// List
+
+message ListApprovalRequestsRequest {
+  Page page = 1;
+  ListApprovalRequestsFilter filter = 2;  
+}
+
+message Page {
+  int32 index = 1;
+  int32 size = 2;
+}
+
+message ListApprovalRequestsFilter{
+  google.protobuf.BoolValue is_read = 1;
+  google.protobuf.Int64Value custody_id = 2;
+  google.protobuf.BoolValue is_processed = 3;
+}
+
+message ListApprovalRequestsResponse {
+  oneof body {
+    ListApprovalRequestsPayload payload = 1;
+    ListApprovalRequestsError error = 2;
+  }
+}
+
+message ListApprovalRequestsPayload {
+  repeated ApprovalRequestListItem items = 1;
+}
+
+message ListApprovalRequestsError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+message ApprovalRequestListItem {
+  int64 id = 1;
+  ApprovalProcess approval_process = 2;
+  string context = 3;
+  Custody custody = 4;
+  Subscription subscription = 5;
+  ApproverResolution approver_resolution = 6;
+  bool is_read = 7;
+  google.protobuf.Timestamp read_at = 8;
+  google.protobuf.Timestamp delivered_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
+// Get
+
+message GetApprovalRequestRequest {
+  int64 id = 1;
+}
+
+message GetApprovalRequestResponse {
+  oneof body {
+    GetApprovalRequestPayload payload = 1;
+    GetApprovalRequestError error = 2;
+  }
+}
+
+message GetApprovalRequestPayload {
+  int64 id = 1;
+  ApprovalProcess approval_process = 2;
+  string context = 3;
+  Custody custody = 4;
+  Subscription subscription = 5;
+  ApproverResolution approver_resolution = 6;
+  repeated LinkedApprovalRequest linked_approval_requests = 7;
+  bool is_read = 8;
+  google.protobuf.Timestamp read_at = 9;
+  google.protobuf.Timestamp delivered_at = 10;
+  google.protobuf.Timestamp created_at = 11;
+}
+
+message GetApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+message LinkedApprovalRequest {
+  Approver approver = 1;
+  ApproverResolution approver_resolution = 2;
+  bool is_read = 3;
+  bool is_delivered = 4;
+  google.protobuf.Timestamp read_at = 5;
+  google.protobuf.Timestamp delivered_at = 6;
+}
+
+message Approver {
+  string id = 1;
+  string name = 2;
+}
+
+// Acknowledge
+
+message AcknowledgeApprovalRequestRequest {
+  int64 id = 1;
+}
+
+message AcknowledgeApprovalRequestResponse {
+  oneof body {
+    AcknowledgeApprovalRequestPayload payload = 1;
+    AcknowledgeApprovalRequestError error = 2;
+  }
+}
+
+message AcknowledgeApprovalRequestPayload {
+}
+
+message AcknowledgeApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+// Read
+
+message ReadApprovalRequestRequest {
+  int64 id = 1;
+}
+
+message ReadApprovalRequestResponse {
+  oneof body {
+    ReadApprovalRequestPayload payload = 1;
+    ReadApprovalRequestError error = 2;
+  }
+}
+
+message ReadApprovalRequestPayload {
+}
+
+message ReadApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+// Approve
+
+message ApproveApprovalRequestRequest {
+  int64 id = 1;
+  string comment = 2;
+  string context = 3;
+  string signature = 4;
+  string device_info = 5;
+  string app_version = 6;
+}
+
+message ApproveApprovalRequestResponse {
+  oneof body {
+    ApproveApprovalRequestPayload payload = 1;
+    ApproveApprovalRequestError error = 2;
+  }
+}
+
+message ApproveApprovalRequestPayload {
+}
+
+message ApproveApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+// Reject
+
+message RejectApprovalRequestRequest {
+  int64 id = 1;
+  string comment = 2;
+  string context = 3;
+  string signature = 4;
+  string device_info = 5;
+  string app_version = 6;
+}
+
+message RejectApprovalRequestResponse {
+  oneof body {
+    RejectApprovalRequestPayload payload = 1;
+    RejectApprovalRequestError error = 2;
+  }
+}
+
+message RejectApprovalRequestPayload {
+}
+
+message RejectApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+// Common
+
+message ApprovalProcess {
+  string id = 1;
+  swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessType type = 2;
+  swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessStatus status = 3;
+  string context = 4;
+}
+
+message ApproverResolution {
+  swisschain.sirius.keykeeperapi.approvalprocess.common.Decision decision = 1;
+  google.protobuf.StringValue comment = 2;
+  google.protobuf.Timestamp created_at = 3;
+}
+
+message Custody {
+  int64 id = 1;
+  string name = 2;
+}
+
+message Subscription {
+  string name = 1;
+  google.protobuf.StringValue color = 2;
+}

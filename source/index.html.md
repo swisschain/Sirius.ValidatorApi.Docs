@@ -1,5 +1,5 @@
 ---
-title: Sirius API Reference
+title: Sirius Validator API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - protobuf
@@ -12,16 +12,11 @@ includes:
   - introduction.md
   - feedback.md
   - api_usage.md
-  - v1/rest_protocol-description.md
-  - v1/brokerage-api-blockchains.md
-  - v1/brokerage-api-assets.md
-  - v1/brokerage-api-custodies
-  - v1/brokerage-api-broker-accounts.md
-  - v1/brokerage-api-accounts.md
-  - v1/brokerage-api-deposits.md
-  - v1/brokerage-api-withdrawals.md
-  - v1/brokerage-api-smart-contracts.md
-  - v1/brokerage-api-data-structures.md
+  - v1/protocol-description.md
+  - v1/invites.md
+  - v1/inbox.md
+  - v1/blockchains.md
+  - v1/approval_requests.md
 
 search: true
 code_clipboard: true

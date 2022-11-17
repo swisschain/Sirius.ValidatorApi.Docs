@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.ValidatorApi";
+
+package swisschain.sirius.validator_api.blockchains;
+
+import "common.proto";
+import "google/protobuf/wrappers.proto";
+
+service Blockchains {
+    rpc Get (GetBlockchainsRequest) returns (GetBlockchainsResponse);
+}
+
+message GetBlockchainsRequest {
+}
+
+message GetBlockchainsResponse {
+    oneof body {
+        GetBlockchainResponseBody response = 1;
+        .swisschain.sirius.validator_api.common.Error error = 2;
+    }
+}
+
+message GetBlockchainResponseBody {
+    repeated Blockchain blockchains = 1;
+
+    message Blockchain {
+        string id = 1;
+        string name = 2;
+        NetworkType network_type = 3;
+        google.protobuf.StringValue tenant_id = 4;
+    };
+
+    enum NetworkType {
+        PRIVATE = 0;
+        TEST = 1;
+        PUBLIC = 2;
+    };
+}

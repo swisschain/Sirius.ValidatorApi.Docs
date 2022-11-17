@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.ValidatorApi";
+
+package swisschain.sirius.validator_api.invites;
+
+import "common.proto";
+
+service Invites {
+    rpc Accept (AcceptInviteRequest) returns (AcceptInviteResponse);
+    rpc Revoke (RevokeInviteRequest) returns (RevokeInviteResponse);
+}
+
+// Accept
+
+message AcceptInviteRequest {
+    string invite_id = 1;
+    string validator_id = 2;
+    string public_key = 3;
+}
+
+message AcceptInviteResponse {
+    oneof body {
+        AcceptInviteResponseBody response = 1;
+        .swisschain.sirius.validator_api.common.Error error = 2;
+    }
+}
+
+message AcceptInviteResponseBody {
+    string name = 1;
+    string position = 2;
+    string description = 3;
+    string api_key = 4;
+}
+
+// Revoke
+
+message RevokeInviteRequest {
+}
+
+message RevokeInviteResponse {
+    oneof body {
+        AcceptInviteResponseBody response = 1;
+        .swisschain.sirius.validator_api.common.Error error = 2;
+    }
+}
+
+message RevokeInviteResponseBody {
+}
