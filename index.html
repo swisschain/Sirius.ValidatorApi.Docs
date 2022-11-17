@@ -392,8 +392,8 @@
 <p>To learn more about gRPC please follow <a href="https://grpc.io">grpc.io</a></p>
 <h2 id='api-usage-authentication'>Authentication</h2>
 <p>Sirius Validator API uses <code>Bearer authentication</code>. Authentication token that a client needs to send with a request is a JWT token.
-The token can be obtained during Validation registration process that can should be initiated via <a href="https://universe.swisschain.io">Universe portal</a>.
-See <em><a href="invites">Invites</a></em> section to get more details.</p>
+The token can be obtained during the Validator registration process that can be initiated via <a href="https://universe.swisschain.io">Universe portal</a>.
+See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 
 <blockquote>
 <p>Request Header</p>
@@ -401,7 +401,7 @@ See <em><a href="invites">Invites</a></em> section to get more details.</p>
 <div class="highlight"><pre class="highlight plaintext"><code>  "Authorization": "Bearer **********************************"
 </code></pre></div><h2 id='api-usage-pagination'>Pagination</h2>
 <p>Some API endpoint that potentially returns a lot of items have pagination option. Request object of such an endpoint has <em><a href="#api-usage-pagination-page-object">Page</a></em> field with name <code>page</code>.</p>
-<h3 id='api-usage-pagination-rage-object'>Rage object</h3><div class="highlight"><pre class="highlight proto tab-protobuf"><code><span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
+<h3 id='api-usage-pagination-page-object'>Page object</h3><div class="highlight"><pre class="highlight proto tab-protobuf"><code><span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
   <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
