@@ -1,4 +1,4 @@
-# Withdrawals
+# Inbox
 
 Withdrawal refers to outgoing transfers of the funds from a broker account. You can get withdrawals history, or be notified about new withdrawals and state changing of the existing withdrawals. There are different options to be notified about withdrawals state changing:
 

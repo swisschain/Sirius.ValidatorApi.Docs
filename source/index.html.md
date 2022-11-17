@@ -12,7 +12,6 @@ includes:
   - introduction.md
   - feedback.md
   - api_usage.md
-  - v1/protocol-description.md
   - v1/invites.md
   - v1/inbox.md
   - v1/blockchains.md

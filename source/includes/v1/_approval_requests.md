@@ -1,4 +1,4 @@
-# Assets
+# Approval requests
 
 Sirius provides the set of crypto assets available to use. You can get notifications about a deposit or initiate a withdrawal in any asset presented in this set. Each asset has a symbol, accuracy, optional address, ID of the blockchain containing this asset and unique ID. It's possible that in the different blockchains assets with the same symbol and/or address are existed, so you have to rely only on the asset ID if you need to deterministically identify it. In fact asset ID corresponds to its blockchain ID + symbol + address. If you've received a deposit of an asset which is not supported by Sirius yet, you can add this particular asset to your personal list by specifying all needed asset parameters.
 
