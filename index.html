@@ -420,7 +420,26 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 <td>50</td>
 </tr>
 </tbody></table>
-<h1 id='invites'>Invites</h1><h2 id='invites-accept-an-invitation'>Accept an invitation</h2><h3 id='invites-accept-an-invitation-request'>Request</h3>
+<h1 id='invites'>Invites</h1>
+<p>Invitation allows to register a validator on a Universe Subscription.
+Inivitation can be generated on the Universe portal. </p>
+
+<p>Before a validator can accept an invitation it needs to generate its
+keys pair and validator ID. Keys pairs is an RSA-PKCS1 keys with the following parameters:</p>
+
+<ul>
+<li>Public exponent: <code>3</code></li>
+<li>Strength: <code>1024</code></li>
+<li>Certainty: <code>25</code></li>
+</ul>
+
+<p>Validator ID is a SHA256Digest hash of the validator public key.</p>
+
+<p>The private key should be kept in secret by the validator. The public key and validator ID
+should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a></em> method of API.</p>
+<h2 id='invites-accept-an-invitation'>Accept an invitation</h2>
+<p>Accepts a validator invitation generated via Universe portal.</p>
+<h3 id='invites-accept-an-invitation-request'>Request</h3>
 <p><code>swisschain.sirius.validator_api.invites.Invites.Accept</code></p>
 <div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Accept</span>
 
@@ -472,181 +491,80 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
     <span class="kt">string</span> <span class="na">description</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
     <span class="kt">string</span> <span class="na">api_key</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
+</code></pre></div><h4 id='invites-accept-an-invitation-response-acceptinviteresponsebody'>AcceptInviteResponseBody</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>placement</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td><em>string</em></td>
+<td>body</td>
+<td>Name of the validator specified on the Universe portal</td>
+</tr>
+<tr>
+<td><code>position</code></td>
+<td><em>optional</em>, <em>string</em></td>
+<td>body</td>
+<td>Position of the validator specified on the Universe portal</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td><em>optional</em>, <em>string</em></td>
+<td>body</td>
+<td>Description of the validator specified on the Universe portal</td>
+</tr>
+<tr>
+<td><code>api_key</code></td>
+<td><em>string</em></td>
+<td>body</td>
+<td>API key of the validator to be used for all further API requests</td>
+</tr>
+</tbody></table>
+<h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2>
+<p>Revokes a previously accepted invitation. </p>
+<h3 id='invites-revoke-an-invitation-request'>Request</h3>
+<p><code>swisschain.sirius.validator_api.invites.Invites.Revoke</code></p>
+<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Revoke</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">RevokeInviteRequest</span> <span class="p">{</span>
+<span class="p">}</span>
 </code></pre></div>
 <table><thead>
 <tr>
-<th>REST name</th>
-<th>gRPC name</th>
+<th>name</th>
 <th>type</th>
+<th>placement</th>
 <th>description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><code>id</code></td>
-<td><code>id</code></td>
-<td><em>number</em></td>
-<td>ID of the account</td>
-</tr>
-<tr>
-<td><code>referenceId</code></td>
-<td><code>reference_id</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>brokerAccountId</code></td>
-<td><code>broker_account_id</code></td>
-<td><em>number</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>status</code></td>
-<td><code>status</code></td>
-<td><em><a href="#accountstate-enum">AccountState</a></em></td>
-<td>Status of the account</td>
-</tr>
-<tr>
-<td><code>createdAt</code></td>
-<td><code>created_at</code></td>
-<td><em>timestamp</em></td>
-<td>Date of the account creation</td>
-</tr>
-<tr>
-<td><code>updatedAt</code></td>
-<td><code>updated_at</code></td>
-<td><em>timestamp</em></td>
-<td>Date of the latest account update</td>
-</tr>
-<tr>
-<td><code>userId</code></td>
-<td><code>user_id</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>userNativeId</code></td>
-<td><code>user_native_id</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td><em>body</em></td>
-</tr>
-</tbody></table>
-<h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2><h3 id='invites-revoke-an-invitation-request'>Request</h3>
-<p><code>swisschain.sirius.api.accounts.Accounts.Update</code></p>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="err">POST</span><span class="w"> </span><span class="err">/api/accounts</span><span class="w">
-
-</span><span class="err">&gt;</span><span class="w"> </span><span class="err">Request:</span><span class="w"> </span><span class="err">(application/json)</span><span class="w">
-
-</span><span class="err">x-request-id:</span><span class="w"> </span><span class="mi">1</span><span class="err">a</span><span class="mi">5</span><span class="err">c</span><span class="mi">0</span><span class="err">b</span><span class="mi">3</span><span class="err">d</span><span class="mi">15494</span><span class="err">ec</span><span class="mi">8</span><span class="err">a</span><span class="mi">390</span><span class="err">fd</span><span class="mi">3</span><span class="err">b</span><span class="mi">22</span><span class="err">d</span><span class="mi">757</span><span class="err">d</span><span class="mi">6</span><span class="w">
-
-</span><span class="p">{</span><span class="w">
-    </span><span class="nl">"accountId"</span><span class="p">:</span><span class="w"> </span><span class="mi">100000113</span><span class="w">
-    </span><span class="nl">"userId"</span><span class="p">:</span><span class="w"> </span><span class="mi">108000004</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<table><thead>
-<tr>
-<th>REST name</th>
-<th>gRPC name</th>
-<th>type</th>
-<th>REST placement</th>
-<th>description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>X-Request-ID</code></td>
-<td>-</td>
+<td><code>Bearer</code></td>
 <td><em>string</em></td>
-<td><em>header</em></td>
-<td>Unique ID of the request</td>
-</tr>
-<tr>
-<td><code>accountId</code></td>
-<td>-</td>
-<td><em>optional</em>, <em>number</em></td>
-<td><em>body</em></td>
-<td>Id of the related Account</td>
-</tr>
-<tr>
-<td><code>userId</code></td>
-<td>-</td>
-<td><em>optional</em>, <em>number</em></td>
-<td><em>body</em></td>
-<td>Id of the related user in the system (Needed for enabling AML on broker Account)</td>
+<td>metadata</td>
+<td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
 </tr>
 </tbody></table>
-<h3 id='invites-revoke-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="err">POST</span><span class="w"> </span><span class="err">/api/accounts</span><span class="w"> 
+<h3 id='invites-revoke-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Revoke</span>
 
-</span><span class="err">&gt;</span><span class="w"> </span><span class="err">Response:</span><span class="w"> </span><span class="mi">200</span><span class="w"> </span><span class="err">(application/json)</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">success</span><span class="w"> </span><span class="err">response</span><span class="w">
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
-</span><span class="p">{</span><span class="w">
-    </span><span class="nl">"id"</span><span class="p">:</span><span class="mi">103000158</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"referenceId"</span><span class="p">:</span><span class="s2">"user reference"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"brokerAccountId"</span><span class="p">:</span><span class="mi">100000113</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"state"</span><span class="p">:</span><span class="s2">"creating"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"createdAt"</span><span class="p">:</span><span class="s2">"2021-03-26T14:14:46.089822+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"updatedAt"</span><span class="p">:</span><span class="s2">"2021-03-26T14:14:46.089822+00:00"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"userId"</span><span class="p">:</span><span class="mi">108000004</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"userNativeId"</span><span class="p">:</span><span class="s2">"chainalysis-user-1"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<table><thead>
-<tr>
-<th>REST name</th>
-<th>gRPC name</th>
-<th>type</th>
-<th>description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>id</code></td>
-<td><code>id</code></td>
-<td><em>number</em></td>
-<td>ID of the account</td>
-</tr>
-<tr>
-<td><code>referenceId</code></td>
-<td><code>reference_id</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>brokerAccountId</code></td>
-<td><code>broker_account_id</code></td>
-<td><em>number</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>status</code></td>
-<td><code>status</code></td>
-<td><em><a href="#accountstate-enum">AccountState</a></em></td>
-<td>Status of the account</td>
-</tr>
-<tr>
-<td><code>createdAt</code></td>
-<td><code>created_at</code></td>
-<td><em>timestamp</em></td>
-<td>Date of the account creation</td>
-</tr>
-<tr>
-<td><code>updatedAt</code></td>
-<td><code>updated_at</code></td>
-<td><em>timestamp</em></td>
-<td>Date of the latest account update</td>
-</tr>
-<tr>
-<td><code>userId</code></td>
-<td><code>user_id</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td><em>body</em></td>
-</tr>
-<tr>
-<td><code>userNativeId</code></td>
-<td><code>user_native_id</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td><em>body</em></td>
-</tr>
-</tbody></table>
-<h1 id='blockchains'>Blockchains</h1>
+<span class="kd">message</span> <span class="nc">RevokeInviteResponse</span> <span class="p">{</span>
+    <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+        <span class="n">AcceptInviteResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="o">.</span><span class="n">swisschain.sirius.validator_api.common.Error</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='blockchains'>Blockchains</h1>
 <p>We distinguish <em>Blockchain</em>, <em>Protocol</em>, and <em>Network Type</em>.</p>
 
 <p><em>Blockchain</em> is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Ropsten are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. Networks can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>. So Blockchain has a protocol and network type.</p>
