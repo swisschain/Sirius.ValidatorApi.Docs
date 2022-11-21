@@ -1,6 +1,23 @@
 # Invites
 
+Invitation allows to register a validator on a Universe Subscription.
+Inivitation can be generated on the Universe portal. 
+
+Before a validator can accept an invitation it needs to generate its
+keys pair and validator ID. Keys pairs is an RSA-PKCS1 keys with the following parameters:
+
+- Public exponent: `3`
+- Strength: `1024`
+- Certainty: `25`
+
+Validator ID is a SHA256Digest hash of the validator public key.
+
+The private key should be kept in secret by the validator. The public key and validator ID
+should be submitted to the *[Accept](#invites-accept-an-invitation)* method of API.
+
 ## Accept an invitation
+
+Accepts a validator invitation generated via Universe portal.
 
 ### Request
 
@@ -46,68 +63,50 @@ message AcceptInviteResponseBody {
 }
 ```
 
-REST name | gRPC name | type | description
---------- | --------- | ---- | -----------
-`id` | `id` | *number* | ID of the account
-`referenceId` | `reference_id` | *optional*, *string* | *body* | Account reference id
-`brokerAccountId` | `broker_account_id` | *number* | *body* | Id of the related Broker Account
-`status` | `status` | *[AccountState](#accountstate-enum)* | Status of the account
-`createdAt` | `created_at` | *timestamp* | Date of the account creation
-`updatedAt` | `updated_at` | *timestamp* | Date of the latest account update
-`userId` | `user_id` | *optional*, *number* | *body* | Id of the related user in the system (Needed for enabling AML on broker Account)
-`userNativeId` | `user_native_id` | *optional*, *string* | *body* | Native Id of the user in customer's system
+#### AcceptInviteResponseBody
+
+name | type | placement | description
+-----| ---- | --------- | -----------
+`name` | *string* | body | Name of the validator specified on the Universe portal
+`position` | *optional*, *string* | body | Position of the validator specified on the Universe portal
+`description` | *optional*, *string* | body | Description of the validator specified on the Universe portal
+`api_key` | *string* | body | API key of the validator to be used for all further API requests
 
 ## Revoke an invitation
 
+Revokes a previously accepted invitation. 
+
 ### Request
 
-`swisschain.sirius.api.accounts.Accounts.Update`
+`swisschain.sirius.validator_api.invites.Invites.Revoke`
 
-```json
-POST /api/accounts
+```protobuf
+swisschain.sirius.validator_api.invites.Invites.Revoke
 
-> Request: (application/json)
+> Requets: (application/grpc)
 
-x-request-id: 1a5c0b3d15494ec8a390fd3b22d757d6
-
-{
-    "accountId": 100000113
-    "userId": 108000004
+message RevokeInviteRequest {
 }
 ```
 
-REST name | gRPC name | type | REST placement | description 
---------- | --------- | ---- | -------------- | -----------
-`X-Request-ID` | - | *string* | *header* | Unique ID of the request
-`accountId` | - | *optional*, *number* | *body* | Id of the related Account
-`userId` | - | *optional*, *number* | *body* | Id of the related user in the system (Needed for enabling AML on broker Account)
+name | type | placement | description
+---- | ---- | --------- | -----------
+`Bearer` | *string* | metadata | API key of the validator returned by the *[Accept](#invites-accept-an-invitation)* method
 
 ### Response
 
-```json
-POST /api/accounts 
+```protobuf
+swisschain.sirius.validator_api.invites.Invites.Revoke
 
-> Response: 200 (application/json) - success response
+> Response: (application/grpc) - success response
 
-{
-    "id":103000158,
-    "referenceId":"user reference",
-    "brokerAccountId":100000113,
-    "state":"creating",
-    "createdAt":"2021-03-26T14:14:46.089822+00:00",
-    "updatedAt":"2021-03-26T14:14:46.089822+00:00",
-    "userId":108000004,
-    "userNativeId":"chainalysis-user-1"
+message RevokeInviteResponse {
+    oneof body {
+        AcceptInviteResponseBody response = 1;
+        .swisschain.sirius.validator_api.common.Error error = 2;
+    }
+}
+
+message RevokeInviteResponseBody {
 }
 ```
-
-REST name | gRPC name | type | description
---------- | --------- | ---- | -----------
-`id` | `id` | *number* | ID of the account
-`referenceId` | `reference_id` | *optional*, *string* | *body* | Account reference id
-`brokerAccountId` | `broker_account_id` | *number* | *body* | Id of the related Broker Account
-`status` | `status` | *[AccountState](#accountstate-enum)* | Status of the account
-`createdAt` | `created_at` | *timestamp* | Date of the account creation
-`updatedAt` | `updated_at` | *timestamp* | Date of the latest account update
-`userId` | `user_id` | *optional*, *number* | *body* | Id of the related user in the system (Needed for enabling AML on broker Account)
-`userNativeId` | `user_native_id` | *optional*, *string* | *body* | Native Id of the user in customer's system
