@@ -61,7 +61,7 @@ message GetBlockchainResponseBody {
 
 name | type | description
 -----| ---- | -----------
-`blockchains` | *repeated [Blockchain](blockchains-get-blockchains-response-blockchain)* | List of the blockchains
+`blockchains` | *repeated [Blockchain](#blockchains-get-blockchains-response-blockchain)* | List of the blockchains
 
 #### Blockchain
 
@@ -69,7 +69,7 @@ name | type | description
 -----| ---- | -----------
 `id` | *string* | Sirius ID of the blockchain
 `name` | *string* | Name of the blockchain
-`network_type` | *[NetworkType](blockchains-get-blockchains-response-networktype)* | Blockchain network type
+`network_type` | *[NetworkType](#blockchains-get-blockchains-response-networktype)* | Blockchain network type
 `tenant_id` | *optional*, *string* | ID of a tenant (subscription) to which is blockchain is dedicated to on Sirius
 
 #### NetworkType
