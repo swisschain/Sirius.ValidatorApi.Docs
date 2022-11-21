@@ -74,7 +74,7 @@ name | type | description
 
 ## Revoke an invitation
 
-**Authorization required**
+***Authorization required***
 
 Revokes a previously accepted invitation. 
 

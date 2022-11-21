@@ -4,7 +4,7 @@ Blockchain is not just Bitcoin or Ethereum, it's a particular network. For examp
 
 ## Get blockchains
 
-**Authorization required**
+***Authorization required***
 
 Returns a full list of the blockchains available for the validator.
 
