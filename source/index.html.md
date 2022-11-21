@@ -13,7 +13,6 @@ includes:
   - feedback.md
   - api_usage.md
   - v1/invites.md
-  - v1/inbox.md
   - v1/blockchains.md
   - v1/approval_requests.md
 
