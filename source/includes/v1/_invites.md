@@ -4,13 +4,13 @@ Invitation allows to register a validator on a Universe Subscription.
 Inivitation can be generated on the Universe portal. 
 
 Before a validator can accept an invitation it needs to generate its
-keys pair and validator ID. Keys pairs is an RSA-PKCS1 keys with the following parameters:
+keys pair and validator ID. Keys pairs is an `RSA-PKCS1` keys with the following parameters:
 
 - Public exponent: `3`
 - Strength: `1024`
 - Certainty: `25`
 
-Validator ID is a SHA256Digest hash of the validator public key.
+Validator ID is a `SHA256Digest` hash of the validator public key.
 
 The private key should be kept in secret by the validator. The public key and validator ID
 should be submitted to the *[Accept](#invites-accept-an-invitation)* method of API.
@@ -35,11 +35,11 @@ message AcceptInviteRequest {
 }
 ```
 
-name | type | description 
----- | ---- | -------------- | -----------
-`invite_id` | *string* | Invitation ID to accept
-`validator_id` | *string* | ID of the validator
-`public_key` | *string* | Public key of the validator
+name | type | placement | description 
+---- | ---- | ----------| -----------
+`invite_id` | *string* | body | Invitation ID to accept
+`validator_id` | *string* | body | ID of the validator
+`public_key` | *string* | body | Public key of the validator
 
 ### Response
 
@@ -65,14 +65,16 @@ message AcceptInviteResponseBody {
 
 #### AcceptInviteResponseBody
 
-name | type | placement | description
------| ---- | --------- | -----------
-`name` | *string* | body | Name of the validator specified on the Universe portal
-`position` | *optional*, *string* | body | Position of the validator specified on the Universe portal
-`description` | *optional*, *string* | body | Description of the validator specified on the Universe portal
-`api_key` | *string* | body | API key of the validator to be used for all further API requests
+name | type | description
+-----| ---- | -----------
+`name` | *string* | Name of the validator specified on the Universe portal
+`position` | *optional*, *string* | Position of the validator specified on the Universe portal
+`description` | *optional*, *string* | Description of the validator specified on the Universe portal
+`api_key` | *string* | API key of the validator to be used for all further API requests
 
 ## Revoke an invitation
+
+**Authorization required**
 
 Revokes a previously accepted invitation. 
 
