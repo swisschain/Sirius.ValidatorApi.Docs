@@ -352,11 +352,6 @@
           </li>
           <li>
             <a href="#approval-requests" class="toc-h1 toc-link" data-title="Approval requests">Approval requests</a>
-              <ul class="toc-list-h2">
-                  <li>
-                    <a href="#approval-requests-search-assets" class="toc-h2 toc-link" data-title="Search assets">Search assets</a>
-                  </li>
-              </ul>
           </li>
       </ul>
     </div>
@@ -563,7 +558,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='blockchains'>Blockchains</h1>
-<p><em>Blockchain</em> is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
+<p>Blockchain is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
 <h2 id='blockchains-get-blockchains'>Get blockchains</h2>
 <p><strong>Authorization required</strong></p>
 
@@ -671,145 +666,13 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <li><code>public</code> - Public mainnet blockchain.</li>
 </ul>
 <h1 id='approval-requests'>Approval requests</h1>
-<p>Sirius provides the set of crypto assets available to use. You can get notifications about a deposit or initiate a withdrawal in any asset presented in this set. Each asset has a symbol, accuracy, optional address, ID of the blockchain containing this asset and unique ID. It&#39;s possible that in the different blockchains assets with the same symbol and/or address are existed, so you have to rely only on the asset ID if you need to deterministically identify it. In fact asset ID corresponds to its blockchain ID + symbol + address. If you&#39;ve received a deposit of an asset which is not supported by Sirius yet, you can add this particular asset to your personal list by specifying all needed asset parameters.</p>
-<h2 id='approval-requests-search-assets'>Search assets</h2><h3 id='approval-requests-search-assets-request'>Request</h3>
-<p><strong>Rest API:</strong> <code>GET /api/assets</code></p>
-<h3 id='approval-requests-search-assets-parameters'>Parameters</h3><h3 id='approval-requests-search-assets-query-parameters'>Query Parameters</h3>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>id</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td>ID of the asset to search</td>
-<td>100553</td>
-</tr>
-<tr>
-<td><code>blockchainId</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Exact blockchain id to search</td>
-<td>bitcoin-private</td>
-</tr>
-<tr>
-<td><code>symbol</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Text to search in the asset symbol</td>
-<td>BTC</td>
-</tr>
-<tr>
-<td><code>address</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Exact address to search</td>
-<td>0xC1701AbD559FC263829CA3917d03045F95b5224A</td>
-</tr>
-<tr>
-<td><code>accuracy</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td>Exact accuracy to search</td>
-<td>8</td>
-</tr>
-<tr>
-<td><code>order</code></td>
-<td><em>optional</em>, <em><a href="#order-enum">Order</a></em></td>
-<td>Result items sorting order</td>
-<td>asc</td>
-</tr>
-<tr>
-<td><code>cursor</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Cursor to continue the search</td>
-<td>stellar-test</td>
-</tr>
-<tr>
-<td><code>limit</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td>Maximum number of items to return in the search results</td>
-<td>10</td>
-</tr>
-</tbody></table>
-<h3 id='approval-requests-search-assets-response'>Response</h3>
-<p>Paginated array of the assets:</p>
+<p>Approval requests is what this API all about. Whenever a custody needs an approval from validators it initiates an approval request.
+Each approval request object represents an overall process of approving of something. This object is a general one and it fits all the different
+approval requests like root key initialization, transfer transaction, smart contract invocation and so on. This is achieved by having a <code>string context</code>
+field that contains a approva process type-specific data serialized as a JSON object. Each validator sees its onw representation of an
+approval request where he sees its own approval status and approval statuses of all other validators separately. Once an approval request
+is approved or rejected it can&#39;t become a pending again.</p>
 
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>id</code></td>
-<td><em>number</em></td>
-<td>ID of the asset to search</td>
-<td>100003</td>
-</tr>
-<tr>
-<td><code>blockchainId</code></td>
-<td><em>string</em></td>
-<td>Exact blockchain id to search</td>
-<td>bitcoin-private</td>
-</tr>
-<tr>
-<td><code>symbol</code></td>
-<td><em>string</em></td>
-<td>Text to search in the asset symbol</td>
-<td>BTC</td>
-</tr>
-<tr>
-<td><code>address</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Exact address to search</td>
-<td>0xC1701AbD559FC263829CA3917d03045F95b5224A</td>
-</tr>
-<tr>
-<td><code>accuracy</code></td>
-<td><em>number</em></td>
-<td>Exact accuracy to search</td>
-<td>8</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p>GET /api/assets 200 OK</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"pagination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"cursor"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"order"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asc"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"nextUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/assets?Symbol=BTC&amp;Order=Asc&amp;Cursor=100110&amp;Limit=3"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100003</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"blockchainId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethereum-ropsten"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WBTC"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0x3DFf0dCE5fc4B367Ec91d31DE3837cf3840c8284"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100085</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"blockchainId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethereum-ropsten"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sBTC"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xC1701AbD559FC263829CA3917d03045F95b5224A"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">100110</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"blockchainId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethereum-ropsten"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TBTC"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0xa609f2c9C5B7873F353C15D4ef6e151D14db69CC"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
