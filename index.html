@@ -346,10 +346,7 @@
             <a href="#blockchains" class="toc-h1 toc-link" data-title="Blockchains">Blockchains</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#blockchains-search-blockchains" class="toc-h2 toc-link" data-title="Search blockchains">Search blockchains</a>
-                  </li>
-                  <li>
-                    <a href="#blockchains-get-latest-block" class="toc-h2 toc-link" data-title="Get latest block">Get latest block</a>
+                    <a href="#blockchains-get-blockchains" class="toc-h2 toc-link" data-title="Get blockchains">Get blockchains</a>
                   </li>
               </ul>
           </li>
@@ -425,7 +422,7 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 Inivitation can be generated on the Universe portal. </p>
 
 <p>Before a validator can accept an invitation it needs to generate its
-keys pair and validator ID. Keys pairs is an RSA-PKCS1 keys with the following parameters:</p>
+keys pair and validator ID. Keys pairs is an <code>RSA-PKCS1</code> keys with the following parameters:</p>
 
 <ul>
 <li>Public exponent: <code>3</code></li>
@@ -433,7 +430,7 @@ keys pair and validator ID. Keys pairs is an RSA-PKCS1 keys with the following p
 <li>Certainty: <code>25</code></li>
 </ul>
 
-<p>Validator ID is a SHA256Digest hash of the validator public key.</p>
+<p>Validator ID is a <code>SHA256Digest</code> hash of the validator public key.</p>
 
 <p>The private key should be kept in secret by the validator. The public key and validator ID
 should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a></em> method of API.</p>
@@ -455,22 +452,26 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <tr>
 <th>name</th>
 <th>type</th>
+<th>placement</th>
 <th>description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>invite_id</code></td>
 <td><em>string</em></td>
+<td>body</td>
 <td>Invitation ID to accept</td>
 </tr>
 <tr>
 <td><code>validator_id</code></td>
 <td><em>string</em></td>
+<td>body</td>
 <td>ID of the validator</td>
 </tr>
 <tr>
 <td><code>public_key</code></td>
 <td><em>string</em></td>
+<td>body</td>
 <td>Public key of the validator</td>
 </tr>
 </tbody></table>
@@ -496,36 +497,33 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <tr>
 <th>name</th>
 <th>type</th>
-<th>placement</th>
 <th>description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>name</code></td>
 <td><em>string</em></td>
-<td>body</td>
 <td>Name of the validator specified on the Universe portal</td>
 </tr>
 <tr>
 <td><code>position</code></td>
 <td><em>optional</em>, <em>string</em></td>
-<td>body</td>
 <td>Position of the validator specified on the Universe portal</td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td><em>optional</em>, <em>string</em></td>
-<td>body</td>
 <td>Description of the validator specified on the Universe portal</td>
 </tr>
 <tr>
 <td><code>api_key</code></td>
 <td><em>string</em></td>
-<td>body</td>
 <td>API key of the validator to be used for all further API requests</td>
 </tr>
 </tbody></table>
 <h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2>
+<p><strong>Authorization required</strong></p>
+
 <p>Revokes a previously accepted invitation. </p>
 <h3 id='invites-revoke-an-invitation-request'>Request</h3>
 <p><code>swisschain.sirius.validator_api.invites.Invites.Revoke</code></p>
@@ -565,254 +563,114 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
 <span class="p">}</span>
 </code></pre></div><h1 id='blockchains'>Blockchains</h1>
-<p>We distinguish <em>Blockchain</em>, <em>Protocol</em>, and <em>Network Type</em>.</p>
+<p><em>Blockchain</em> is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
+<h2 id='blockchains-get-blockchains'>Get blockchains</h2>
+<p><strong>Authorization required</strong></p>
 
-<p><em>Blockchain</em> is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Ropsten are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. Networks can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>. So Blockchain has a protocol and network type.</p>
+<p>Returns a full list of the blockchains available for the validator.</p>
+<h3 id='blockchains-get-blockchains-request'>Request</h3>
+<p><code>swisschain.sirius.validator_api.blockchains.Blockchains.Get</code></p>
+<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains.Get</span>
 
-<p><em>Blockchain</em> is an &quot;instance&quot; of the protocol - Ethereum Ropsten, Bitcoin Mainnet, Ethereum Mainnet.</p>
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
 
-<p>Protocol is a set of rules on how blockchain nodes interact with each other - <code>Bitcoin</code>, <code>Ethereum</code>, <code>Ripple</code>.</p>
-
-<p>Network type can be <code>private</code>, <code>test</code>, or <code>public</code>.</p>
-<h2 id='blockchains-search-blockchains'>Search blockchains</h2><h3 id='blockchains-search-blockchains-request'>Request</h3>
-<p><strong>Rest API:</strong> <code>GET /api/blockchains</code></p>
-<h3 id='blockchains-search-blockchains-query-parameters'>Query Parameters</h3>
+<span class="kd">message</span> <span class="nc">GetBlockchainsRequest</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
 <table><thead>
 <tr>
 <th>name</th>
 <th>type</th>
+<th>placement</th>
 <th>description</th>
-<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
-<td><code>id</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Exact ID of the blockchain to search</td>
-<td>bitcoin-private</td>
-</tr>
-<tr>
-<td><code>name</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Text to search in the name of the blockchain</td>
-<td>Bitcoin private network</td>
-</tr>
-<tr>
-<td><code>protocolCode</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Exact ode of the protocol to search</td>
-<td>bitcoin</td>
-</tr>
-<tr>
-<td><code>protocolName</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Text to search in the name of the protocol</td>
-<td>Bitcoin</td>
-</tr>
-<tr>
-<td><code>networkType</code></td>
-<td><em>optional</em>, <em><a href="#networktype-enum">NetworkType</a></em></td>
-<td>List of the network types to search. Repeat the parameter to specify multiple items</td>
-<td>private</td>
-</tr>
-<tr>
-<td><code>order</code></td>
-<td><em>optional</em>, <em><a href="#order-enum">Order</a></em></td>
-<td>Result items sorting order</td>
-<td>asc</td>
-</tr>
-<tr>
-<td><code>cursor</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Cursor to continue the search</td>
-<td>stellar-test</td>
-</tr>
-<tr>
-<td><code>limit</code></td>
-<td><em>optional</em>, <em>number</em></td>
-<td>Maximum number of items to return in the search results</td>
-<td>10</td>
+<td><code>Bearer</code></td>
+<td><em>string</em></td>
+<td>metadata</td>
+<td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
 </tr>
 </tbody></table>
-<h3 id='blockchains-search-blockchains-response'>Response</h3>
-<p>Paginated array of the blockchains:</p>
+<h3 id='blockchains-get-blockchains-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains.Get</span>
 
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">GetBlockchainsResponse</span> <span class="p">{</span>
+    <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+        <span class="n">GetBlockchainResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="o">.</span><span class="n">swisschain.sirius.validator_api.common.Error</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">GetBlockchainResponseBody</span> <span class="p">{</span>
+    <span class="k">repeated</span> <span class="n">Blockchain</span> <span class="na">blockchains</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+    <span class="kd">message</span> <span class="nc">Blockchain</span> <span class="p">{</span>
+        <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">NetworkType</span> <span class="na">network_type</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="n">google.protobuf.StringValue</span> <span class="na">tenant_id</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="kd">enum</span> <span class="n">NetworkType</span> <span class="p">{</span>
+        <span class="na">PRIVATE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="na">TEST</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="na">PUBLIC</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div><h4 id='blockchains-get-blockchains-response-getblockchainresponsebody'>GetBlockchainResponseBody</h4>
 <table><thead>
 <tr>
 <th>name</th>
 <th>type</th>
 <th>description</th>
-<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>blockchains</code></td>
+<td><em>repeated <a href="blockchains-get-blockchains-response-blockchain">Blockchain</a></em></td>
+<td>List of the blockchains</td>
+</tr>
+</tbody></table>
+<h4 id='blockchains-get-blockchains-response-blockchain'>Blockchain</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>id</code></td>
-<td>string</td>
-<td>Unique identifier.</td>
-<td><code>bitcoin-private</code></td>
-</tr>
-<tr>
-<td><code>tenantId</code></td>
-<td><em>optional</em>, <em>string</em></td>
-<td>Id of the tenant that owns the blockchain</td>
-<td>100000</td>
+<td><em>string</em></td>
+<td>Sirius ID of the blockchain</td>
 </tr>
 <tr>
 <td><code>name</code></td>
 <td><em>string</em></td>
 <td>Name of the blockchain</td>
-<td><code>bitcoin-private</code></td>
 </tr>
 <tr>
-<td><code>networkType</code></td>
-<td><em><a href="#networktype-enum">NetworkType</a></em></td>
-<td>Type of the network</td>
-<td></td>
+<td><code>network_type</code></td>
+<td><em><a href="blockchains-get-blockchains-response-networktype">NetworkType</a></em></td>
+<td>Blockchain network type</td>
 </tr>
 <tr>
-<td><code>protocol</code></td>
-<td><em><a href="#blockchainprotocol-object">BlockchainProtocol</a></em></td>
-<td>Protocol of the blockchain.</td>
-<td></td>
-</tr>
-<tr>
-<td><code>latestBlockNumber</code></td>
-<td><em>number</em></td>
-<td>Number of the latest block</td>
-<td>1567432</td>
+<td><code>tenant_id</code></td>
+<td><em>optional</em>, <em>string</em></td>
+<td>ID of a tenant (subscription) to which is blockchain is dedicated to on Sirius</td>
 </tr>
 </tbody></table>
+<h4 id='blockchains-get-blockchains-response-networktype'>NetworkType</h4>
+<p>Type of blockchain network</p>
 
-<blockquote>
-<p>GET /api/blockchains 200 OK</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"pagination"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"cursor"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"order"</span><span class="p">:</span><span class="w"> </span><span class="s2">"asc"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"nextUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/api/blockchains?Order=Asc&amp;Cursor=stellar-test&amp;Limit=3"</span><span class="w">
-  </span><span class="p">},</span><span class="w">
-  </span><span class="nl">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bitcoin-private"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bitcoin"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"startBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"publicKey"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"destinationTag"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"doubleSpendingProtectionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"coins"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"tenantId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin private network"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"networkType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"private"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"latestBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">5899</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethereum-ropsten"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ethereum"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ethereum"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"startBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"publicKey"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"destinationTag"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-            </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"doubleSpendingProtectionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonce"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"tenantId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ethereum test network"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"networkType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"latestBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">8450781</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stellar-test"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"protocol"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stellar"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stellar"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"startBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"requirements"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"publicKey"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"capabilities"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"destinationTag"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nl">"number"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"min"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"max"</span><span class="p">:</span><span class="w"> </span><span class="mi">9223372036854776000</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Memo ID"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"maxLength"</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Memo text"</span><span class="w">
-            </span><span class="p">}</span><span class="w">
-          </span><span class="p">}</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nl">"doubleSpendingProtectionType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"nonce"</span><span class="w">
-      </span><span class="p">},</span><span class="w">
-      </span><span class="nl">"tenantId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stellar test network"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"networkType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"latestBlockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">133093</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='blockchains-get-latest-block'>Get latest block</h2><h3 id='blockchains-get-latest-block-request'>Request</h3>
-<p><strong>Rest API:</strong> <code>GET /api/blockchains/{id}/latest-block</code></p>
-<h3 id='blockchains-get-latest-block-parameters'>Parameters</h3>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>id</code></td>
-<td><em>string</em></td>
-<td>Exact ID of the blockchain to search</td>
-<td>bitcoin-private</td>
-</tr>
-</tbody></table>
-<h3 id='blockchains-get-latest-block-response'>Response</h3>
-<p>The latest block of the specified blockchain:</p>
-
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>blockNumber</code></td>
-<td><em>number</em></td>
-<td>Number of the latest block.</td>
-<td>5933</td>
-</tr>
-</tbody></table>
-
-<blockquote>
-<p>GET /api/blockchains/{id}/latest-block 200 OK</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"blockNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">5933</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div><h1 id='approval-requests'>Approval requests</h1>
+<ul>
+<li><code>private</code> - Private blockchain.</li>
+<li><code>test</code> - Public testnet blockchain.</li>
+<li><code>public</code> - Public mainnet blockchain.</li>
+</ul>
+<h1 id='approval-requests'>Approval requests</h1>
 <p>Sirius provides the set of crypto assets available to use. You can get notifications about a deposit or initiate a withdrawal in any asset presented in this set. Each asset has a symbol, accuracy, optional address, ID of the blockchain containing this asset and unique ID. It&#39;s possible that in the different blockchains assets with the same symbol and/or address are existed, so you have to rely only on the asset ID if you need to deterministically identify it. In fact asset ID corresponds to its blockchain ID + symbol + address. If you&#39;ve received a deposit of an asset which is not supported by Sirius yet, you can add this particular asset to your personal list by specifying all needed asset parameters.</p>
 <h2 id='approval-requests-search-assets'>Search assets</h2><h3 id='approval-requests-search-assets-request'>Request</h3>
 <p><strong>Rest API:</strong> <code>GET /api/assets</code></p>
