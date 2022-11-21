@@ -1,6 +1,6 @@
 # Blockchains
 
-*Blockchain* is not just Bitcoin or Ethereum, it's a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - `private`, `test`, `public`.
+Blockchain is not just Bitcoin or Ethereum, it's a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - `private`, `test`, `public`.
 
 ## Get blockchains
 
