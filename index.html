@@ -517,7 +517,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </tr>
 </tbody></table>
 <h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2>
-<p><strong>Authorization required</strong></p>
+<p><strong><em>Authorization required</em></strong></p>
 
 <p>Revokes a previously accepted invitation. </p>
 <h3 id='invites-revoke-an-invitation-request'>Request</h3>
@@ -557,10 +557,12 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='blockchains'>Blockchains</h1>
+</code></pre></div>
+<p>N/A</p>
+<h1 id='blockchains'>Blockchains</h1>
 <p>Blockchain is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
 <h2 id='blockchains-get-blockchains'>Get blockchains</h2>
-<p><strong>Authorization required</strong></p>
+<p><strong><em>Authorization required</em></strong></p>
 
 <p>Returns a full list of the blockchains available for the validator.</p>
 <h3 id='blockchains-get-blockchains-request'>Request</h3>
@@ -624,7 +626,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </thead><tbody>
 <tr>
 <td><code>blockchains</code></td>
-<td><em>repeated <a href="blockchains-get-blockchains-response-blockchain">Blockchain</a></em></td>
+<td><em>repeated <a href="#blockchains-get-blockchains-response-blockchain">Blockchain</a></em></td>
 <td>List of the blockchains</td>
 </tr>
 </tbody></table>
@@ -648,7 +650,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </tr>
 <tr>
 <td><code>network_type</code></td>
-<td><em><a href="blockchains-get-blockchains-response-networktype">NetworkType</a></em></td>
+<td><em><a href="#blockchains-get-blockchains-response-networktype">NetworkType</a></em></td>
 <td>Blockchain network type</td>
 </tr>
 <tr>
