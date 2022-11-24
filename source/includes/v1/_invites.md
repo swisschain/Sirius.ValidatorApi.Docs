@@ -35,11 +35,11 @@ message AcceptInviteRequest {
 }
 ```
 
-name | type | placement | description | example
----- | ---- | --------- | ----------- | -------
-`invite_id` | *string* | body | Invitation ID to accept | `3d44bfc617164889b21928ac2c256ffcdead0e33918f4f27a333c2025b8f4447b6b313241ebc4a0e8133c7479337f9ed`
-`validator_id` | *string* | body | ID of the validator. `Base64` encoded string of the `SHA256Digest` hash of the `public_key` | `iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=`
-`public_key` | *string* | body | Single-line `RSA-PKCS1` public key of the validator | `-----BEGIN PUBLIC KEY-----`<br>`MIGdMA0GCSqGSIb3DQEBAQUAA4GLADCBhwKBgQCQN1JrAyX/FsP3v4vmE9aA/95N7EpwKSDujcsJRwttVlT803vU8DSsLAGDAlnb0YqeEhYaaDaGTTeOERitvt9QMnOoLwCuX7Fncp0RYclktjb9yLOl6zxEM5g57bVlCqv78AFfxKwHpt535hMg/bKG1rrNZR9NHh0GACdgsuV8GQIBAw==`<br>`-----END PUBLIC KEY-----`
+name | type | description | example
+---- | ---- | ----------- | -------
+`invite_id` | *string* | Invitation ID to accept | `3d44bfc617164889b21928ac2c256ffcdead0e33918f4f27a333c2025b8f4447b6b313241ebc4a0e8133c7479337f9ed`
+`validator_id` | *string* | ID of the validator. `Base64` encoded string of the `SHA256Digest` hash of the `public_key` | `iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=`
+`public_key` | *string* | Single-line `RSA-PKCS1` public key of the validator | `-----BEGIN PUBLIC KEY-----`<br>`MIGdMA0GCSqGSIb3DQEBAQUAA4GLADCBhwKBgQCQN1JrAyX/FsP3v4vmE9aA/95N7EpwKSDujcsJRwttVlT803vU8DSsLAGDAlnb0YqeEhYaaDaGTTeOERitvt9QMnOoLwCuX7Fncp0RYclktjb9yLOl6zxEM5g57bVlCqv78AFfxKwHpt535hMg/bKG1rrNZR9NHh0GACdgsuV8GQIBAw==`<br>`-----END PUBLIC KEY-----`
 
 ### Response
 
@@ -85,7 +85,7 @@ name | type | description | example
 `name` | *string* | Name of the validator specified on the Universe portal | `Jhon Doe`
 `position` | *optional*, *string* | Position of the validator specified on the Universe portal | `Risk manager`
 `description` | *optional*, *string* | Description of the validator specified on the Universe portal | `Very important guy`
-`api_key` | *string* | API key of the validator to be used for all further API requests | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8`
+`api_key` | *string* | API key of the validator to be used to authenticate further API requests | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8`
 
 ## Revoke an invitation
 
@@ -106,9 +106,7 @@ message RevokeInviteRequest {
 }
 ```
 
-name | type | placement | description | example
----- | ---- | --------- | ----------- | -------
-`Bearer` | *string* | metadata | API key of the validator returned by the *[Accept](#invites-accept-an-invitation)* method | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8`
+Empty
 
 ### Response
 
