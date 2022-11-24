@@ -483,6 +483,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <th>type</th>
 <th>placement</th>
 <th>description</th>
+<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -490,18 +491,21 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td><em>string</em></td>
 <td>body</td>
 <td>Invitation ID to accept</td>
+<td><code>3d44bfc617164889b21928ac2c256ffcdead0e33918f4f27a333c2025b8f4447b6b313241ebc4a0e8133c7479337f9ed</code></td>
 </tr>
 <tr>
 <td><code>validator_id</code></td>
 <td><em>string</em></td>
 <td>body</td>
-<td>ID of the validator</td>
+<td>ID of the validator. <code>Base64</code> encoded string of the <code>SHA256Digest</code> hash of the <code>public_key</code></td>
+<td><code>iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=</code></td>
 </tr>
 <tr>
 <td><code>public_key</code></td>
 <td><em>string</em></td>
 <td>body</td>
-<td>Public key of the validator</td>
+<td>Single-line <code>RSA-PKCS1</code> public key of the validator</td>
+<td><code>-----BEGIN PUBLIC KEY-----</code><br><code>MIGdMA0GCSqGSIb3DQEBAQUAA4GLADCBhwKBgQCQN1JrAyX/FsP3v4vmE9aA/95N7EpwKSDujcsJRwttVlT803vU8DSsLAGDAlnb0YqeEhYaaDaGTTeOERitvt9QMnOoLwCuX7Fncp0RYclktjb9yLOl6zxEM5g57bVlCqv78AFfxKwHpt535hMg/bKG1rrNZR9NHh0GACdgsuV8GQIBAw==</code><br><code>-----END PUBLIC KEY-----</code></td>
 </tr>
 </tbody></table>
 <h3 id='invites-accept-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Accept</span>
@@ -542,27 +546,32 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <th>name</th>
 <th>type</th>
 <th>description</th>
+<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>name</code></td>
 <td><em>string</em></td>
 <td>Name of the validator specified on the Universe portal</td>
+<td><code>Jhon Doe</code></td>
 </tr>
 <tr>
 <td><code>position</code></td>
 <td><em>optional</em>, <em>string</em></td>
 <td>Position of the validator specified on the Universe portal</td>
+<td><code>Risk manager</code></td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td><em>optional</em>, <em>string</em></td>
 <td>Description of the validator specified on the Universe portal</td>
+<td><code>Very important guy</code></td>
 </tr>
 <tr>
 <td><code>api_key</code></td>
 <td><em>string</em></td>
 <td>API key of the validator to be used for all further API requests</td>
+<td><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8</code></td>
 </tr>
 </tbody></table>
 <h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2>
@@ -584,6 +593,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <th>type</th>
 <th>placement</th>
 <th>description</th>
+<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -591,6 +601,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td><em>string</em></td>
 <td>metadata</td>
 <td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
+<td><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8</code></td>
 </tr>
 </tbody></table>
 <h3 id='invites-revoke-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Revoke</span>
