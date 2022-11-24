@@ -15,6 +15,7 @@ includes:
   - v1/invites.md
   - v1/blockchains.md
   - v1/approval_requests.md
+  - v1/data_structures.md
 
 search: true
 code_clipboard: true

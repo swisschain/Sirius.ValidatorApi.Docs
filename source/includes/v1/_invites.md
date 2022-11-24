@@ -126,21 +126,8 @@ message RevokeInviteResponse {
 
 message RevokeInviteResponseBody {
 }
-
-package swisschain.sirius.validator_api.common;
-
-message Error {
-  ErrorCode code = 1;
-  string message = 2;
-}
-
-enum ErrorCode {
-  UNKNOWN = 0;
-  INVALID_PARAMETERS = 1;
-  NOT_FOUND = 2;
-  EXPIRED_API_KEY = 3;
-  INVALID_API_KEY = 4;
-}
 ```
 
-N/A
+#### RevokeInviteResponseBody
+
+Empty

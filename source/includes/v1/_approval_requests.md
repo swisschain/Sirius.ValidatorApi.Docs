@@ -18,7 +18,60 @@ This endpoint returns brief information about approval requests. To get detailed
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/List
+
+> Requets: (application/grpc)
+
+message ListApprovalRequestsRequest {
+  Page page = 1;
+  ListApprovalRequestsFilter filter = 2;  
+}
+
+message Page {
+  int32 index = 1;
+  int32 size = 2;
+}
+
+message ListApprovalRequestsFilter {
+  google.protobuf.BoolValue is_read = 1;
+  google.protobuf.Int64Value custody_id = 2;
+  google.protobuf.BoolValue is_processed = 3;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/List
+
+> Response: (application/grpc) - success response
+
+message ListApprovalRequestsResponse {
+  oneof body {
+    ListApprovalRequestsPayload payload = 1;
+    ListApprovalRequestsError error = 2;
+  }
+}
+
+message ListApprovalRequestsPayload {
+  repeated ApprovalRequestListItem items = 1;
+}
+
+message ListApprovalRequestsError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+```
 
 ## Get approval request details
 
@@ -31,7 +84,72 @@ use it for bluk infromation retrival. If you need to get information about many 
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get
+
+> Requets: (application/grpc)
+
+message GetApprovalRequestRequest {
+  int64 id = 1;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get
+
+> Response: (application/grpc) - success response
+
+message GetApprovalRequestResponse {
+  oneof body {
+    GetApprovalRequestPayload payload = 1;
+    GetApprovalRequestError error = 2;
+  }
+}
+
+message GetApprovalRequestPayload {
+  int64 id = 1;
+  ApprovalProcess approval_process = 2;
+  string context = 3;
+  Custody custody = 4;
+  Subscription subscription = 5;
+  ApproverResolution approver_resolution = 6;
+  repeated LinkedApprovalRequest linked_approval_requests = 7;
+  bool is_read = 8;
+  google.protobuf.Timestamp read_at = 9;
+  google.protobuf.Timestamp delivered_at = 10;
+  google.protobuf.Timestamp created_at = 11;
+}
+
+message GetApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+message LinkedApprovalRequest {
+  Approver approver = 1;
+  ApproverResolution approver_resolution = 2;
+  bool is_read = 3;
+  bool is_delivered = 4;
+  google.protobuf.Timestamp read_at = 5;
+  google.protobuf.Timestamp delivered_at = 6;
+}
+
+message Approver {
+  string id = 1;
+  string name = 2;
+}
+```
 
 ## Acknowledge an approval request is received
 
@@ -43,7 +161,47 @@ Marks a specified approval request as received by the validator application.
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Acknowledge
+
+> Requets: (application/grpc)
+
+message AcknowledgeApprovalRequestRequest {
+  int64 id = 1;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Acknowledge
+
+> Response: (application/grpc) - success response
+
+message AcknowledgeApprovalRequestResponse {
+  oneof body {
+    AcknowledgeApprovalRequestPayload payload = 1;
+    AcknowledgeApprovalRequestError error = 2;
+  }
+}
+
+message AcknowledgeApprovalRequestPayload {
+}
+
+message AcknowledgeApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+```
 
 ## Notify an approval request is read
 
@@ -55,7 +213,47 @@ Marks a specified approval request as read by the validation officer.
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read
+
+> Requets: (application/grpc)
+
+message ReadApprovalRequestRequest {
+  int64 id = 1;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read
+
+> Response: (application/grpc) - success response
+
+message ReadApprovalRequestResponse {
+  oneof body {
+    ReadApprovalRequestPayload payload = 1;
+    ReadApprovalRequestError error = 2;
+  }
+}
+
+message ReadApprovalRequestPayload {
+}
+
+message ReadApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+```
 
 ## Approve an approval request
 
@@ -67,7 +265,52 @@ Approves a specified approval request.
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve
+
+> Requets: (application/grpc)
+
+message ApproveApprovalRequestRequest {
+  int64 id = 1;
+  string comment = 2;
+  string context = 3;
+  string signature = 4;
+  string device_info = 5;
+  string app_version = 6;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve
+
+> Response: (application/grpc) - success response
+
+message ApproveApprovalRequestResponse {
+  oneof body {
+    ApproveApprovalRequestPayload payload = 1;
+    ApproveApprovalRequestError error = 2;
+  }
+}
+
+message ApproveApprovalRequestPayload {
+}
+
+message ApproveApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+```
 
 ## Reject an approval request
 
@@ -79,4 +322,49 @@ Rejects a specified approval request.
 
 ### Request
 
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject
+
+> Requets: (application/grpc)
+
+message RejectApprovalRequestRequest {
+  int64 id = 1;
+  string comment = 2;
+  string context = 3;
+  string signature = 4;
+  string device_info = 5;
+  string app_version = 6;
+}
+```
+
 ### Response
+
+```protobuf
+swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject
+
+> Response: (application/grpc) - success response
+
+message RejectApprovalRequestResponse {
+  oneof body {
+    RejectApprovalRequestPayload payload = 1;
+    RejectApprovalRequestError error = 2;
+  }
+}
+
+message RejectApprovalRequestPayload {
+}
+
+message RejectApprovalRequestError {
+
+  enum ErrorCode {
+    UNKNOWN = 0;
+    INVALID_PARAMETERS = 1;
+    DOMAIN_PROBLEM = 2;
+    TECHNICAL_PROBLEM = 3;
+    UNAUTHORIZED = 4;
+  }
+
+  ErrorCode code = 1;
+  string message = 2;
+}
+```
