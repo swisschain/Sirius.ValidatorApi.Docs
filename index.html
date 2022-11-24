@@ -724,7 +724,7 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>page</code></td>
-<td><em><a href="#Approval-requests-get-list-of-approval-requests-request-page">Page</a></em></td>
+<td><em>object</em></td>
 <td>page selector</td>
 </tr>
 <tr>
@@ -739,10 +739,30 @@ This endpoint returns brief information about approval requests. To get detailed
 </tr>
 <tr>
 <td><code>filter</code></td>
-<td><em><a href="#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em></td>
+<td><em>object</em></td>
 <td>filter parameters</td>
 </tr>
+<tr>
+<td><nobr>&ensp;&ensp;<code>is_read</code></nobr></td>
+<td><em>bool?</em></td>
+<td>If specified, indicates if API should return only read/not read (by the given validator) approval requests</td>
+</tr>
+<tr>
+<td><nobr>&ensp;&ensp;<code>custody_id</code></nobr></td>
+<td><em>int64?</em></td>
+<td>If specified, indicates API to return only approval requests related to the specified custody</td>
+</tr>
+<tr>
+<td><nobr>&ensp;&ensp;<code>is_processed</code></nobr></td>
+<td><em>bool?</em></td>
+<td>If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected</td>
+</tr>
 </tbody></table>
+
+<p><code>page</code> | <em><a href="#Approval-requests-get-list-of-approval-requests-request-page">Page</a></em> | page selector
+<nobr>&ensp;&ensp;<code>index</code></nobr> | <em>in32</em> | Zero-based index of the page to query. Contraint: <code>index</code> &gt;= <code>0</code> | <code>10</code>
+<nobr>&ensp;&ensp;<code>size</code></nobr> | <em>int32</em> | Maximum number of items to return in the results. Constraint: <code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code> | <code>50</code>
+<code>filter</code> | <em><a href="#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em> | filter parameters</p>
 <h4 id='approval-requests-get-list-of-approval-requests-request-page'>Page</h4>
 <table><thead>
 <tr>
