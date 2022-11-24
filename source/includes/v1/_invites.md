@@ -17,14 +17,14 @@ should be submitted to the *[Accept](#invites-accept-an-invitation)* method of A
 
 ## Accept an invitation
 
+`swisschain.sirius.validator_api.invites.Invites/Accept`
+
 Accepts a validator invitation generated via Universe portal.
 
 ### Request
 
-`swisschain.sirius.validator_api.invites.Invites.Accept`
-
 ```protobuf
-swisschain.sirius.validator_api.invites.Invites.Accept
+swisschain.sirius.validator_api.invites.Invites/Accept
 
 > Requets: (application/grpc)
 
@@ -44,7 +44,7 @@ name | type | placement | description
 ### Response
 
 ```protobuf
-swisschain.sirius.validator_api.invites.Invites.Accept
+swisschain.sirius.validator_api.invites.Invites/Accept
 
 > Response: (application/grpc) - success response
 
@@ -89,16 +89,16 @@ name | type | description
 
 ## Revoke an invitation
 
-***Authorization required***
+`swisschain.sirius.validator_api.invites.Invites/Revoke`
+
+`Authorization required`
 
 Revokes a previously accepted invitation. 
 
 ### Request
 
-`swisschain.sirius.validator_api.invites.Invites.Revoke`
-
 ```protobuf
-swisschain.sirius.validator_api.invites.Invites.Revoke
+swisschain.sirius.validator_api.invites.Invites/Revoke
 
 > Requets: (application/grpc)
 
@@ -113,7 +113,7 @@ name | type | placement | description
 ### Response
 
 ```protobuf
-swisschain.sirius.validator_api.invites.Invites.Revoke
+swisschain.sirius.validator_api.invites.Invites/Revoke
 
 > Response: (application/grpc) - success response
 

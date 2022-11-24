@@ -4,16 +4,16 @@ Blockchain is not just Bitcoin or Ethereum, it's a particular network. For examp
 
 ## Get blockchains
 
-***Authorization required***
+`swisschain.sirius.validator_api.blockchains.Blockchains/Get`
+
+`Authorization required`
 
 Returns a full list of the blockchains available for the validator.
 
 ### Request
 
-`swisschain.sirius.validator_api.blockchains.Blockchains.Get`
-
 ```protobuf
-swisschain.sirius.validator_api.blockchains.Blockchains.Get
+swisschain.sirius.validator_api.blockchains.Blockchains/Get
 
 > Requets: (application/grpc)
 
@@ -28,7 +28,7 @@ name | type | placement | description
 ### Response
 
 ```protobuf
-swisschain.sirius.validator_api.blockchains.Blockchains.Get
+swisschain.sirius.validator_api.blockchains.Blockchains/Get
 
 > Response: (application/grpc) - success response
 
