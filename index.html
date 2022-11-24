@@ -326,9 +326,6 @@
                   <li>
                     <a href="#api-usage-authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
                   </li>
-                  <li>
-                    <a href="#api-usage-pagination" class="toc-h2 toc-link" data-title="Pagination">Pagination</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -432,41 +429,6 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 </tbody></table>
 
 <p>For simplicity this metadata item is not shown in every request that requires authorization.</p>
-<h2 id='api-usage-pagination'>Pagination</h2>
-<p>Some API endpoint that potentially returns a lot of items have pagination option. Request object of such an endpoint has <em><a href="#api-usage-pagination-page-object">Page</a></em> field with name <code>page</code>.</p>
-<h3 id='api-usage-pagination-page-object'>Page object</h3><div class="highlight"><pre class="highlight proto tab-protobuf"><code><span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
-  <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kd">message</span> <span class="nc">ARequest</span> <span class="p">{</span>
-  <span class="n">Page</span> <span class="na">page</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>contraints</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>index</code></td>
-<td><em>in32</em></td>
-<td>Zero-based index of the page to query</td>
-<td>index &gt;= 0</td>
-<td>10</td>
-</tr>
-<tr>
-<td><code>size</code></td>
-<td><em>int32</em></td>
-<td>Maximum number of items to return in the results</td>
-<td>size &gt;= 0 and size &lt;= 100</td>
-<td>50</td>
-</tr>
-</tbody></table>
 <h1 id='invites'>Invites</h1>
 <p>Invitation allows to register a validator on a Universe Subscription.
 Inivitation can be generated on the Universe portal. </p>
@@ -673,7 +635,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </thead><tbody>
 <tr>
 <td><code>blockchains</code></td>
-<td><em>repeated <a href="#blockchains-get-blockchains-response-blockchain">Blockchain</a></em></td>
+<td><em><a href="#blockchains-get-blockchains-response-blockchain">Blockchain</a>[]</em></td>
 <td>List of the blockchains</td>
 </tr>
 </tbody></table>
@@ -752,7 +714,79 @@ This endpoint returns brief information about approval requests. To get detailed
   <span class="n">google.protobuf.Int64Value</span> <span class="na">custody_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="n">google.protobuf.BoolValue</span> <span class="na">is_processed</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-get-list-of-approval-requests-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">List</span>
+</code></pre></div><h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsrequest'>ListApprovalRequestsRequest</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>page</code></td>
+<td><em><a href="#Approval-requests-get-list-of-approval-requests-request-page">Page</a></em></td>
+<td>page selector</td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td><em><a href="#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em></td>
+<td>filter parameters</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-request-page'>Page</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>contraints</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>index</code></td>
+<td><em>in32</em></td>
+<td>Zero-based index of the page to query</td>
+<td><code>index</code> &gt;= <code>0</code></td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><em>int32</em></td>
+<td>Maximum number of items to return in the results</td>
+<td><code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code></td>
+<td><code>50</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter'>ListApprovalRequestsFilter</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>is_read</code></td>
+<td><em>bool?</em></td>
+<td>If specified, indicates if API should return only read/not read (by the given validator) approval requests</td>
+<td><code>&lt;null&gt;</code>, <code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>custody_id</code></td>
+<td><em>int64?</em></td>
+<td>If specified, indicates API to return only approval requests related to the specified custody</td>
+<td><code>&lt;null&gt;</code>, <code>404000100</code></td>
+</tr>
+<tr>
+<td><code>is_processed</code></td>
+<td><em>bool?</em></td>
+<td>If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected</td>
+<td><code>&lt;null&gt;</code>, <code>true</code>, <code>false</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-get-list-of-approval-requests-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">List</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
