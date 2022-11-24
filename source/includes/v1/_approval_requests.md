@@ -40,21 +40,21 @@ message ListApprovalRequestsFilter {
 }
 ```
 
-#### ListApprovalRequestsRequest
+#### ListApprovalRequestsRequest (object)
 
 name | type | description
 ---- | ---- | ----------- 
-`page` | *[Page](#approval-requests-get-list-of-approval-requests-request-page)* | page selector
-`filter` | *[ListApprovalRequestsFilter](#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
+`page` | *[Page](#approval-requests-get-list-of-approval-requests-request-page-object)* | page selector
+`filter` | *[ListApprovalRequestsFilter](#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object)* | filter parameters
 
-#### Page
+#### Page (object)
 
 name | type | description | contraints | example
 ---- | ---- | ----------- | ---------- | -------
 `index` | *in32* | Zero-based index of the page to query | `index` >= `0` | `10`
 `size` | *int32* | Maximum number of items to return in the results | `size` >= `0` and `size` <= `100` | `50`
 
-#### ListApprovalRequestsFilter
+#### ListApprovalRequestsFilter (object)
 
 name | type | description | example
 ---- | ---- | ----------- | -------
@@ -112,14 +112,14 @@ message ListApprovalRequestsError {
 
 name | type | description
 ---- | ---- | -------
-`payload`| *oneof body*, *[ListApprovalRequestsPayload](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload)* | Response payload
-`error` | *oneof body*, *[ListApprovalRequestsError](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror)* | Response error
+`payload`| *oneof body*, *[ListApprovalRequestsPayload](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload-object)* | Response payload
+`error` | *oneof body*, *[ListApprovalRequestsError](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-object)* | Response error
 
 #### ListApprovalRequestsPayload (object)
 
 name | type | description
 ---- | ----------- | -------
-`items` | *[ApprovalRequestListItem](#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem)[]* | Approval request items
+`items` | *[ApprovalRequestListItem](#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem-object)[]* | Approval request items
 
 
 #### ApprovalRequestListItem (object)
@@ -141,10 +141,10 @@ name | type | description | example
 
 name | type | description | example
 ---- | ---- | ----------- | -------
-`code` | *[ListApprovalRequestsError.ErrorCode](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode)* | Error code | `INVALID_PARAMETERS`
+`code` | *[ListApprovalRequestsError.ErrorCode](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode-enum)* | Error code | `INVALID_PARAMETERS`
 `message` | *string* | Error message | `Page size should be a positive number`
 
-#### ListApprovalRequestsError.ErrorCode
+#### ListApprovalRequestsError.ErrorCode (enum)
 
 name | value | description
 ---- | ----- | -----------

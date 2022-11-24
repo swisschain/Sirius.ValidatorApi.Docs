@@ -2,11 +2,7 @@
 
 Here you can see data structures used by different API endpoints groupped by protobuf packages
 
-## Common
-
-`package swisschain.sirius.validator_api.common`
-
-### Error (object)
+## Error (object)
 
 ```protobuf
 package swisschain.sirius.validator_api.common;
@@ -17,7 +13,7 @@ message Error {
 }
 ```
 
-### ErrorCode (enum)
+## ErrorCode (enum)
 
 ```protobuf
 package swisschain.sirius.validator_api.common;
@@ -31,13 +27,11 @@ enum ErrorCode {
 }
 ```
 
-## Approval process common
-
-`package swisschain.sirius.keykeeperapi.approvalprocess.common;`
-
-### ApprovalProcessType (enum)
+## ApprovalProcessType (enum)
 
 ```protobuf
+package swisschain.sirius.keykeeperapi.approvalprocess.common;
+
 enum ApprovalProcessType {
   APPROVAL_PROCESS_TYPE_UNKNOWN = 0;
   APPROVAL_PROCESS_TYPE_TRANSFER = 1;
@@ -48,9 +42,11 @@ enum ApprovalProcessType {
 }
 ```
 
-### ApprovalProcessStatus (enum)
+## ApprovalProcessStatus (enum)
 
 ```protobuf
+package swisschain.sirius.keykeeperapi.approvalprocess.common;
+
 enum ApprovalProcessStatus {
   APPROVAL_PROCESS_STATUS_UNKNOWN = 0;
   APPROVAL_PROCESS_STATUS_PENDING = 1;
@@ -59,9 +55,11 @@ enum ApprovalProcessStatus {
 }
 ```
 
-### Decision (enum)
+## Decision (enum)
 
 ```protobuf
+package swisschain.sirius.keykeeperapi.approvalprocess.common;
+
 enum Decision {
   DECISION_UNKNOWN = 0;
   DECISION_APPROVED = 1;
@@ -69,13 +67,11 @@ enum Decision {
 }
 ```
 
-## Approval requests
-
-`package swisschain.sirius.keykeeperapi.approvalrequest;`
-
-### ApprovalProcess (object)
+## ApprovalProcess (object)
 
 ```protobuf
+package swisschain.sirius.keykeeperapi.approvalrequest;
+
 message ApprovalProcess {
   string id = 1;
   swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessType type = 2;
@@ -84,7 +80,9 @@ message ApprovalProcess {
 }
 ```
 
-### ApproverResolution (object)
+## ApproverResolution (object)
+
+package swisschain.sirius.keykeeperapi.approvalrequest;
 
 ```protobuf
 message ApproverResolution {
@@ -94,24 +92,30 @@ message ApproverResolution {
 }
 ```
 
-### Custody (object)
+## Custody (object)
 
 ```protobuf
+
+package swisschain.sirius.keykeeperapi.approvalrequest;
+
 message Custody {
   int64 id = 1;
   string name = 2;
 }
 ```
 
-### Subscription (object)
+## Subscription (object)
 
 ```protobuf
+
+package swisschain.sirius.keykeeperapi.approvalrequest;
+
 message Subscription {
   string name = 1;
   google.protobuf.StringValue color = 2;
 }
 ```
 
-### Approval request context (JSON string)
+## Approval request context (JSON string)
 
-### Approval process context (JSON string)
+## Approval process context (JSON string)
