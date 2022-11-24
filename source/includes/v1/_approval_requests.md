@@ -45,6 +45,8 @@ message ListApprovalRequestsFilter {
 name | type | description
 ---- | ---- | ----------- 
 `page` | *[Page](#Approval-requests-get-list-of-approval-requests-request-page)* | page selector
+  `index` | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
+  `size` | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
 `filter` | *[ListApprovalRequestsFilter](#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
 
 #### Page
@@ -80,6 +82,19 @@ message ListApprovalRequestsPayload {
   repeated ApprovalRequestListItem items = 1;
 }
 
+message ApprovalRequestListItem {
+  int64 id = 1;
+  ApprovalProcess approval_process = 2;
+  string context = 3;
+  Custody custody = 4;
+  Subscription subscription = 5;
+  ApproverResolution approver_resolution = 6;
+  bool is_read = 7;
+  google.protobuf.Timestamp read_at = 8;
+  google.protobuf.Timestamp delivered_at = 9;
+  google.protobuf.Timestamp created_at = 10;
+}
+
 message ListApprovalRequestsError {
 
   enum ErrorCode {
@@ -94,6 +109,21 @@ message ListApprovalRequestsError {
   string message = 2;
 }
 ```
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`payload`| | |
+`error` | | |
+
+#### ListApprovalRequestsResponse
+
+#### ListApprovalRequestsPayload
+
+#### ApprovalRequestListItem
+
+#### ListApprovalRequestsError
+
+#### ListApprovalRequestsError.ErrorCode
 
 ## Get approval request details
 
