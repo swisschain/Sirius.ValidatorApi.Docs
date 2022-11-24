@@ -724,45 +724,15 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>page</code></td>
-<td><em>object</em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-request-page">Page</a></em></td>
 <td>page selector</td>
 </tr>
 <tr>
-<td><nobr>&ensp;&ensp;<code>index</code></nobr></td>
-<td><em>in32</em></td>
-<td>Zero-based index of the page to query. Contraint: <code>index</code> &gt;= <code>0</code></td>
-</tr>
-<tr>
-<td><nobr>&ensp;&ensp;<code>size</code></nobr></td>
-<td><em>int32</em></td>
-<td>Maximum number of items to return in the results. Constraint: <code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code></td>
-</tr>
-<tr>
 <td><code>filter</code></td>
-<td><em>object</em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em></td>
 <td>filter parameters</td>
 </tr>
-<tr>
-<td><nobr>&ensp;&ensp;<code>is_read</code></nobr></td>
-<td><em>bool?</em></td>
-<td>If specified, indicates if API should return only read/not read (by the given validator) approval requests</td>
-</tr>
-<tr>
-<td><nobr>&ensp;&ensp;<code>custody_id</code></nobr></td>
-<td><em>int64?</em></td>
-<td>If specified, indicates API to return only approval requests related to the specified custody</td>
-</tr>
-<tr>
-<td><nobr>&ensp;&ensp;<code>is_processed</code></nobr></td>
-<td><em>bool?</em></td>
-<td>If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected</td>
-</tr>
 </tbody></table>
-
-<p><code>page</code> | <em><a href="#Approval-requests-get-list-of-approval-requests-request-page">Page</a></em> | page selector
-<nobr>&ensp;&ensp;<code>index</code></nobr> | <em>in32</em> | Zero-based index of the page to query. Contraint: <code>index</code> &gt;= <code>0</code> | <code>10</code>
-<nobr>&ensp;&ensp;<code>size</code></nobr> | <em>int32</em> | Maximum number of items to return in the results. Constraint: <code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code> | <code>50</code>
-<code>filter</code> | <em><a href="#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em> | filter parameters</p>
 <h4 id='approval-requests-get-list-of-approval-requests-request-page'>Page</h4>
 <table><thead>
 <tr>
@@ -857,7 +827,40 @@ This endpoint returns brief information about approval requests. To get detailed
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div>
+</code></pre></div><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestsresponse-object'>ListApprovalRequestsResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload">ListApprovalRequestsPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror">ListApprovalRequestsError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload-object'>ListApprovalRequestsPayload (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>items</code></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem">ApprovalRequestListItem</a>[]</em></td>
+<td>Approval request items</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem-object'>ApprovalRequestListItem (object)</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -867,19 +870,123 @@ This endpoint returns brief information about approval requests. To get detailed
 </tr>
 </thead><tbody>
 <tr>
-<td><code>payload</code></td>
-<td></td>
-<td></td>
+<td><code>id</code></td>
+<td><em>int64</em></td>
+<td>Approval request items</td>
 <td></td>
 </tr>
 <tr>
-<td><code>error</code></td>
+<td><code>approval_process</code></td>
+<td><em><a href="#data-structures-approvalprocess-object">ApprovalProcess</a></em></td>
+<td>Details of the approval process to which the approval request is related to</td>
 <td></td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><em>string</em>, <em>JSON</em></td>
+<td>Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
 <td></td>
+</tr>
+<tr>
+<td><code>custody</code></td>
+<td><em><a href="#data-structures-custody-object">Custody</a></em></td>
+<td>Details of the custody to which the approval request is related to</td>
+<td></td>
+</tr>
+<tr>
+<td><code>subscription</code></td>
+<td><em><a href="#data-structures-subscription-object">Subscription</a></em></td>
+<td>Details of the Universe portal subscription to which the approval request is related to</td>
+<td></td>
+</tr>
+<tr>
+<td><code>approver_resolution</code></td>
+<td><em>optional</em>, <em><a href="#data-structures-approverresolution-object">ApproverResolution</a></em></td>
+<td>Details of the approver resolution related to the approval request. Can be <code>null</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_read</code></td>
+<td><em>bool</em></td>
+<td>Indicates if the approval request was read by the validator</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>read_at</code></td>
+<td><em>timestamp</em></td>
+<td>TODO: can be null?</td>
+<td></td>
+</tr>
+<tr>
+<td><code>delivered_at</code></td>
+<td><em>timestamp</em></td>
+<td>TODO</td>
+<td></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><em>timestamp</em></td>
+<td>TODO</td>
 <td></td>
 </tr>
 </tbody></table>
-<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestsresponse'>ListApprovalRequestsResponse</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload'>ListApprovalRequestsPayload</h4><h4 id='approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem'>ApprovalRequestListItem</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror'>ListApprovalRequestsError</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode'>ListApprovalRequestsError.ErrorCode</h4><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
+<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-object'>ListApprovalRequestsError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode">ListApprovalRequestsError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>INVALID_PARAMETERS</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Page size should be a positive number</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode'>ListApprovalRequestsError.ErrorCode</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get</code></p>
 
 <p><code>Authorization required</code></p>
@@ -1176,7 +1283,7 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">google.protobuf.StringValue</span> <span class="na">color</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div>
+</code></pre></div><h3 id='data-structures-approval-requests-approval-request-context-json-string'>Approval request context (JSON string)</h3><h3 id='data-structures-approval-requests-approval-process-context-json-string'>Approval process context (JSON string)</h3>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
