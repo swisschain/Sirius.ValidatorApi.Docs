@@ -111,3 +111,7 @@ message Subscription {
   google.protobuf.StringValue color = 2;
 }
 ```
+
+### Approval request context (JSON string)
+
+### Approval process context (JSON string)

@@ -44,25 +44,8 @@ message ListApprovalRequestsFilter {
 
 name | type | description
 ---- | ---- | ----------- 
-`page` | *object* | page selector
-<nobr>&ensp;&ensp;`index`</nobr> | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
-<nobr>&ensp;&ensp;`size`</nobr> | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
-`filter` | *object* | filter parameters
-<nobr>&ensp;&ensp;`is_read`</nobr> | *bool?* | If specified, indicates if API should return only read/not read (by the given validator) approval requests | `<null>`, `true`, `false`
-<nobr>&ensp;&ensp;`custody_id`</nobr> | *int64?* | If specified, indicates API to return only approval requests related to the specified custody | `<null>`, `404000100`
-<nobr>&ensp;&ensp;`is_processed`</nobr> | *bool?* | If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected |  `<null>`, `true`, `false`
-
-
-
-
-
-
-
-`page` | *[Page](#Approval-requests-get-list-of-approval-requests-request-page)* | page selector
-<nobr>&ensp;&ensp;`index`</nobr> | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
-<nobr>&ensp;&ensp;`size`</nobr> | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
-`filter` | *[ListApprovalRequestsFilter](#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
-
+`page` | *[Page](#approval-requests-get-list-of-approval-requests-request-page)* | page selector
+`filter` | *[ListApprovalRequestsFilter](#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
 
 #### Page
 
@@ -125,20 +108,51 @@ message ListApprovalRequestsError {
 }
 ```
 
+#### ListApprovalRequestsResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[ListApprovalRequestsPayload](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload)* | Response payload
+`error` | *oneof body*, *[ListApprovalRequestsError](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror)* | Response error
+
+#### ListApprovalRequestsPayload (object)
+
+name | type | description
+---- | ----------- | -------
+`items` | *[ApprovalRequestListItem](#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem)[]* | Approval request items
+
+
+#### ApprovalRequestListItem (object)
+
 name | type | description | example
 ---- | ---- | ----------- | -------
-`payload`| | |
-`error` | | |
+`id` | *int64* | Approval request items |
+`approval_process` | *[ApprovalProcess](#data-structures-approvalprocess-object)* | Details of the approval process to which the approval request is related to |
+`context` | *string*, *JSON* | Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`custody` | *[Custody](#data-structures-custody-object)* | Details of the custody to which the approval request is related to |
+`subscription` | *[Subscription](#data-structures-subscription-object)* | Details of the Universe portal subscription to which the approval request is related to |
+`approver_resolution` | *optional*, *[ApproverResolution](#data-structures-approverresolution-object)* | Details of the approver resolution related to the approval request. Can be `null` |
+`is_read` | *bool* | Indicates if the approval request was read by the validator | `true`, `false`
+`read_at` | *timestamp* | TODO: can be null? | 
+`delivered_at` | *timestamp* | TODO |
+`created_at` | *timestamp*| TODO |
 
-#### ListApprovalRequestsResponse
+#### ListApprovalRequestsError (object)
 
-#### ListApprovalRequestsPayload
-
-#### ApprovalRequestListItem
-
-#### ListApprovalRequestsError
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[ListApprovalRequestsError.ErrorCode](#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode)* | Error code | `INVALID_PARAMETERS`
+`message` | *string* | Error message | `Page size should be a positive number`
 
 #### ListApprovalRequestsError.ErrorCode
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
 
 ## Get approval request details
 
