@@ -49,17 +49,32 @@ swisschain.sirius.validator_api.invites.Invites.Accept
 > Response: (application/grpc) - success response
 
 message AcceptInviteResponse {
-    oneof body {
-        AcceptInviteResponseBody response = 1;
-        .swisschain.sirius.validator_api.common.Error error = 2;
-    }
+  oneof body {
+    AcceptInviteResponseBody response = 1;
+    .swisschain.sirius.validator_api.common.Error error = 2;
+  }
 }
 
 message AcceptInviteResponseBody {
-    string name = 1;
-    string position = 2;
-    string description = 3;
-    string api_key = 4;
+  string name = 1;
+  string position = 2;
+  string description = 3;
+  string api_key = 4;
+}
+
+package swisschain.sirius.validator_api.common;
+
+message Error {
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+enum ErrorCode {
+  UNKNOWN = 0;
+  INVALID_PARAMETERS = 1;
+  NOT_FOUND = 2;
+  EXPIRED_API_KEY = 3;
+  INVALID_API_KEY = 4;
 }
 ```
 
@@ -110,6 +125,21 @@ message RevokeInviteResponse {
 }
 
 message RevokeInviteResponseBody {
+}
+
+package swisschain.sirius.validator_api.common;
+
+message Error {
+  ErrorCode code = 1;
+  string message = 2;
+}
+
+enum ErrorCode {
+  UNKNOWN = 0;
+  INVALID_PARAMETERS = 1;
+  NOT_FOUND = 2;
+  EXPIRED_API_KEY = 3;
+  INVALID_API_KEY = 4;
 }
 ```
 
