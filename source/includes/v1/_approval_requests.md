@@ -40,6 +40,28 @@ message ListApprovalRequestsFilter {
 }
 ```
 
+#### ListApprovalRequestsRequest
+
+name | type | description
+---- | ---- | ----------- 
+`page` | *[Page](#Approval-requests-get-list-of-approval-requests-request-page)* | page selector
+`filter` | *[ListApprovalRequestsFilter](#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
+
+#### Page
+
+name | type | description | contraints | example
+---- | ---- | ----------- | ---------- | -------
+`index` | *in32* | Zero-based index of the page to query | `index` >= `0` | `10`
+`size` | *int32* | Maximum number of items to return in the results | `size` >= `0` and `size` <= `100` | `50`
+
+#### ListApprovalRequestsFilter
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`is_read` | *bool?* | If specified, indicates if API should return only read/not read (by the given validator) approval requests | `<null>`, `true`, `false`
+`custody_id` | *int64?* | If specified, indicates API to return only approval requests related to the specified custody | `<null>`, `404000100`
+`is_processed` | *bool?* | If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected |  `<null>`, `true`, `false`
+
 ### Response
 
 ```protobuf

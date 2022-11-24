@@ -59,7 +59,7 @@ message GetBlockchainResponseBody {
 
 name | type | description
 -----| ---- | -----------
-`blockchains` | *repeated [Blockchain](#blockchains-get-blockchains-response-blockchain)* | List of the blockchains
+`blockchains` | *[Blockchain](#blockchains-get-blockchains-response-blockchain)[]* | List of the blockchains
 
 #### Blockchain
 
