@@ -352,6 +352,26 @@
           </li>
           <li>
             <a href="#approval-requests" class="toc-h1 toc-link" data-title="Approval requests">Approval requests</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#approval-requests-get-list-of-approval-requests" class="toc-h2 toc-link" data-title="Get list of approval requests">Get list of approval requests</a>
+                  </li>
+                  <li>
+                    <a href="#approval-requests-get-approval-request-details" class="toc-h2 toc-link" data-title="Get approval request details">Get approval request details</a>
+                  </li>
+                  <li>
+                    <a href="#approval-requests-acknowledge-an-approval-request-is-received" class="toc-h2 toc-link" data-title="Acknowledge an approval request is received">Acknowledge an approval request is received</a>
+                  </li>
+                  <li>
+                    <a href="#approval-requests-notify-an-approval-request-is-read" class="toc-h2 toc-link" data-title="Notify an approval request is read">Notify an approval request is read</a>
+                  </li>
+                  <li>
+                    <a href="#approval-requests-approve-an-approval-request" class="toc-h2 toc-link" data-title="Approve an approval request">Approve an approval request</a>
+                  </li>
+                  <li>
+                    <a href="#approval-requests-reject-an-approval-request" class="toc-h2 toc-link" data-title="Reject an approval request">Reject an approval request</a>
+                  </li>
+              </ul>
           </li>
       </ul>
     </div>
@@ -475,17 +495,32 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
 <span class="kd">message</span> <span class="nc">AcceptInviteResponse</span> <span class="p">{</span>
-    <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
-        <span class="n">AcceptInviteResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="o">.</span><span class="n">swisschain.sirius.validator_api.common.Error</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="p">}</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">AcceptInviteResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="o">.</span><span class="n">swisschain.sirius.validator_api.common.Error</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kd">message</span> <span class="nc">AcceptInviteResponseBody</span> <span class="p">{</span>
-    <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="kt">string</span> <span class="na">position</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="kt">string</span> <span class="na">description</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-    <span class="kt">string</span> <span class="na">api_key</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">position</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">description</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">api_key</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">NOT_FOUND</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div><h4 id='invites-accept-an-invitation-response-acceptinviteresponsebody'>AcceptInviteResponseBody</h4>
 <table><thead>
@@ -556,6 +591,21 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <span class="p">}</span>
 
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">NOT_FOUND</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 <p>N/A</p>
@@ -673,7 +723,33 @@ Each approval request object represents an overall process of approving of somet
 approval requests like root key initialization, transfer transaction, smart contract invocation and so on. This is achieved by having a <code>string context</code>
 field that contains a approva process type-specific data serialized as a JSON object. Each validator sees its onw representation of an
 approval request where he sees its own approval status and approval statuses of all other validators separately. Once an approval request
-is approved or rejected it can&#39;t become a pending again.</p>
+is approved or rejected it can not become a pending again.</p>
+<h2 id='approval-requests-get-list-of-approval-requests'>Get list of approval requests</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Gets list of approval requests related to the current (authenticated) validator with pagination and filtering.
+This endpoint returns brief information about approval requests. To get detailed approval request information see <em><a href="#approval-requests-get-approval-request-details">Get approval request details</a></em>.</p>
+<h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Gets detailed information about a specified approval request. This method is intended to be invoked only for a single approval request, do not
+use it for bluk infromation retrival. If you need to get information about many approval requests, consider using <em><a href="#approval-requests-get-list-of-approval-requests">Get list of approval requests</a></em>.</p>
+<h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Marks a specified approval request as received by the validator application.</p>
+<h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Marks a specified approval request as read by the validation officer.</p>
+<h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Approves a specified approval request.</p>
+<h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
+<p><strong><em>Authorization required</em></strong></p>
+
+<p>Rejects a specified approval request.</p>
 
       </div>
       <div class="dark-box">
