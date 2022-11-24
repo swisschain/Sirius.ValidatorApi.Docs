@@ -21,9 +21,9 @@ message GetBlockchainsRequest {
 }
 ```
 
-name | type | placement | description
----- | ---- | --------- | -----------
-`Bearer` | *string* | metadata | API key of the validator returned by the *[Accept](#invites-accept-an-invitation)* method
+name | type | placement | description | example
+---- | ---- | --------- | ----------- | -------
+`Bearer` | *string* | metadata | API key of the validator returned by the *[Accept](#invites-accept-an-invitation)* method | `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8`
 
 ### Response
 
@@ -65,12 +65,12 @@ name | type | description
 
 #### Blockchain
 
-name | type | description
------| ---- | -----------
-`id` | *string* | Sirius ID of the blockchain
-`name` | *string* | Name of the blockchain
-`network_type` | *[NetworkType](#blockchains-get-blockchains-response-networktype)* | Blockchain network type
-`tenant_id` | *optional*, *string* | ID of a tenant (subscription) to which is blockchain is dedicated to on Sirius
+name | type | description | example
+-----| ---- | ----------- | -------
+`id` | *string* | Sirius ID of the blockchain | `ethereum`
+`name` | *string* | Name of the blockchain | `Ethereum`
+`network_type` | *[NetworkType](#blockchains-get-blockchains-response-networktype)* | Blockchain network type | `public`
+`tenant_id` | *optional*, *string* | ID of a tenant (subscription) to which is blockchain is dedicated to on Sirius | `<null>`, `61a9d900-802b-4830-b741-d98c3204e0d8`
 
 #### NetworkType
 
