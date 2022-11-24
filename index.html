@@ -374,13 +374,37 @@
             <a href="#data-structures" class="toc-h1 toc-link" data-title="Data structures">Data structures</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#data-structures-common" class="toc-h2 toc-link" data-title="Common">Common</a>
+                    <a href="#data-structures-error-object" class="toc-h2 toc-link" data-title="Error (object)">Error (object)</a>
                   </li>
                   <li>
-                    <a href="#data-structures-approval-process-common" class="toc-h2 toc-link" data-title="Approval process common">Approval process common</a>
+                    <a href="#data-structures-errorcode-enum" class="toc-h2 toc-link" data-title="ErrorCode (enum)">ErrorCode (enum)</a>
                   </li>
                   <li>
-                    <a href="#data-structures-approval-requests" class="toc-h2 toc-link" data-title="Approval requests">Approval requests</a>
+                    <a href="#data-structures-approvalprocesstype-enum" class="toc-h2 toc-link" data-title="ApprovalProcessType (enum)">ApprovalProcessType (enum)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approvalprocessstatus-enum" class="toc-h2 toc-link" data-title="ApprovalProcessStatus (enum)">ApprovalProcessStatus (enum)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-decision-enum" class="toc-h2 toc-link" data-title="Decision (enum)">Decision (enum)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approvalprocess-object" class="toc-h2 toc-link" data-title="ApprovalProcess (object)">ApprovalProcess (object)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approverresolution-object" class="toc-h2 toc-link" data-title="ApproverResolution (object)">ApproverResolution (object)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-custody-object" class="toc-h2 toc-link" data-title="Custody (object)">Custody (object)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-subscription-object" class="toc-h2 toc-link" data-title="Subscription (object)">Subscription (object)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approval-request-context-json-string" class="toc-h2 toc-link" data-title="Approval request context (JSON string)">Approval request context (JSON string)</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approval-process-context-json-string" class="toc-h2 toc-link" data-title="Approval process context (JSON string)">Approval process context (JSON string)</a>
                   </li>
               </ul>
           </li>
@@ -714,7 +738,7 @@ This endpoint returns brief information about approval requests. To get detailed
   <span class="n">google.protobuf.Int64Value</span> <span class="na">custody_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="n">google.protobuf.BoolValue</span> <span class="na">is_processed</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsrequest'>ListApprovalRequestsRequest</h4>
+</code></pre></div><h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsrequest-object'>ListApprovalRequestsRequest (object)</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -724,16 +748,16 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>page</code></td>
-<td><em><a href="#approval-requests-get-list-of-approval-requests-request-page">Page</a></em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-request-page-object">Page</a></em></td>
 <td>page selector</td>
 </tr>
 <tr>
 <td><code>filter</code></td>
-<td><em><a href="#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object">ListApprovalRequestsFilter</a></em></td>
 <td>filter parameters</td>
 </tr>
 </tbody></table>
-<h4 id='approval-requests-get-list-of-approval-requests-request-page'>Page</h4>
+<h4 id='approval-requests-get-list-of-approval-requests-request-page-object'>Page (object)</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -758,7 +782,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <td><code>50</code></td>
 </tr>
 </tbody></table>
-<h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter'>ListApprovalRequestsFilter</h4>
+<h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object'>ListApprovalRequestsFilter (object)</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -837,12 +861,12 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>payload</code></td>
-<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload">ListApprovalRequestsPayload</a></em></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload-object">ListApprovalRequestsPayload</a></em></td>
 <td>Response payload</td>
 </tr>
 <tr>
 <td><code>error</code></td>
-<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror">ListApprovalRequestsError</a></em></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-object">ListApprovalRequestsError</a></em></td>
 <td>Response error</td>
 </tr>
 </tbody></table>
@@ -856,7 +880,7 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>items</code></td>
-<td><em><a href="#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem">ApprovalRequestListItem</a>[]</em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem-object">ApprovalRequestListItem</a>[]</em></td>
 <td>Approval request items</td>
 </tr>
 </tbody></table>
@@ -941,7 +965,7 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>code</code></td>
-<td><em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode">ListApprovalRequestsError.ErrorCode</a></em></td>
+<td><em><a href="#approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode-enum">ListApprovalRequestsError.ErrorCode</a></em></td>
 <td>Error code</td>
 <td><code>INVALID_PARAMETERS</code></td>
 </tr>
@@ -952,7 +976,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <td><code>Page size should be a positive number</code></td>
 </tr>
 </tbody></table>
-<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode'>ListApprovalRequestsError.ErrorCode</h4>
+<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode-enum'>ListApprovalRequestsError.ErrorCode (enum)</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -1224,15 +1248,13 @@ use it for bluk infromation retrival. If you need to get information about many 
 <span class="p">}</span>
 </code></pre></div><h1 id='data-structures'>Data structures</h1>
 <p>Here you can see data structures used by different API endpoints groupped by protobuf packages</p>
-<h2 id='data-structures-common'>Common</h2>
-<p><code>package swisschain.sirius.validator_api.common</code></p>
-<h3 id='data-structures-common-error-object'>Error (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+<h2 id='data-structures-error-object'>Error (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
 
 <span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-common-errorcode-enum'>ErrorCode (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+</code></pre></div><h2 id='data-structures-errorcode-enum'>ErrorCode (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
   <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1241,9 +1263,9 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approval-process-common'>Approval process common</h2>
-<p><code>package swisschain.sirius.keykeeperapi.approvalprocess.common;</code></p>
-<h3 id='data-structures-approval-process-common-approvalprocesstype-enum'>ApprovalProcessType (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">ApprovalProcessType</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-approvalprocesstype-enum'>ApprovalProcessType (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+
+<span class="kd">enum</span> <span class="n">ApprovalProcessType</span> <span class="p">{</span>
   <span class="na">APPROVAL_PROCESS_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_TYPE_TRANSFER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
@@ -1251,39 +1273,51 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-process-common-approvalprocessstatus-enum'>ApprovalProcessStatus (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">ApprovalProcessStatus</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-approvalprocessstatus-enum'>ApprovalProcessStatus (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+
+<span class="kd">enum</span> <span class="n">ApprovalProcessStatus</span> <span class="p">{</span>
   <span class="na">APPROVAL_PROCESS_STATUS_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_STATUS_PENDING</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_STATUS_APPROVED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_STATUS_REJECTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-process-common-decision-enum'>Decision (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">Decision</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-decision-enum'>Decision (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+
+<span class="kd">enum</span> <span class="n">Decision</span> <span class="p">{</span>
   <span class="na">DECISION_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="na">DECISION_APPROVED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="na">DECISION_REJECTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approval-requests'>Approval requests</h2>
-<p><code>package swisschain.sirius.keykeeperapi.approvalrequest;</code></p>
-<h3 id='data-structures-approval-requests-approvalprocess-object'>ApprovalProcess (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApprovalProcess</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-approvalprocess-object'>ApprovalProcess (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">ApprovalProcess</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessStatus</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-requests-approverresolution-object'>ApproverResolution (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApproverResolution</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-approverresolution-object'>ApproverResolution (object)</h2>
+<p>package swisschain.sirius.keykeeperapi.approvalrequest;</p>
+<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApproverResolution</span> <span class="p">{</span>
   <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.Decision</span> <span class="na">decision</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">google.protobuf.StringValue</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="n">google.protobuf.Timestamp</span> <span class="na">created_at</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-requests-custody-object'>Custody (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">Custody</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-custody-object'>Custody (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code>
+<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Custody</span> <span class="p">{</span>
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-requests-subscription-object'>Subscription (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">Subscription</span> <span class="p">{</span>
+</code></pre></div><h2 id='data-structures-subscription-object'>Subscription (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code>
+<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Subscription</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">google.protobuf.StringValue</span> <span class="na">color</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='data-structures-approval-requests-approval-request-context-json-string'>Approval request context (JSON string)</h3><h3 id='data-structures-approval-requests-approval-process-context-json-string'>Approval process context (JSON string)</h3>
+</code></pre></div><h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2><h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
