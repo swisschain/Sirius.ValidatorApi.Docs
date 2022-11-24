@@ -640,6 +640,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <th>type</th>
 <th>placement</th>
 <th>description</th>
+<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -647,6 +648,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td><em>string</em></td>
 <td>metadata</td>
 <td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
+<td><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2YWxpZGF0b3ItaWQiOiI3MDEwMDAwMTUiLCJuYmYiOjE2NjcyNDQyNzEsImV4cCI6MTY5ODc4MDI3MSwiaWF0IjoxNjY3MjQ0MjcxLCJhdWQiOiJzaXJpdXMuc3dpc3NjaGFpbi5pbyJ9.QkhXNhb3EVyoO7KRb2jiWDQV0gWjASCyhMXsPl5i9g8</code></td>
 </tr>
 </tbody></table>
 <h3 id='blockchains-get-blockchains-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains</span><span class="o">/</span><span class="n">Get</span>
@@ -696,27 +698,32 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <th>name</th>
 <th>type</th>
 <th>description</th>
+<th>example</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>id</code></td>
 <td><em>string</em></td>
 <td>Sirius ID of the blockchain</td>
+<td><code>ethereum</code></td>
 </tr>
 <tr>
 <td><code>name</code></td>
 <td><em>string</em></td>
 <td>Name of the blockchain</td>
+<td><code>Ethereum</code></td>
 </tr>
 <tr>
 <td><code>network_type</code></td>
 <td><em><a href="#blockchains-get-blockchains-response-networktype">NetworkType</a></em></td>
 <td>Blockchain network type</td>
+<td><code>public</code></td>
 </tr>
 <tr>
 <td><code>tenant_id</code></td>
 <td><em>optional</em>, <em>string</em></td>
 <td>ID of a tenant (subscription) to which is blockchain is dedicated to on Sirius</td>
+<td><code>&lt;null&gt;</code>, <code>61a9d900-802b-4830-b741-d98c3204e0d8</code></td>
 </tr>
 </tbody></table>
 <h4 id='blockchains-get-blockchains-response-networktype'>NetworkType</h4>
