@@ -450,10 +450,10 @@ keys pair and validator ID. Keys pairs is an <code>RSA-PKCS1</code> keys with th
 <p>The private key should be kept in secret by the validator. The public key and validator ID
 should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a></em> method of API.</p>
 <h2 id='invites-accept-an-invitation'>Accept an invitation</h2>
+<p><code>swisschain.sirius.validator_api.invites.Invites/Accept</code></p>
+
 <p>Accepts a validator invitation generated via Universe portal.</p>
-<h3 id='invites-accept-an-invitation-request'>Request</h3>
-<p><code>swisschain.sirius.validator_api.invites.Invites.Accept</code></p>
-<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Accept</span>
+<h3 id='invites-accept-an-invitation-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Accept</span>
 
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
 
@@ -490,7 +490,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td>Public key of the validator</td>
 </tr>
 </tbody></table>
-<h3 id='invites-accept-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Accept</span>
+<h3 id='invites-accept-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Accept</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -552,12 +552,12 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </tr>
 </tbody></table>
 <h2 id='invites-revoke-an-invitation'>Revoke an invitation</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<p><code>swisschain.sirius.validator_api.invites.Invites/Revoke</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Revokes a previously accepted invitation. </p>
-<h3 id='invites-revoke-an-invitation-request'>Request</h3>
-<p><code>swisschain.sirius.validator_api.invites.Invites.Revoke</code></p>
-<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Revoke</span>
+<h3 id='invites-revoke-an-invitation-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Revoke</span>
 
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
 
@@ -579,7 +579,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
 </tr>
 </tbody></table>
-<h3 id='invites-revoke-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites.Revoke</span>
+<h3 id='invites-revoke-an-invitation-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Revoke</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -612,12 +612,12 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <h1 id='blockchains'>Blockchains</h1>
 <p>Blockchain is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
 <h2 id='blockchains-get-blockchains'>Get blockchains</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<p><code>swisschain.sirius.validator_api.blockchains.Blockchains/Get</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Returns a full list of the blockchains available for the validator.</p>
-<h3 id='blockchains-get-blockchains-request'>Request</h3>
-<p><code>swisschain.sirius.validator_api.blockchains.Blockchains.Get</code></p>
-<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains.Get</span>
+<h3 id='blockchains-get-blockchains-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains</span><span class="o">/</span><span class="n">Get</span>
 
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
 
@@ -639,7 +639,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <td>API key of the validator returned by the <em><a href="#invites-accept-an-invitation">Accept</a></em> method</td>
 </tr>
 </tbody></table>
-<h3 id='blockchains-get-blockchains-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains.Get</span>
+<h3 id='blockchains-get-blockchains-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.blockchains.Blockchains</span><span class="o">/</span><span class="n">Get</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -725,32 +725,44 @@ field that contains a approva process type-specific data serialized as a JSON ob
 approval request where he sees its own approval status and approval statuses of all other validators separately. Once an approval request
 is approved or rejected it can not become a pending again.</p>
 <h2 id='approval-requests-get-list-of-approval-requests'>Get list of approval requests</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/List</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Gets list of approval requests related to the current (authenticated) validator with pagination and filtering.
 This endpoint returns brief information about approval requests. To get detailed approval request information see <em><a href="#approval-requests-get-approval-request-details">Get approval request details</a></em>.</p>
-<h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<h3 id='approval-requests-get-list-of-approval-requests-request'>Request</h3><h3 id='approval-requests-get-list-of-approval-requests-response'>Response</h3><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Gets detailed information about a specified approval request. This method is intended to be invoked only for a single approval request, do not
 use it for bluk infromation retrival. If you need to get information about many approval requests, consider using <em><a href="#approval-requests-get-list-of-approval-requests">Get list of approval requests</a></em>.</p>
-<h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<h3 id='approval-requests-get-approval-request-details-request'>Request</h3><h3 id='approval-requests-get-approval-request-details-response'>Response</h3><h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Acknowledge</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Marks a specified approval request as received by the validator application.</p>
-<h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<h3 id='approval-requests-acknowledge-an-approval-request-is-received-request'>Request</h3><h3 id='approval-requests-acknowledge-an-approval-request-is-received-response'>Response</h3><h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Marks a specified approval request as read by the validation officer.</p>
-<h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<h3 id='approval-requests-notify-an-approval-request-is-read-request'>Request</h3><h3 id='approval-requests-notify-an-approval-request-is-read-response'>Response</h3><h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Approves a specified approval request.</p>
-<h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
-<p><strong><em>Authorization required</em></strong></p>
+<h3 id='approval-requests-approve-an-approval-request-request'>Request</h3><h3 id='approval-requests-approve-an-approval-request-response'>Response</h3><h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
+<p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject</code></p>
+
+<p><code>Authorization required</code></p>
 
 <p>Rejects a specified approval request.</p>
-
+<h3 id='approval-requests-reject-an-approval-request-request'>Request</h3><h3 id='approval-requests-reject-an-approval-request-response'>Response</h3>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
