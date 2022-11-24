@@ -46,7 +46,7 @@ name | type | description
 ---- | ---- | ----------- 
 `page` | *[Page](#Approval-requests-get-list-of-approval-requests-request-page)* | page selector
 &nbsp;&nbsp;`index` | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
-&ensp`size` | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
+&ensp;`size` | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
 `filter` | *[ListApprovalRequestsFilter](#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
 
 #### Page
