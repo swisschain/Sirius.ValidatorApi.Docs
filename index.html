@@ -728,6 +728,16 @@ This endpoint returns brief information about approval requests. To get detailed
 <td>page selector</td>
 </tr>
 <tr>
+<td><code>index</code></td>
+<td><em>in32</em></td>
+<td>Zero-based index of the page to query. Contraint: <code>index</code> &gt;= <code>0</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><em>int32</em></td>
+<td>Maximum number of items to return in the results. Constraint: <code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code></td>
+</tr>
+<tr>
 <td><code>filter</code></td>
 <td><em><a href="#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter">ListApprovalRequestsFilter</a></em></td>
 <td>filter parameters</td>
@@ -801,6 +811,19 @@ This endpoint returns brief information about approval requests. To get detailed
   <span class="k">repeated</span> <span class="n">ApprovalRequestListItem</span> <span class="na">items</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 
+<span class="kd">message</span> <span class="nc">ApprovalRequestListItem</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">ApprovalProcess</span> <span class="na">approval_process</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">Custody</span> <span class="na">custody</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">Subscription</span> <span class="na">subscription</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">ApproverResolution</span> <span class="na">approver_resolution</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">is_read</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">read_at</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">delivered_at</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">created_at</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">}</span>
+
 <span class="kd">message</span> <span class="nc">ListApprovalRequestsError</span> <span class="p">{</span>
 
   <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
@@ -814,7 +837,29 @@ This endpoint returns brief information about approval requests. To get detailed
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestsresponse'>ListApprovalRequestsResponse</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestspayload'>ListApprovalRequestsPayload</h4><h4 id='approval-requests-get-list-of-approval-requests-response-approvalrequestlistitem'>ApprovalRequestListItem</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror'>ListApprovalRequestsError</h4><h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-errorcode'>ListApprovalRequestsError.ErrorCode</h4><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get</code></p>
 
 <p><code>Authorization required</code></p>
