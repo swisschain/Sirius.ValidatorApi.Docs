@@ -373,6 +373,20 @@
                   </li>
               </ul>
           </li>
+          <li>
+            <a href="#data-structures" class="toc-h1 toc-link" data-title="Data structures">Data structures</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#data-structures-common" class="toc-h2 toc-link" data-title="Common">Common</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approval-process-common" class="toc-h2 toc-link" data-title="Approval process common">Approval process common</a>
+                  </li>
+                  <li>
+                    <a href="#data-structures-approval-requests" class="toc-h2 toc-link" data-title="Approval requests">Approval requests</a>
+                  </li>
+              </ul>
+          </li>
       </ul>
     </div>
     <div class="page-wrapper">
@@ -592,23 +606,8 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
 <span class="p">}</span>
-
-<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
-
-<span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
-  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
-  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="na">NOT_FOUND</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-  <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-<p>N/A</p>
+</code></pre></div><h4 id='invites-revoke-an-invitation-response-revokeinviteresponsebody'>RevokeInviteResponseBody</h4>
+<p>Empty</p>
 <h1 id='blockchains'>Blockchains</h1>
 <p>Blockchain is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
 <h2 id='blockchains-get-blockchains'>Get blockchains</h2>
@@ -731,38 +730,351 @@ is approved or rejected it can not become a pending again.</p>
 
 <p>Gets list of approval requests related to the current (authenticated) validator with pagination and filtering.
 This endpoint returns brief information about approval requests. To get detailed approval request information see <em><a href="#approval-requests-get-approval-request-details">Get approval request details</a></em>.</p>
-<h3 id='approval-requests-get-list-of-approval-requests-request'>Request</h3><h3 id='approval-requests-get-list-of-approval-requests-response'>Response</h3><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
+<h3 id='approval-requests-get-list-of-approval-requests-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">List</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">ListApprovalRequestsRequest</span> <span class="p">{</span>
+  <span class="n">Page</span> <span class="na">page</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">ListApprovalRequestsFilter</span> <span class="na">filter</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ListApprovalRequestsFilter</span> <span class="p">{</span>
+  <span class="n">google.protobuf.BoolValue</span> <span class="na">is_read</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">google.protobuf.Int64Value</span> <span class="na">custody_id</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">google.protobuf.BoolValue</span> <span class="na">is_processed</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-get-list-of-approval-requests-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">List</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">ListApprovalRequestsResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">ListApprovalRequestsPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ListApprovalRequestsError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ListApprovalRequestsPayload</span> <span class="p">{</span>
+  <span class="k">repeated</span> <span class="n">ApprovalRequestListItem</span> <span class="na">items</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ListApprovalRequestsError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='approval-requests-get-approval-request-details'>Get approval request details</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Get</code></p>
 
 <p><code>Authorization required</code></p>
 
 <p>Gets detailed information about a specified approval request. This method is intended to be invoked only for a single approval request, do not
 use it for bluk infromation retrival. If you need to get information about many approval requests, consider using <em><a href="#approval-requests-get-list-of-approval-requests">Get list of approval requests</a></em>.</p>
-<h3 id='approval-requests-get-approval-request-details-request'>Request</h3><h3 id='approval-requests-get-approval-request-details-response'>Response</h3><h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
+<h3 id='approval-requests-get-approval-request-details-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Get</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">GetApprovalRequestRequest</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-get-approval-request-details-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Get</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">GetApprovalRequestResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">GetApprovalRequestPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">GetApprovalRequestError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">GetApprovalRequestPayload</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">ApprovalProcess</span> <span class="na">approval_process</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="n">Custody</span> <span class="na">custody</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">Subscription</span> <span class="na">subscription</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">ApproverResolution</span> <span class="na">approver_resolution</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+  <span class="k">repeated</span> <span class="n">LinkedApprovalRequest</span> <span class="na">linked_approval_requests</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">is_read</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">read_at</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">delivered_at</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">created_at</span> <span class="o">=</span> <span class="mi">11</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">GetApprovalRequestError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">LinkedApprovalRequest</span> <span class="p">{</span>
+  <span class="n">Approver</span> <span class="na">approver</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">ApproverResolution</span> <span class="na">approver_resolution</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">is_read</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">bool</span> <span class="na">is_delivered</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">read_at</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">delivered_at</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">Approver</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Acknowledge</code></p>
 
 <p><code>Authorization required</code></p>
 
 <p>Marks a specified approval request as received by the validator application.</p>
-<h3 id='approval-requests-acknowledge-an-approval-request-is-received-request'>Request</h3><h3 id='approval-requests-acknowledge-an-approval-request-is-received-response'>Response</h3><h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
+<h3 id='approval-requests-acknowledge-an-approval-request-is-received-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Acknowledge</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">AcknowledgeApprovalRequestRequest</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-acknowledge-an-approval-request-is-received-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Acknowledge</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">AcknowledgeApprovalRequestResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">AcknowledgeApprovalRequestPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">AcknowledgeApprovalRequestError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">AcknowledgeApprovalRequestPayload</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">AcknowledgeApprovalRequestError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read</code></p>
 
 <p><code>Authorization required</code></p>
 
 <p>Marks a specified approval request as read by the validation officer.</p>
-<h3 id='approval-requests-notify-an-approval-request-is-read-request'>Request</h3><h3 id='approval-requests-notify-an-approval-request-is-read-response'>Response</h3><h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
+<h3 id='approval-requests-notify-an-approval-request-is-read-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Read</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">ReadApprovalRequestRequest</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-notify-an-approval-request-is-read-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Read</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">ReadApprovalRequestResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">ReadApprovalRequestPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ReadApprovalRequestError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ReadApprovalRequestPayload</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ReadApprovalRequestError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve</code></p>
 
 <p><code>Authorization required</code></p>
 
 <p>Approves a specified approval request.</p>
-<h3 id='approval-requests-approve-an-approval-request-request'>Request</h3><h3 id='approval-requests-approve-an-approval-request-response'>Response</h3><h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
+<h3 id='approval-requests-approve-an-approval-request-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Approve</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">ApproveApprovalRequestRequest</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-approve-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Approve</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">ApproveApprovalRequestResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">ApproveApprovalRequestPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">ApproveApprovalRequestError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ApproveApprovalRequestPayload</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">ApproveApprovalRequestError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject</code></p>
 
 <p><code>Authorization required</code></p>
 
 <p>Rejects a specified approval request.</p>
-<h3 id='approval-requests-reject-an-approval-request-request'>Request</h3><h3 id='approval-requests-reject-an-approval-request-response'>Response</h3>
+<h3 id='approval-requests-reject-an-approval-request-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Reject</span>
+
+<span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
+
+<span class="kd">message</span> <span class="nc">RejectApprovalRequestRequest</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='approval-requests-reject-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Reject</span>
+
+<span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
+
+<span class="kd">message</span> <span class="nc">RejectApprovalRequestResponse</span> <span class="p">{</span>
+  <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
+    <span class="n">RejectApprovalRequestPayload</span> <span class="na">payload</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">RejectApprovalRequestError</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">RejectApprovalRequestPayload</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="kd">message</span> <span class="nc">RejectApprovalRequestError</span> <span class="p">{</span>
+
+  <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+    <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="na">DOMAIN_PROBLEM</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="na">TECHNICAL_PROBLEM</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="na">UNAUTHORIZED</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h1 id='data-structures'>Data structures</h1>
+<p>Here you can see data structures used by different API endpoints groupped by protobuf packages</p>
+<h2 id='data-structures-common'>Common</h2>
+<p><code>package swisschain.sirius.validator_api.common</code></p>
+<h3 id='data-structures-common-error-object'>Error (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
+  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-common-errorcode-enum'>ErrorCode (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+
+<span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
+  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">NOT_FOUND</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='data-structures-approval-process-common'>Approval process common</h2>
+<p><code>package swisschain.sirius.keykeeperapi.approvalprocess.common;</code></p>
+<h3 id='data-structures-approval-process-common-approvalprocesstype-enum'>ApprovalProcessType (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">ApprovalProcessType</span> <span class="p">{</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_TRANSFER</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-approval-process-common-approvalprocessstatus-enum'>ApprovalProcessStatus (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">ApprovalProcessStatus</span> <span class="p">{</span>
+  <span class="na">APPROVAL_PROCESS_STATUS_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_STATUS_PENDING</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_STATUS_APPROVED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="na">APPROVAL_PROCESS_STATUS_REJECTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-approval-process-common-decision-enum'>Decision (enum)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">enum</span> <span class="n">Decision</span> <span class="p">{</span>
+  <span class="na">DECISION_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="na">DECISION_APPROVED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="na">DECISION_REJECTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='data-structures-approval-requests'>Approval requests</h2>
+<p><code>package swisschain.sirius.keykeeperapi.approvalrequest;</code></p>
+<h3 id='data-structures-approval-requests-approvalprocess-object'>ApprovalProcess (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApprovalProcess</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessType</span> <span class="na">type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessStatus</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-approval-requests-approverresolution-object'>ApproverResolution (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApproverResolution</span> <span class="p">{</span>
+  <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.Decision</span> <span class="na">decision</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">google.protobuf.StringValue</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="n">google.protobuf.Timestamp</span> <span class="na">created_at</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-approval-requests-custody-object'>Custody (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">Custody</span> <span class="p">{</span>
+  <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h3 id='data-structures-approval-requests-subscription-object'>Subscription (object)</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">Subscription</span> <span class="p">{</span>
+  <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">google.protobuf.StringValue</span> <span class="na">color</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
