@@ -44,10 +44,25 @@ message ListApprovalRequestsFilter {
 
 name | type | description
 ---- | ---- | ----------- 
+`page` | *object* | page selector
+<nobr>&ensp;&ensp;`index`</nobr> | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
+<nobr>&ensp;&ensp;`size`</nobr> | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
+`filter` | *object* | filter parameters
+<nobr>&ensp;&ensp;`is_read`</nobr> | *bool?* | If specified, indicates if API should return only read/not read (by the given validator) approval requests | `<null>`, `true`, `false`
+<nobr>&ensp;&ensp;`custody_id`</nobr> | *int64?* | If specified, indicates API to return only approval requests related to the specified custody | `<null>`, `404000100`
+<nobr>&ensp;&ensp;`is_processed`</nobr> | *bool?* | If specified, indicates if API should return only processed/not processed approval requests. Processed means that an approval request is either approved or rejected |  `<null>`, `true`, `false`
+
+
+
+
+
+
+
 `page` | *[Page](#Approval-requests-get-list-of-approval-requests-request-page)* | page selector
 <nobr>&ensp;&ensp;`index`</nobr> | *in32* | Zero-based index of the page to query. Contraint: `index` >= `0` | `10`
 <nobr>&ensp;&ensp;`size`</nobr> | *int32* | Maximum number of items to return in the results. Constraint: `size` >= `0` and `size` <= `100` | `50`
 `filter` | *[ListApprovalRequestsFilter](#Approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter)* | filter parameters
+
 
 #### Page
 
