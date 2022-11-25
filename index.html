@@ -896,8 +896,8 @@ This endpoint returns brief information about approval requests. To get detailed
 <tr>
 <td><code>id</code></td>
 <td><em>int64</em></td>
-<td>Approval request items</td>
-<td></td>
+<td>ID of the approval request</td>
+<td><code>702000453</code></td>
 </tr>
 <tr>
 <td><code>approval_process</code></td>
@@ -932,26 +932,26 @@ This endpoint returns brief information about approval requests. To get detailed
 <tr>
 <td><code>is_read</code></td>
 <td><em>bool</em></td>
-<td>Indicates if the approval request was read by the validator</td>
+<td>Indicates if the approval request was read by the validator (if <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
 <td><code>true</code>, <code>false</code></td>
 </tr>
 <tr>
 <td><code>read_at</code></td>
-<td><em>timestamp</em></td>
-<td>TODO: can be null?</td>
-<td></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was read by the validator (when <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
 </tr>
 <tr>
 <td><code>delivered_at</code></td>
-<td><em>timestamp</em></td>
-<td>TODO</td>
-<td></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was delivered to the validator (when <em><a href="#approval-requests-acknowledge-an-approval-request-is-received">Acknowledge</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
 </tr>
 <tr>
 <td><code>created_at</code></td>
 <td><em>timestamp</em></td>
-<td>TODO</td>
-<td></td>
+<td>Timestamp when the approval request was created</td>
+<td><code>2022-11-25T11:49:03.456Z</code></td>
 </tr>
 </tbody></table>
 <h4 id='approval-requests-get-list-of-approval-requests-response-listapprovalrequestserror-object'>ListApprovalRequestsError (object)</h4>
@@ -1024,7 +1024,23 @@ use it for bluk infromation retrival. If you need to get information about many 
 <span class="kd">message</span> <span class="nc">GetApprovalRequestRequest</span> <span class="p">{</span>
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-get-approval-request-details-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Get</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>int64</td>
+<td>Id of an approval request to get details</td>
+<td><code>702000453</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-get-approval-request-details-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Get</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -1076,7 +1092,226 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
+</code></pre></div><h4 id='approval-requests-get-approval-request-details-response-getapprovalrequestresponse-object'>GetApprovalRequestResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-getapprovalrequestpayload-object">GetApprovalRequestPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-get-list-of-approval-requests-response-getapprovalrequesterror-object">GetApprovalRequestError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-approval-request-details-response-getapprovalrequestpayload-object'>GetApprovalRequestPayload (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>int64</em></td>
+<td>ID of the approval request</td>
+<td><code>702000453</code></td>
+</tr>
+<tr>
+<td><code>approval_process</code></td>
+<td><em><a href="#data-structures-approvalprocess-object">ApprovalProcess</a></em></td>
+<td>Details of the approval process to which the approval request is related to</td>
+<td></td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><em>string</em>, <em>JSON</em></td>
+<td>Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>custody</code></td>
+<td><em><a href="#data-structures-custody-object">Custody</a></em></td>
+<td>Details of the custody to which the approval request is related to</td>
+<td></td>
+</tr>
+<tr>
+<td><code>subscription</code></td>
+<td><em><a href="#data-structures-subscription-object">Subscription</a></em></td>
+<td>Details of the Universe portal subscription to which the approval request is related to</td>
+<td></td>
+</tr>
+<tr>
+<td><code>linked_approval_requests</code></td>
+<td><em><a href="#approval-requests-get-approval-request-details-response-linkedapprovalrequest-object">LinkedApprovalRequest</a>[]</em></td>
+<td>List of approval requests send to other validators within given approval process</td>
+<td></td>
+</tr>
+<tr>
+<td><code>approver_resolution</code></td>
+<td><em>optional</em>, <em><a href="#data-structures-approverresolution-object">ApproverResolution</a></em></td>
+<td>Details of the approver resolution related to the approval request. Can be <code>null</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_read</code></td>
+<td><em>bool</em></td>
+<td>Indicates if the approval request was read by the validator (if <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>read_at</code></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was read by the validator (when <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
+</tr>
+<tr>
+<td><code>delivered_at</code></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was delivered to the validator (when <em><a href="#approval-requests-acknowledge-an-approval-request-is-received">Acknowledge</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><em>timestamp</em></td>
+<td>Timestamp when the approval request was created</td>
+<td><code>2022-11-25T11:49:03.456Z</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-approval-request-details-response-linkedapprovalrequest-object'>LinkedApprovalRequest (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>approver</code></td>
+<td>Details of the validator to which given approval request is related to</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>approver_resolution</code></td>
+<td><em>optional</em>, <em><a href="#data-structures-approverresolution-object">ApproverResolution</a></em></td>
+<td>Details of the approver resolution related to the approval request. Can be <code>null</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>is_read</code></td>
+<td><em>bool</em></td>
+<td>Indicates if the approval request was read by the validator (if <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>is_delivered</code></td>
+<td><em>bool</em></td>
+<td>Indicates if the approval request was delivered to the validator (if <em><a href="#approval-requests-acknowledge-an-approval-request-is-received">Acknowledge</a></em> endpoint was invoked)</td>
+<td><code>true</code>, <code>false</code></td>
+</tr>
+<tr>
+<td><code>read_at</code></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was read by the validator (when <em><a href="#approval-requests-notify-an-approval-request-is-read">Read</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
+</tr>
+<tr>
+<td><code>delivered_at</code></td>
+<td><em>optional</em>, <em>timestamp</em></td>
+<td>Timestamp when the approval request was delivered to the validator (when <em><a href="#approval-requests-acknowledge-an-approval-request-is-received">Acknowledge</a></em> endpoint was invoked)</td>
+<td><code>&lt;null&gt;</code>, <code>2022-11-25T11:49:03.456Z</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-approval-request-details-response-approver-object'>Approver (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>string</em></td>
+<td>ID of the approver</td>
+<td><code>iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><em>string</em></td>
+<td>Name of the approver</td>
+<td><code>Jhon Doe</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-approval-request-details-response-getapprovalrequesterror-object'>GetApprovalRequestError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-get-approval-request-details-response-getapprovalrequesterror-errorcode-enum">GetApprovalRequestError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>DOMAIN_PROBLEM</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Approval request not found.</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-get-approval-request-details-response-getapprovalrequesterror-errorcode-enum'>GetApprovalRequestError.ErrorCode (enum)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h2 id='approval-requests-acknowledge-an-approval-request-is-received'>Acknowledge an approval request is received</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Acknowledge</code></p>
 
 <p><code>Authorization required</code></p>
