@@ -240,8 +240,8 @@ message Approver {
 
 name | type | description
 ---- | ---- | -------
-`payload`| *oneof body*, *[GetApprovalRequestPayload](#approval-requests-get-list-of-approval-requests-response-getapprovalrequestpayload-object)* | Response payload
-`error` | *oneof body*, *[GetApprovalRequestError](#approval-requests-get-list-of-approval-requests-response-getapprovalrequesterror-object)* | Response error
+`payload`| *oneof body*, *[GetApprovalRequestPayload](#approval-requests-get-approval-request-details-response-getapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[GetApprovalRequestError](#approval-requests-get-approval-request-details-response-getapprovalrequesterror-object)* | Response error
 
 #### GetApprovalRequestPayload (object)
 
