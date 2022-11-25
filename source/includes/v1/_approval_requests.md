@@ -126,16 +126,16 @@ name | type | description
 
 name | type | description | example
 ---- | ---- | ----------- | -------
-`id` | *int64* | Approval request items |
+`id` | *int64* | ID of the approval request | `702000453`
 `approval_process` | *[ApprovalProcess](#data-structures-approvalprocess-object)* | Details of the approval process to which the approval request is related to |
 `context` | *string*, *JSON* | Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
 `custody` | *[Custody](#data-structures-custody-object)* | Details of the custody to which the approval request is related to |
 `subscription` | *[Subscription](#data-structures-subscription-object)* | Details of the Universe portal subscription to which the approval request is related to |
 `approver_resolution` | *optional*, *[ApproverResolution](#data-structures-approverresolution-object)* | Details of the approver resolution related to the approval request. Can be `null` |
-`is_read` | *bool* | Indicates if the approval request was read by the validator | `true`, `false`
-`read_at` | *timestamp* | TODO: can be null? | 
-`delivered_at` | *timestamp* | TODO |
-`created_at` | *timestamp*| TODO |
+`is_read` | *bool* | Indicates if the approval request was read by the validator (if *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `true`, `false`
+`read_at` | *optional*, *timestamp* | Timestamp when the approval request was read by the validator (when *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+`delivered_at` | *optional*, *timestamp* | Timestamp when the approval request was delivered to the validator (when *[Acknowledge](#approval-requests-acknowledge-an-approval-request-is-received)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+`created_at` | *timestamp* | Timestamp when the approval request was created | `2022-11-25T11:49:03.456Z`
 
 #### ListApprovalRequestsError (object)
 
@@ -174,6 +174,10 @@ message GetApprovalRequestRequest {
   int64 id = 1;
 }
 ```
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | int64 | Id of an approval request to get details | `702000453`
 
 ### Response
 
@@ -231,6 +235,64 @@ message Approver {
   string name = 2;
 }
 ```
+
+#### GetApprovalRequestResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[GetApprovalRequestPayload](#approval-requests-get-list-of-approval-requests-response-getapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[GetApprovalRequestError](#approval-requests-get-list-of-approval-requests-response-getapprovalrequesterror-object)* | Response error
+
+#### GetApprovalRequestPayload (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | *int64* | ID of the approval request | `702000453`
+`approval_process` | *[ApprovalProcess](#data-structures-approvalprocess-object)* | Details of the approval process to which the approval request is related to |
+`context` | *string*, *JSON* | Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`custody` | *[Custody](#data-structures-custody-object)* | Details of the custody to which the approval request is related to |
+`subscription` | *[Subscription](#data-structures-subscription-object)* | Details of the Universe portal subscription to which the approval request is related to |
+`linked_approval_requests` | *[LinkedApprovalRequest](#approval-requests-get-approval-request-details-response-linkedapprovalrequest-object)[]* | List of approval requests send to other validators within given approval process |
+`approver_resolution` | *optional*, *[ApproverResolution](#data-structures-approverresolution-object)* | Details of the approver resolution related to the approval request. Can be `null` |
+`is_read` | *bool* | Indicates if the approval request was read by the validator (if *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `true`, `false`
+`read_at` | *optional*, *timestamp* | Timestamp when the approval request was read by the validator (when *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+`delivered_at` | *optional*, *timestamp* | Timestamp when the approval request was delivered to the validator (when *[Acknowledge](#approval-requests-acknowledge-an-approval-request-is-received)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+`created_at` | *timestamp* | Timestamp when the approval request was created | `2022-11-25T11:49:03.456Z`
+
+#### LinkedApprovalRequest (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`approver` | Details of the validator to which given approval request is related to | 
+`approver_resolution` | *optional*, *[ApproverResolution](#data-structures-approverresolution-object)* | Details of the approver resolution related to the approval request. Can be `null` |
+`is_read` | *bool* | Indicates if the approval request was read by the validator (if *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `true`, `false`
+`is_delivered` | *bool* | Indicates if the approval request was delivered to the validator (if *[Acknowledge](#approval-requests-acknowledge-an-approval-request-is-received)* endpoint was invoked) | `true`, `false`
+`read_at` | *optional*, *timestamp* | Timestamp when the approval request was read by the validator (when *[Read](#approval-requests-notify-an-approval-request-is-read)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+`delivered_at` | *optional*, *timestamp* | Timestamp when the approval request was delivered to the validator (when *[Acknowledge](#approval-requests-acknowledge-an-approval-request-is-received)* endpoint was invoked) | `<null>`, `2022-11-25T11:49:03.456Z`
+
+#### Approver (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | *string* | ID of the approver | `iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=`
+`name` | *string* | Name of the approver | `Jhon Doe`
+
+#### GetApprovalRequestError (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[GetApprovalRequestError.ErrorCode](#approval-requests-get-approval-request-details-response-getapprovalrequesterror-errorcode-enum)* | Error code | `DOMAIN_PROBLEM`
+`message` | *string* | Error message | `Approval request not found.`
+
+#### GetApprovalRequestError.ErrorCode (enum)
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
 
 ## Acknowledge an approval request is received
 
