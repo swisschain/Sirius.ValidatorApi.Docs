@@ -13,6 +13,11 @@ message Error {
 }
 ```
 
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[ErrorCode](#data-structures-errorcode-enum)* | Error code |
+`message` | *string* | Error message | `API key is expired`
+
 ## ErrorCode (enum)
 
 ```protobuf
@@ -26,6 +31,14 @@ enum ErrorCode {
   INVALID_API_KEY = 4;
 }
 ```
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | Transient error or program error
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`NOT_FOUND` | `2` | Object not found
+`EXPIRED_API_KEY` | `3` | API key is expired
+`INVALID_API_KEY` | `4` | API key is invalid
 
 ## ApprovalProcessType (enum)
 
@@ -42,6 +55,15 @@ enum ApprovalProcessType {
 }
 ```
 
+name | value | description
+---- | ----- | -----------
+`APPROVAL_PROCESS_TYPE_UNKNOWN` | `0` | Unexpected value. This should not be returned normally
+`APPROVAL_PROCESS_TYPE_TRANSFER` | `1` | A transfer blockchain transaction
+`APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT` | `2` | A smart contract deployment blockchain transaction
+`APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION` | `3` | A smart contract method invocation blockchain transaction
+`APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION` | `4` | A custody root key initialization
+`APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION` | `5` | A custody root key rotation
+
 ## ApprovalProcessStatus (enum)
 
 ```protobuf
@@ -55,6 +77,13 @@ enum ApprovalProcessStatus {
 }
 ```
 
+name | value | description
+---- | ----- | -----------
+`APPROVAL_PROCESS_STATUS_UNKNOWN` | `0` | Unexpected value. This should not be returned normally
+`APPROVAL_PROCESS_STATUS_PENDING` | `1` | An approval process is pending for resolutions
+`APPROVAL_PROCESS_STATUS_APPROVED` | `2` | An approval process is approved
+`APPROVAL_PROCESS_STATUS_REJECTED` | `3` | An approval process is rejected
+
 ## Decision (enum)
 
 ```protobuf
@@ -66,6 +95,12 @@ enum Decision {
   DECISION_REJECTED = 2;
 }
 ```
+
+name | value | description
+---- | ----- | -----------
+`DECISION_UNKNOWN` | `0` | Unexpected value. This should not be returned normally
+`DECISION_APPROVED` | `1` | A validator approved a validation request
+`DECISION_REJECTED` | `2` | A validator rejected a validation request
 
 ## ApprovalProcess (object)
 
@@ -80,11 +115,18 @@ message ApprovalProcess {
 }
 ```
 
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | *string*, *guid* | ID of the approval process | `52635969-3c80-422a-bafc-7e5a6151bf85`
+`type` | *[ApprovalProcessType](#data-structures-approvalprocesstype-enum)* | Type of the approval process | `APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION`
+`status` | *[ApprovalProcessStatus](#data-structures-approvalprocessstatus-enum) | Status of the approval process | `APPROVAL_PROCESS_STATUS_PENDING`
+`context` | *string*, *JSON* | Approval process context. It is a JSON string. Schema of JSON depends on the approval process `type` field value
+
 ## ApproverResolution (object)
 
+```protobuf
 package swisschain.sirius.keykeeperapi.approvalrequest;
 
-```protobuf
 message ApproverResolution {
   swisschain.sirius.keykeeperapi.approvalprocess.common.Decision decision = 1;
   google.protobuf.StringValue comment = 2;
@@ -92,10 +134,15 @@ message ApproverResolution {
 }
 ```
 
+name | type | description | example
+---- | ---- | ----------- | -------
+`decision` | *[Decision](#data-structures-decision-enum)* | Decision made by the approver |
+`comment` | *optional*, *string* | Comment made by the approver | `This transaction is not allowed`
+`created_at` | *timestamp* | When the approver resolution was made | `2022-11-25T15:26:43.185` 
+
 ## Custody (object)
 
 ```protobuf
-
 package swisschain.sirius.keykeeperapi.approvalrequest;
 
 message Custody {
@@ -104,10 +151,14 @@ message Custody {
 }
 ```
 
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | *int64* | ID of the custody | `404000019`
+`name` | *string* | Name of the custody | `Treasury custody`
+
 ## Subscription (object)
 
 ```protobuf
-
 package swisschain.sirius.keykeeperapi.approvalrequest;
 
 message Subscription {
@@ -115,6 +166,10 @@ message Subscription {
   google.protobuf.StringValue color = 2;
 }
 ```
+name | type | description | example
+---- | ---- | ----------- | -------
+`name` | *string* | Name of the subscription | `Sandbox`
+`color` | *optional*, *string* | Color of associated with the subscription on the Universe portal | `#ff0000`
 
 ## Approval request context (JSON string)
 

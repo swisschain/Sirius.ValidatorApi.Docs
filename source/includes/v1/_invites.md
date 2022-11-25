@@ -61,22 +61,14 @@ message AcceptInviteResponseBody {
   string description = 3;
   string api_key = 4;
 }
-
-package swisschain.sirius.validator_api.common;
-
-message Error {
-  ErrorCode code = 1;
-  string message = 2;
-}
-
-enum ErrorCode {
-  UNKNOWN = 0;
-  INVALID_PARAMETERS = 1;
-  NOT_FOUND = 2;
-  EXPIRED_API_KEY = 3;
-  INVALID_API_KEY = 4;
-}
 ```
+
+#### AcceptInviteResponse
+
+name | type | description
+---- | ---- | -------
+`response`| *oneof body*, *[AcceptInviteResponseBody](#invites-accept-an-invitation-response-acceptinviteresponsebody-object)* | Response payload
+`error` | *oneof body*, *[Error](#data-structures-error-object)* | Response error
 
 #### AcceptInviteResponseBody
 
@@ -117,7 +109,7 @@ swisschain.sirius.validator_api.invites.Invites/Revoke
 
 message RevokeInviteResponse {
     oneof body {
-        AcceptInviteResponseBody response = 1;
+        RevokeInviteResponseBody response = 1;
         .swisschain.sirius.validator_api.common.Error error = 2;
     }
 }
@@ -125,6 +117,13 @@ message RevokeInviteResponse {
 message RevokeInviteResponseBody {
 }
 ```
+
+#### RevokeInviteResponse
+
+name | type | description
+---- | ---- | -------
+`response`| *oneof body*, *[RevokeInviteResponseBody](#invites-accept-an-invitation-response-revokeinviteresponsebody-object)* | Response payload
+`error` | *oneof body*, *[Error](#data-structures-error-object)* | Response error
 
 #### RevokeInviteResponseBody
 

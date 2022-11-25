@@ -148,7 +148,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
@@ -288,7 +288,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
@@ -372,7 +372,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
@@ -456,7 +456,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
@@ -492,7 +492,7 @@ name | type | description | example
 `id` | int64 | Id of an approval request to approve | `702000453`
 `comment` | *string* | Comment of the validator | `This transaction is correct`
 `context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
-`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key |
+`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 
@@ -550,7 +550,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
@@ -584,9 +584,9 @@ message RejectApprovalRequestRequest {
 name | type | description | example
 ---- | ---- | ----------- | -------
 `id` | int64 | Id of an approval request to reject | `702000453`
-`comment` | *string* | Comment of the validator | `This transaction is correct`
+`comment` | *string* | Comment of the validator | `This transaction is not allowed`
 `context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
-`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key |
+`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 
@@ -644,7 +644,7 @@ name | type | description | example
 
 name | value | description
 ---- | ----- | -----------
-`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`UNKNOWN` | `0` | An unexpected error. This should not be returned normally
 `INVALID_PARAMETERS` | `1` | Invalid request parameters
 `DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
 `TECHNICAL_PROBLEM` | `3` | A transient error or a program error
