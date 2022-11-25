@@ -401,10 +401,13 @@
                     <a href="#data-structures-subscription-object" class="toc-h2 toc-link" data-title="Subscription (object)">Subscription (object)</a>
                   </li>
                   <li>
+                    <a href="#data-structures-approval-process-context-json-string" class="toc-h2 toc-link" data-title="Approval process context (JSON string)">Approval process context (JSON string)</a>
+                  </li>
+                  <li>
                     <a href="#data-structures-approval-request-context-json-string" class="toc-h2 toc-link" data-title="Approval request context (JSON string)">Approval request context (JSON string)</a>
                   </li>
                   <li>
-                    <a href="#data-structures-approval-process-context-json-string" class="toc-h2 toc-link" data-title="Approval process context (JSON string)">Approval process context (JSON string)</a>
+                    <a href="#data-structures-approval-request-resolution-context-json-string" class="toc-h2 toc-link" data-title="Approval request resolution context (JSON string)">Approval request resolution context (JSON string)</a>
                   </li>
               </ul>
           </li>
@@ -933,7 +936,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <tr>
 <td><code>context</code></td>
 <td><em>string</em>, <em>JSON</em></td>
-<td>Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td>Approval request context. See *(Approval request context)[#data_structures-approval-request-context-JSON-string]</td>
 <td></td>
 </tr>
 <tr>
@@ -1160,7 +1163,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>context</code></td>
 <td><em>string</em>, <em>JSON</em></td>
-<td>Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td>Approval request context. See *(Approval request context)[#data_structures-approval-request-context-JSON-string]</td>
 <td></td>
 </tr>
 <tr>
@@ -1644,7 +1647,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>context</code></td>
 <td><em>string</em>, <em>JSON</em></td>
-<td>Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td>Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string]</td>
 <td></td>
 </tr>
 <tr>
@@ -1812,7 +1815,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>context</code></td>
 <td><em>string</em>, <em>JSON</em></td>
-<td>Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td>Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string]</td>
 <td></td>
 </tr>
 <tr>
@@ -2261,7 +2264,65 @@ use it for bluk infromation retrival. If you need to get information about many 
 <td><code>#ff0000</code></td>
 </tr>
 </tbody></table>
-<h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2><h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
+<h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
+<p>Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<h3 id='data-structures-approval-process-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-process-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-process-context-json-string-approval_process_type_smart_contract_invocation'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-process-context-json-string-approval_process_type_root_key_initialization'>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44496481-4343-4d00-bdaf-29714c266a06"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: get an example"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"234.125.135.334"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-25T16:22:23.832Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='data-structures-approval-process-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44496481-4343-4d00-bdaf-29714c266a06"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: get an example"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"234.125.135.334"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-25T16:22:23.832Z"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2>
+<p>Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<h3 id='data-structures-approval-request-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-context-json-string-approval_process_type_smart_contract_invocation'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-context-json-string-approval_process_type_root_key_initialization'>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"encryptedPart"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"partKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">AES</span><span class="w"> </span><span class="err">encryption</span><span class="w"> </span><span class="err">key</span><span class="w">
+        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">approver</span><span class="w"> </span><span class="err">public</span><span class="w"> </span><span class="err">key</span><span class="w">
+        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"responseKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">safetly</span><span class="w"> </span><span class="err">transfer</span><span class="w"> </span><span class="err">restored</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">vault</span><span class="w">
+        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">approver</span><span class="w"> </span><span class="err">public</span><span class="w"> </span><span class="err">key</span><span class="w">
+        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='data-structures-approval-request-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='data-structures-approval-request-resolution-context-json-string'>Approval request resolution context (JSON string)</h2>
+<p>Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_smart_contract_invocation'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</h3>
+<p>Not available yet</p>
+<h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_root_key_initialization'>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"part"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">restored</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">key</span><span class="w">
+    </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root-key-initialization-process-context.json"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root-key-rotation-process-context.json"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
