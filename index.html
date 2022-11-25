@@ -326,6 +326,12 @@
                   <li>
                     <a href="#api-usage-authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
                   </li>
+                  <li>
+                    <a href="#api-usage-json-string" class="toc-h2 toc-link" data-title="JSON string">JSON string</a>
+                  </li>
+                  <li>
+                    <a href="#api-usage-json-string-timestamp" class="toc-h2 toc-link" data-title="JSON string timestamp">JSON string timestamp</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -458,6 +464,11 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 </tbody></table>
 
 <p>For simplicity this metadata item is not shown in every request that requires authorization.</p>
+<h2 id='api-usage-json-string'>JSON string</h2>
+<p>Although given API is a gRPC API, some gRPC objects may have string fields that contain some data serialized in the JSON format. Mainly such JSON strings are used
+to represent data that should be signed. Data can be serialized to JSON using any serialization options, the only requirement - JSON should follow <a href="https://datatracker.ietf.org/doc/rfc8259">RFC 8259</a></p>
+<h2 id='api-usage-json-string-timestamp'>JSON string timestamp</h2>
+<p>Since timestamp representation is not fixed in the RFC 8259, give API uses textual representation following <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exact format is <code>yyyy-MM-ddThh:mm:ss.ffffffZ</code>. Timestamps are always in UTC time zone</p>
 <h1 id='invites'>Invites</h1>
 <p>Invitation allows to register a validator on a Universe Subscription.
 Inivitation can be generated on the Universe portal. </p>
