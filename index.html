@@ -530,22 +530,26 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
   <span class="kt">string</span> <span class="na">description</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">api_key</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
-
-<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
-
-<span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
-  <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
-  <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-  <span class="na">INVALID_PARAMETERS</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="na">NOT_FOUND</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-  <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div><h4 id='invites-accept-an-invitation-response-acceptinviteresponsebody'>AcceptInviteResponseBody</h4>
+</code></pre></div><h4 id='invites-accept-an-invitation-response-acceptinviteresponse'>AcceptInviteResponse</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>response</code></td>
+<td><em>oneof body</em>, <em><a href="#invites-accept-an-invitation-response-acceptinviteresponsebody-object">AcceptInviteResponseBody</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#data-structures-error-object">Error</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='invites-accept-an-invitation-response-acceptinviteresponsebody'>AcceptInviteResponseBody</h4>
 <table><thead>
 <tr>
 <th>name</th>
@@ -599,14 +603,33 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 
 <span class="kd">message</span> <span class="nc">RevokeInviteResponse</span> <span class="p">{</span>
     <span class="k">oneof</span> <span class="n">body</span> <span class="p">{</span>
-        <span class="n">AcceptInviteResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">RevokeInviteResponseBody</span> <span class="na">response</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
         <span class="o">.</span><span class="n">swisschain.sirius.validator_api.common.Error</span> <span class="na">error</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kd">message</span> <span class="nc">RevokeInviteResponseBody</span> <span class="p">{</span>
 <span class="p">}</span>
-</code></pre></div><h4 id='invites-revoke-an-invitation-response-revokeinviteresponsebody'>RevokeInviteResponseBody</h4>
+</code></pre></div><h4 id='invites-revoke-an-invitation-response-revokeinviteresponse'>RevokeInviteResponse</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>response</code></td>
+<td><em>oneof body</em>, <em><a href="#invites-accept-an-invitation-response-revokeinviteresponsebody-object">RevokeInviteResponseBody</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#data-structures-error-object">Error</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='invites-revoke-an-invitation-response-revokeinviteresponsebody'>RevokeInviteResponseBody</h4>
 <p>Empty</p>
 <h1 id='blockchains'>Blockchains</h1>
 <p>Blockchain is not just Bitcoin or Ethereum, it&#39;s a particular network. For example Bitcoin MainNet, Ethereum Goerli are blockchains, whilst Bitcoin and Ethereum are protocols which are used by these blockchains. A network can be one of the types - <code>private</code>, <code>test</code>, <code>public</code>.</p>
@@ -989,7 +1012,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1290,7 +1313,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1423,7 +1446,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1556,7 +1579,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1628,7 +1651,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <td><code>signature</code></td>
 <td><em>string</em>, <em>Base64</em></td>
 <td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
-<td></td>
+<td><code>G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=</code></td>
 </tr>
 <tr>
 <td><code>device_info</code></td>
@@ -1724,7 +1747,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1784,7 +1807,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <td><code>comment</code></td>
 <td><em>string</em></td>
 <td>Comment of the validator</td>
-<td><code>This transaction is correct</code></td>
+<td><code>This transaction is not allowed</code></td>
 </tr>
 <tr>
 <td><code>context</code></td>
@@ -1796,7 +1819,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <td><code>signature</code></td>
 <td><em>string</em>, <em>Base64</em></td>
 <td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
-<td></td>
+<td><code>G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=</code></td>
 </tr>
 <tr>
 <td><code>device_info</code></td>
@@ -1892,7 +1915,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>UNKNOWN</code></td>
 <td><code>0</code></td>
-<td>An unexpected error. This should be returned normally</td>
+<td>An unexpected error. This should not be returned normally</td>
 </tr>
 <tr>
 <td><code>INVALID_PARAMETERS</code></td>
@@ -1923,7 +1946,29 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-errorcode-enum'>ErrorCode (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#data-structures-errorcode-enum">ErrorCode</a></em></td>
+<td>Error code</td>
+<td></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>API key is expired</code></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-errorcode-enum'>ErrorCode (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">ErrorCode</span> <span class="p">{</span>
   <span class="na">UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1932,7 +1977,41 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="na">EXPIRED_API_KEY</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="na">INVALID_API_KEY</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approvalprocesstype-enum'>ApprovalProcessType (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>Transient error or program error</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>NOT_FOUND</code></td>
+<td><code>2</code></td>
+<td>Object not found</td>
+</tr>
+<tr>
+<td><code>EXPIRED_API_KEY</code></td>
+<td><code>3</code></td>
+<td>API key is expired</td>
+</tr>
+<tr>
+<td><code>INVALID_API_KEY</code></td>
+<td><code>4</code></td>
+<td>API key is invalid</td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approvalprocesstype-enum'>ApprovalProcessType (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">ApprovalProcessType</span> <span class="p">{</span>
   <span class="na">APPROVAL_PROCESS_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1942,7 +2021,46 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approvalprocessstatus-enum'>ApprovalProcessStatus (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>Unexpected value. This should not be returned normally</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_TRANSFER</code></td>
+<td><code>1</code></td>
+<td>A transfer blockchain transaction</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</code></td>
+<td><code>2</code></td>
+<td>A smart contract deployment blockchain transaction</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</code></td>
+<td><code>3</code></td>
+<td>A smart contract method invocation blockchain transaction</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</code></td>
+<td><code>4</code></td>
+<td>A custody root key initialization</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</code></td>
+<td><code>5</code></td>
+<td>A custody root key rotation</td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approvalprocessstatus-enum'>ApprovalProcessStatus (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">ApprovalProcessStatus</span> <span class="p">{</span>
   <span class="na">APPROVAL_PROCESS_STATUS_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -1950,14 +2068,67 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="na">APPROVAL_PROCESS_STATUS_APPROVED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="na">APPROVAL_PROCESS_STATUS_REJECTED</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-decision-enum'>Decision (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>APPROVAL_PROCESS_STATUS_UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>Unexpected value. This should not be returned normally</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_STATUS_PENDING</code></td>
+<td><code>1</code></td>
+<td>An approval process is pending for resolutions</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_STATUS_APPROVED</code></td>
+<td><code>2</code></td>
+<td>An approval process is approved</td>
+</tr>
+<tr>
+<td><code>APPROVAL_PROCESS_STATUS_REJECTED</code></td>
+<td><code>3</code></td>
+<td>An approval process is rejected</td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-decision-enum'>Decision (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">Decision</span> <span class="p">{</span>
   <span class="na">DECISION_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
   <span class="na">DECISION_APPROVED</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="na">DECISION_REJECTED</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approvalprocess-object'>ApprovalProcess (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>DECISION_UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>Unexpected value. This should not be returned normally</td>
+</tr>
+<tr>
+<td><code>DECISION_APPROVED</code></td>
+<td><code>1</code></td>
+<td>A validator approved a validation request</td>
+</tr>
+<tr>
+<td><code>DECISION_REJECTED</code></td>
+<td><code>2</code></td>
+<td>A validator rejected a validation request</td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approvalprocess-object'>ApprovalProcess (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
 
 <span class="kd">message</span> <span class="nc">ApprovalProcess</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
@@ -1965,28 +2136,132 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.ApprovalProcessStatus</span> <span class="na">status</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approverresolution-object'>ApproverResolution (object)</h2>
-<p>package swisschain.sirius.keykeeperapi.approvalrequest;</p>
-<div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kd">message</span> <span class="nc">ApproverResolution</span> <span class="p">{</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>string</em>, <em>guid</em></td>
+<td>ID of the approval process</td>
+<td><code>52635969-3c80-422a-bafc-7e5a6151bf85</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><em><a href="#data-structures-approvalprocesstype-enum">ApprovalProcessType</a></em></td>
+<td>Type of the approval process</td>
+<td><code>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</code></td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>*<a href="#data-structures-approvalprocessstatus-enum">ApprovalProcessStatus</a></td>
+<td>Status of the approval process</td>
+<td><code>APPROVAL_PROCESS_STATUS_PENDING</code></td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><em>string</em>, <em>JSON</em></td>
+<td>Approval process context. It is a JSON string. Schema of JSON depends on the approval process <code>type</code> field value</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approverresolution-object'>ApproverResolution (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">ApproverResolution</span> <span class="p">{</span>
   <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.Decision</span> <span class="na">decision</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">google.protobuf.StringValue</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="n">google.protobuf.Timestamp</span> <span class="na">created_at</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-custody-object'>Custody (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code>
-<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>decision</code></td>
+<td><em><a href="#data-structures-decision-enum">Decision</a></em></td>
+<td>Decision made by the approver</td>
+<td></td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><em>optional</em>, <em>string</em></td>
+<td>Comment made by the approver</td>
+<td><code>This transaction is not allowed</code></td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td><em>timestamp</em></td>
+<td>When the approver resolution was made</td>
+<td><code>2022-11-25T15:26:43.185</code></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-custody-object'>Custody (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
 
 <span class="kd">message</span> <span class="nc">Custody</span> <span class="p">{</span>
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-subscription-object'>Subscription (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code>
-<span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>int64</em></td>
+<td>ID of the custody</td>
+<td><code>404000019</code></td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><em>string</em></td>
+<td>Name of the custody</td>
+<td><code>Treasury custody</code></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-subscription-object'>Subscription (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalrequest</span><span class="p">;</span>
 
 <span class="kd">message</span> <span class="nc">Subscription</span> <span class="p">{</span>
   <span class="kt">string</span> <span class="na">name</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">google.protobuf.StringValue</span> <span class="na">color</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2><h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>name</code></td>
+<td><em>string</em></td>
+<td>Name of the subscription</td>
+<td><code>Sandbox</code></td>
+</tr>
+<tr>
+<td><code>color</code></td>
+<td><em>optional</em>, <em>string</em></td>
+<td>Color of associated with the subscription on the Universe portal</td>
+<td><code>#ff0000</code></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2><h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
       </div>
       <div class="dark-box">
           <div class="lang-selector">
