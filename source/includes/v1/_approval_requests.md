@@ -274,7 +274,7 @@ name | type | description | example
 
 name | type | description | example
 ---- | ---- | ----------- | -------
-`id` | *string* | ID of the approver | `iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=`
+`id` | *string*, *Base64* | ID of the approver | `iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=`
 `name` | *string* | Name of the approver | `Jhon Doe`
 
 #### GetApprovalRequestError (object)
@@ -314,6 +314,10 @@ message AcknowledgeApprovalRequestRequest {
 }
 ```
 
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | int64 | Id of an approval request will acknowledged as received | `702000453`
+
 ### Response
 
 ```protobuf
@@ -346,6 +350,34 @@ message AcknowledgeApprovalRequestError {
 }
 ```
 
+#### AcknowledgeApprovalRequestResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[AcknowledgeApprovalRequestPayload](#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[AcknowledgeApprovalRequestError](#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovaleequesetrror-object)* | Response error
+
+#### AcknowledgeApprovalRequestPayload (object)
+
+Empty
+
+#### AcknowledgeApprovalRequestError (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[AcknowledgeApprovalRequestError.ErrorCode](#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequesterror-errorcode-enum)* | Error code | `DOMAIN_PROBLEM`
+`message` | *string* | Error message | `Approval request not found.`
+
+#### AcknowledgeApprovalRequestError.ErrorCode (enum)
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
+
 ## Notify an approval request is read
 
 `swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read`
@@ -365,6 +397,10 @@ message ReadApprovalRequestRequest {
   int64 id = 1;
 }
 ```
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | int64 | Id of an approval request will be notified as read | `702000453`
 
 ### Response
 
@@ -398,6 +434,34 @@ message ReadApprovalRequestError {
 }
 ```
 
+#### ReadApprovalRequestResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[ReadApprovalRequestPayload](#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[ReadApprovalRequestError](#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-object)* | Response error
+
+#### ReadApprovalRequestPayload (object)
+
+Empty
+
+#### ReadApprovalRequestError (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[ReadApprovalRequestError.ErrorCode](#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-errorcode-enum)* | Error code | `DOMAIN_PROBLEM`
+`message` | *string* | Error message | `Approval request not found.`
+
+#### ReadApprovalRequestError.ErrorCode (enum)
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
+
 ## Approve an approval request
 
 `swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve`
@@ -422,6 +486,15 @@ message ApproveApprovalRequestRequest {
   string app_version = 6;
 }
 ```
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | int64 | Id of an approval request to approve | `702000453`
+`comment` | *string* | Comment of the validator | `This transaction is correct`
+`context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key |
+`device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
+`app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 
 ### Response
 
@@ -455,6 +528,34 @@ message ApproveApprovalRequestError {
 }
 ```
 
+#### ApproveApprovalRequestResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[ApproveApprovalRequestPayload](#approval-requests-approve-an-approval-request-response-approveapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[ApproveApprovalRequestError](#approval-requests-approve-an-approval-request-response-approveapprovalrequesterror-object)* | Response error
+
+#### ApproveApprovalRequestPayload (object)
+
+Empty
+
+#### ApproveApprovalRequestError (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[ApproveApprovalRequestError.ErrorCode](#approval-requests-approve-an-approval-request-response-response-approveapprovalrequesterror-errorcode-enum)* | Error code | `DOMAIN_PROBLEM`
+`message` | *string* | Error message | `Approval request not found.`
+
+#### ApproveApprovalRequestError.ErrorCode (enum)
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
+
 ## Reject an approval request
 
 `swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject`
@@ -479,6 +580,15 @@ message RejectApprovalRequestRequest {
   string app_version = 6;
 }
 ```
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`id` | int64 | Id of an approval request to reject | `702000453`
+`comment` | *string* | Comment of the validator | `This transaction is correct`
+`context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key |
+`device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
+`app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 
 ### Response
 
@@ -511,3 +621,31 @@ message RejectApprovalRequestError {
   string message = 2;
 }
 ```
+
+#### RejectApprovalRequestResponse (object)
+
+name | type | description
+---- | ---- | -------
+`payload`| *oneof body*, *[RejectApprovalRequestPayload](#approval-requests-reject-an-approval-request-response-rejectapprovalrequestpayload-object)* | Response payload
+`error` | *oneof body*, *[RejectApprovalRequestError](#approval-requests-reject-an-approval-request-response-rejectapprovalrequesterror-object)* | Response error
+
+#### RejectApprovalRequestPayload (object)
+
+Empty
+
+#### RejectApprovalRequestError (object)
+
+name | type | description | example
+---- | ---- | ----------- | -------
+`code` | *[RejectApprovalRequestError.ErrorCode](#approval-requests-reject-an-approval-request-response-response-rejectapprovalrequesterror-errorcode-enum)* | Error code | `DOMAIN_PROBLEM`
+`message` | *string* | Error message | `Approval request not found.`
+
+#### RejectApprovalRequestError.ErrorCode (enum)
+
+name | value | description
+---- | ----- | -----------
+`UNKNOWN` | `0` | An unexpected error. This should be returned normally
+`INVALID_PARAMETERS` | `1` | Invalid request parameters
+`DOMAIN_PROBLEM` | `2` | Operation can't be performed with the current server state and with the specified parameters 
+`TECHNICAL_PROBLEM` | `3` | A transient error or a program error
+`UNAUTHORIZED` | `4` | Unauthorized request
