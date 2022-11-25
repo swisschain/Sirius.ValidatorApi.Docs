@@ -128,7 +128,7 @@ name | type | description | example
 ---- | ---- | ----------- | -------
 `id` | *int64* | ID of the approval request | `702000453`
 `approval_process` | *[ApprovalProcess](#data-structures-approvalprocess-object)* | Details of the approval process to which the approval request is related to |
-`context` | *string*, *JSON* | Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`context` | *string*, *JSON* | Approval request context. See *(Approval request context)[#data_structures-approval-request-context-JSON-string] |
 `custody` | *[Custody](#data-structures-custody-object)* | Details of the custody to which the approval request is related to |
 `subscription` | *[Subscription](#data-structures-subscription-object)* | Details of the Universe portal subscription to which the approval request is related to |
 `approver_resolution` | *optional*, *[ApproverResolution](#data-structures-approverresolution-object)* | Details of the approver resolution related to the approval request. Can be `null` |
@@ -249,7 +249,7 @@ name | type | description | example
 ---- | ---- | ----------- | -------
 `id` | *int64* | ID of the approval request | `702000453`
 `approval_process` | *[ApprovalProcess](#data-structures-approvalprocess-object)* | Details of the approval process to which the approval request is related to |
-`context` | *string*, *JSON* | Approval request context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`context` | *string*, *JSON* | Approval request context. See *(Approval request context)[#data_structures-approval-request-context-JSON-string] |
 `custody` | *[Custody](#data-structures-custody-object)* | Details of the custody to which the approval request is related to |
 `subscription` | *[Subscription](#data-structures-subscription-object)* | Details of the Universe portal subscription to which the approval request is related to |
 `linked_approval_requests` | *[LinkedApprovalRequest](#approval-requests-get-approval-request-details-response-linkedapprovalrequest-object)[]* | List of approval requests send to other validators within given approval process |
@@ -491,7 +491,7 @@ name | type | description | example
 ---- | ---- | ----------- | -------
 `id` | int64 | Id of an approval request to approve | `702000453`
 `comment` | *string* | Comment of the validator | `This transaction is correct`
-`context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`context` | *string*, *JSON* | Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string] |
 `signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
@@ -585,7 +585,7 @@ name | type | description | example
 ---- | ---- | ----------- | -------
 `id` | int64 | Id of an approval request to reject | `702000453`
 `comment` | *string* | Comment of the validator | `This transaction is not allowed`
-`context` | *string*, *JSON* | Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see `approval_process.type`) |
+`context` | *string*, *JSON* | Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string] |
 `signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`

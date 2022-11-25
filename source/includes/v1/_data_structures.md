@@ -171,6 +171,114 @@ name | type | description | example
 `name` | *string* | Name of the subscription | `Sandbox`
 `color` | *optional*, *string* | Color of associated with the subscription on the Universe portal | `#ff0000`
 
+## Approval process context (JSON string)
+
+Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+
+### APPROVAL_PROCESS_TYPE_TRANSFER
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION
+
+```json
+{
+	"id": "44496481-4343-4d00-bdaf-29714c266a06",
+	"instance": "TODO: get an example",
+	"ip": "234.125.135.334",
+	"threshold": 3,
+	"timestamp": "2022-11-25T16:22:23.832Z"
+}
+```
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
+
+```json
+{
+	"id": "44496481-4343-4d00-bdaf-29714c266a06",
+	"instance": "TODO: get an example",
+	"ip": "234.125.135.334",
+	"threshold": 3,
+	"timestamp": "2022-11-25T16:22:23.832Z"
+}
+```
+
 ## Approval request context (JSON string)
 
-## Approval process context (JSON string)
+Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+
+### APPROVAL_PROCESS_TYPE_TRANSFER
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION
+
+```json
+{
+	"encryptedPart": "string",
+	"partKey": { // root key part AES encryption key
+		"secret": "key", // encrypted by approver public key
+		"nonce": "string"
+	},
+	"responseKey": { // used to safetly transfer restored root key part to vault
+		"secret": "key", // encrypted by approver public key
+		"nonce": "string"
+	}
+}
+```
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
+
+```json
+{
+}
+```
+
+## Approval request resolution context (JSON string)
+
+Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+
+### APPROVAL_PROCESS_TYPE_TRANSFER
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION
+
+Not available yet
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION
+
+```json
+{
+	"part": "string", // restored root key part encrypted by response key
+	"process": "root-key-initialization-process-context.json"
+}
+```
+
+### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
+
+```json
+{
+	"process": "root-key-rotation-process-context.json"
+}
+```
