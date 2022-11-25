@@ -1244,7 +1244,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 </thead><tbody>
 <tr>
 <td><code>id</code></td>
-<td><em>string</em></td>
+<td><em>string</em>, <em>Base64</em></td>
 <td>ID of the approver</td>
 <td><code>iPC78NoD2KpFFig8FHR7Pg403d+FCKwMorjaEBXn5PY=</code></td>
 </tr>
@@ -1324,7 +1324,23 @@ use it for bluk infromation retrival. If you need to get information about many 
 <span class="kd">message</span> <span class="nc">AcknowledgeApprovalRequestRequest</span> <span class="p">{</span>
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-acknowledge-an-approval-request-is-received-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Acknowledge</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>int64</td>
+<td>Id of an approval request will acknowledged as received</td>
+<td><code>702000453</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-acknowledge-an-approval-request-is-received-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Acknowledge</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -1351,7 +1367,84 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
+</code></pre></div><h4 id='approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequestresponse-object'>AcknowledgeApprovalRequestResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequestpayload-object">AcknowledgeApprovalRequestPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovaleequesetrror-object">AcknowledgeApprovalRequestError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequestpayload-object'>AcknowledgeApprovalRequestPayload (object)</h4>
+<p>Empty</p>
+<h4 id='approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequesterror-object'>AcknowledgeApprovalRequestError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequesterror-errorcode-enum">AcknowledgeApprovalRequestError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>DOMAIN_PROBLEM</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Approval request not found.</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-acknowledge-an-approval-request-is-received-response-acknowledgeapprovalrequesterror-errorcode-enum'>AcknowledgeApprovalRequestError.ErrorCode (enum)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h2 id='approval-requests-notify-an-approval-request-is-read'>Notify an approval request is read</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Read</code></p>
 
 <p><code>Authorization required</code></p>
@@ -1364,7 +1457,23 @@ use it for bluk infromation retrival. If you need to get information about many 
 <span class="kd">message</span> <span class="nc">ReadApprovalRequestRequest</span> <span class="p">{</span>
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-notify-an-approval-request-is-read-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Read</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>int64</td>
+<td>Id of an approval request will be notified as read</td>
+<td><code>702000453</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-notify-an-approval-request-is-read-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Read</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -1391,7 +1500,84 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
+</code></pre></div><h4 id='approval-requests-notify-an-approval-request-is-read-response-readapprovalrequestresponse-object'>ReadApprovalRequestResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequestpayload-object">ReadApprovalRequestPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-object">ReadApprovalRequestError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-notify-an-approval-request-is-read-response-readapprovalrequestpayload-object'>ReadApprovalRequestPayload (object)</h4>
+<p>Empty</p>
+<h4 id='approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-object'>ReadApprovalRequestError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-errorcode-enum">ReadApprovalRequestError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>DOMAIN_PROBLEM</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Approval request not found.</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-notify-an-approval-request-is-read-response-readapprovalrequesterror-errorcode-enum'>ReadApprovalRequestError.ErrorCode (enum)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h2 id='approval-requests-approve-an-approval-request'>Approve an approval request</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Approve</code></p>
 
 <p><code>Authorization required</code></p>
@@ -1409,7 +1595,53 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-approve-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Approve</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>int64</td>
+<td>Id of an approval request to approve</td>
+<td><code>702000453</code></td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><em>string</em></td>
+<td>Comment of the validator</td>
+<td><code>This transaction is correct</code></td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><em>string</em>, <em>JSON</em></td>
+<td>Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>signature</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>device_info</code></td>
+<td><em>string</em></td>
+<td>Validator device info</td>
+<td><code>{&quot;deviceUID&quot;:&quot;6616c7824783d341&quot;,&quot;platform&quot;:&quot;Android&quot;}</code></td>
+</tr>
+<tr>
+<td><code>app_version</code></td>
+<td><em>string</em></td>
+<td>Validator application version</td>
+<td><code>Sirius Validator 1.3.4</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-approve-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Approve</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -1436,7 +1668,84 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
+</code></pre></div><h4 id='approval-requests-approve-an-approval-request-response-approveapprovalrequestresponse-object'>ApproveApprovalRequestResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-approve-an-approval-request-response-approveapprovalrequestpayload-object">ApproveApprovalRequestPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-approve-an-approval-request-response-approveapprovalrequesterror-object">ApproveApprovalRequestError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-approve-an-approval-request-response-approveapprovalrequestpayload-object'>ApproveApprovalRequestPayload (object)</h4>
+<p>Empty</p>
+<h4 id='approval-requests-approve-an-approval-request-response-approveapprovalrequesterror-object'>ApproveApprovalRequestError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-approve-an-approval-request-response-response-approveapprovalrequesterror-errorcode-enum">ApproveApprovalRequestError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>DOMAIN_PROBLEM</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Approval request not found.</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-approve-an-approval-request-response-approveapprovalrequesterror-errorcode-enum'>ApproveApprovalRequestError.ErrorCode (enum)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h2 id='approval-requests-reject-an-approval-request'>Reject an approval request</h2>
 <p><code>swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/Reject</code></p>
 
 <p><code>Authorization required</code></p>
@@ -1454,7 +1763,53 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h3 id='approval-requests-reject-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Reject</span>
+</code></pre></div>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td>int64</td>
+<td>Id of an approval request to reject</td>
+<td><code>702000453</code></td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><em>string</em></td>
+<td>Comment of the validator</td>
+<td><code>This transaction is correct</code></td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><em>string</em>, <em>JSON</em></td>
+<td>Approval request resolution context. It is a JSON string. Schema of JSON depends on the approval process type (see <code>approval_process.type</code>)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>signature</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>device_info</code></td>
+<td><em>string</em></td>
+<td>Validator device info</td>
+<td><code>{&quot;deviceUID&quot;:&quot;6616c7824783d341&quot;,&quot;platform&quot;:&quot;Android&quot;}</code></td>
+</tr>
+<tr>
+<td><code>app_version</code></td>
+<td><em>string</em></td>
+<td>Validator application version</td>
+<td><code>Sirius Validator 1.3.4</code></td>
+</tr>
+</tbody></table>
+<h3 id='approval-requests-reject-an-approval-request-response'>Response</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Reject</span>
 
 <span class="err">&gt;</span> <span class="n">Response</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span> <span class="o">-</span> <span class="n">success</span> <span class="n">response</span>
 
@@ -1481,7 +1836,84 @@ use it for bluk infromation retrival. If you need to get information about many 
   <span class="n">ErrorCode</span> <span class="na">code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="kd">message</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre></div><h1 id='data-structures'>Data structures</h1>
+</code></pre></div><h4 id='approval-requests-reject-an-approval-request-response-rejectapprovalrequestresponse-object'>RejectApprovalRequestResponse (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>payload</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-reject-an-approval-request-response-rejectapprovalrequestpayload-object">RejectApprovalRequestPayload</a></em></td>
+<td>Response payload</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><em>oneof body</em>, <em><a href="#approval-requests-reject-an-approval-request-response-rejectapprovalrequesterror-object">RejectApprovalRequestError</a></em></td>
+<td>Response error</td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-reject-an-approval-request-response-rejectapprovalrequestpayload-object'>RejectApprovalRequestPayload (object)</h4>
+<p>Empty</p>
+<h4 id='approval-requests-reject-an-approval-request-response-rejectapprovalrequesterror-object'>RejectApprovalRequestError (object)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>code</code></td>
+<td><em><a href="#approval-requests-reject-an-approval-request-response-response-rejectapprovalrequesterror-errorcode-enum">RejectApprovalRequestError.ErrorCode</a></em></td>
+<td>Error code</td>
+<td><code>DOMAIN_PROBLEM</code></td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><em>string</em></td>
+<td>Error message</td>
+<td><code>Approval request not found.</code></td>
+</tr>
+</tbody></table>
+<h4 id='approval-requests-reject-an-approval-request-response-rejectapprovalrequesterror-errorcode-enum'>RejectApprovalRequestError.ErrorCode (enum)</h4>
+<table><thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td><code>0</code></td>
+<td>An unexpected error. This should be returned normally</td>
+</tr>
+<tr>
+<td><code>INVALID_PARAMETERS</code></td>
+<td><code>1</code></td>
+<td>Invalid request parameters</td>
+</tr>
+<tr>
+<td><code>DOMAIN_PROBLEM</code></td>
+<td><code>2</code></td>
+<td>Operation can&#39;t be performed with the current server state and with the specified parameters</td>
+</tr>
+<tr>
+<td><code>TECHNICAL_PROBLEM</code></td>
+<td><code>3</code></td>
+<td>A transient error or a program error</td>
+</tr>
+<tr>
+<td><code>UNAUTHORIZED</code></td>
+<td><code>4</code></td>
+<td>Unauthorized request</td>
+</tr>
+</tbody></table>
+<h1 id='data-structures'>Data structures</h1>
 <p>Here you can see data structures used by different API endpoints groupped by protobuf packages</p>
 <h2 id='data-structures-error-object'>Error (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
 
