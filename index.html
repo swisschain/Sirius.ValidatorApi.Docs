@@ -431,11 +431,12 @@
         <h1 id='introduction'>Introduction</h1>
 <p><strong>API status: DRAFT</strong> - breaking changes are possible</p>
 
-<p>Sirius is a Digital Assets custody and a blockchain infrastructure. Validator API allowing consumers to programatically validate, approve or reject: transactions, custody initialization and custody root key rotation. This API allows to implement functionality similar to Swisschain Validator mobile app.</p>
+<p>Sirius is a Digital Assets custody and a blockchain infrastructure. 
+Validator API allows consumers to programmatically validate, approve or reject: transactions, custody initialization and custody root key rotation. This API allows implementing functionality similar to Swisschain Validator mobile app.</p>
 
 <p>For more information about Sirius, please contact us <a href="mailto:info@swisschain.io">info@swisschain.io</a>.</p>
 <h1 id='feedback'>Feedback</h1>
-<p>In the case, if you have found an issue in this <a href="https://sirius-validator.swisschain.io">API</a> or in this documentation, please give us feedback by adding a <a href="https://github.com/swisschain/Sirius.Public/issues/new">GitHub issue</a>. Thank you!</p>
+<p>In case if you have found an issue in <a href="https://sirius-validator.swisschain.io">API</a> or in this documentation, please give us your feedback by submitting a <a href="https://github.com/swisschain/Sirius.Public/issues/new">GitHub issue</a>. Thank you!</p>
 <h1 id='api-usage'>API usage</h1>
 <p>Sirius Validator API is a gRPC API. To get proto files please follow <a href="https://github.com/swisschain/Sirius.ValidatorApi.Docs/tree/master/.proto">our GitHub</a></p>
 
@@ -478,16 +479,16 @@ to represent data that should be signed. Data can be serialized to JSON using an
 <h2 id='api-usage-json-string-timestamp'>JSON string timestamp</h2>
 <p>Since timestamp representation is not fixed in the RFC 8259, given API uses textual representation following <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exact format is <code>yyyy-MM-ddThh:mm:ss.ffffffZ</code>. Timestamps are always in UTC time zone</p>
 <h2 id='api-usage-data-encryption'>Data encryption</h2>
-<p>Some data is passed in encrypted form. For symmetrical encryption <code>AES</code> algorythm is used. For assymetrical encryption <code>RSA-PKCS1</code> algorythm is used.</p>
+<p>Some data is passed in encrypted form. For symmetrical encryption <code>AES</code> algorithm is used. For asymetrical encryption <code>RSA-PKCS1</code> algorithm is used.</p>
 
-<p>Parameters of <code>AES</code> algorythm are:</p>
+<p>Parameters of <code>AES</code> algorithm are:</p>
 
 <ul>
 <li>Key bits size: <code>256</code></li>
 <li>Nonce bits size: <code>128</code></li>
 </ul>
 
-<p>Parameters of <code>RSA-PKCS1</code> algorythm are:</p>
+<p>Parameters of <code>RSA-PKCS1</code> algorithm are:</p>
 
 <ul>
 <li>Public exponent: <code>3</code></li>
@@ -496,7 +497,7 @@ to represent data that should be signed. Data can be serialized to JSON using an
 </ul>
 <h1 id='invites'>Invites</h1>
 <p>Invitation allows to register a validator on a Universe Subscription.
-Inivitation can be generated on the Universe portal. </p>
+Invitation can be generated on the Universe portal. </p>
 
 <p>Before a validator can accept an invitation it needs to generate its
 keys pair and validator ID. Keys pair is <a href="#api-usage-data-encryption">RSA-PKCS1</a> keys:</p>
@@ -508,7 +509,7 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 <h2 id='invites-accept-an-invitation'>Accept an invitation</h2>
 <p><code>swisschain.sirius.validator_api.invites.Invites/Accept</code></p>
 
-<p>Accepts a validator invitation generated via Universe portal.</p>
+<p>accepts a validator invitation generated via Universe portal.</p>
 <h3 id='invites-accept-an-invitation-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.validator_api.invites.Invites</span><span class="o">/</span><span class="n">Accept</span>
 
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
@@ -765,9 +766,9 @@ should be submitted to the <em><a href="#invites-accept-an-invitation">Accept</a
 </ul>
 <h1 id='approval-requests'>Approval requests</h1>
 <p>Approval requests is what this API all about. Whenever a custody needs an approval from validators it initiates an approval request.
-Each approval request object represents an overall process of approving of something. This object is a general one and it fits all the different
+Each approval request object represents an overall process of approving of something. This object is a general one, and it fits all the different
 approval requests like root key initialization, transfer transaction, smart contract invocation and so on. This is achieved by having a <code>string context</code>
-field that contains a approva process type-specific data serialized as a JSON object. Each validator sees its onw representation of an
+field that contains an approval process type-specific data serialized as a JSON object. Each validator sees its own representation of an
 approval request where he sees its own approval status and approval statuses of all other validators separately. Once an approval request
 is approved or rejected it can not become a pending again.</p>
 <h2 id='approval-requests-get-list-of-approval-requests'>Get list of approval requests</h2>
@@ -821,7 +822,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <th>name</th>
 <th>type</th>
 <th>description</th>
-<th>contraints</th>
+<th>constraints</th>
 <th>example</th>
 </tr>
 </thead><tbody>
@@ -1074,7 +1075,7 @@ This endpoint returns brief information about approval requests. To get detailed
 <p><code>Authorization required</code></p>
 
 <p>Gets detailed information about a specified approval request. This method is intended to be invoked only for a single approval request, do not
-use it for bluk infromation retrival. If you need to get information about many approval requests, consider using <em><a href="#approval-requests-get-list-of-approval-requests">Get list of approval requests</a></em>.</p>
+use it for bulk information retrieval. If you need to get information about many approval requests, consider using <em><a href="#approval-requests-get-list-of-approval-requests">Get list of approval requests</a></em>.</p>
 <h3 id='approval-requests-get-approval-request-details-request'>Request</h3><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="n">swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests</span><span class="o">/</span><span class="n">Get</span>
 
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
@@ -1972,7 +1973,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 </tr>
 </tbody></table>
 <h1 id='data-structures'>Data structures</h1>
-<p>Here you can see data structures used by different API endpoints groupped by protobuf packages</p>
+<p>Here you can see data structures used by different API endpoints grouped by protobuf packages</p>
 <h2 id='data-structures-error-object'>Error (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.validator_api.common</span><span class="p">;</span>
 
 <span class="kd">message</span> <span class="nc">Error</span> <span class="p">{</span>
@@ -2295,7 +2296,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 </tr>
 </tbody></table>
 <h2 id='data-structures-approval-process-context-json-string'>Approval process context (JSON string)</h2>
-<p>Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<p>Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus, JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
 <h3 id='data-structures-approval-process-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
 <p>Not available yet</p>
 <h3 id='data-structures-approval-process-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
@@ -2386,7 +2387,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>threshold</code></td>
 <td><em>int</em></td>
-<td>Threshold indicating how many approval are need to rootate the root key</td>
+<td>Threshold indicating how many approval are need to rotate the root key</td>
 <td><code>3</code></td>
 </tr>
 <tr>
@@ -2397,7 +2398,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 </tr>
 </tbody></table>
 <h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2>
-<p>Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<p>Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus, JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
 <h3 id='data-structures-approval-request-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
 <p>Not available yet</p>
 <h3 id='data-structures-approval-request-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
@@ -2472,7 +2473,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 </span></code></pre></div>
 <p>Empty</p>
 <h2 id='data-structures-approval-request-resolution-context-json-string'>Approval request resolution context (JSON string)</h2>
-<p>Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
+<p>Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus, JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
 <h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
 <p>Not available yet</p>
 <h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_smart_contract_deployment'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_DEPLOYMENT</h3>
@@ -2586,7 +2587,7 @@ use it for bluk infromation retrival. If you need to get information about many 
 <tr>
 <td><code>process.threshold</code></td>
 <td><em>int</em></td>
-<td>Threshold indicating how many approval are need to rootate the root key</td>
+<td>Threshold indicating how many approval are need to rotate the root key</td>
 <td><code>3</code></td>
 </tr>
 <tr>
