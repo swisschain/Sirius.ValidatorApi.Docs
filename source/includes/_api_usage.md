@@ -33,7 +33,7 @@ to represent data that should be signed. Data can be serialized to JSON using an
 
 ## JSON string timestamp
 
-Since timestamp representation is not fixed in the RFC 8259, give API uses textual representation following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). Exact format is `yyyy-MM-ddThh:mm:ss.ffffffZ`. Timestamps are always in UTC time zone
+Since timestamp representation is not fixed in the RFC 8259, given API uses textual representation following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). Exact format is `yyyy-MM-ddThh:mm:ss.ffffffZ`. Timestamps are always in UTC time zone
 
 ## Data encryption
 
