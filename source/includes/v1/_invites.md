@@ -4,11 +4,7 @@ Invitation allows to register a validator on a Universe Subscription.
 Inivitation can be generated on the Universe portal. 
 
 Before a validator can accept an invitation it needs to generate its
-keys pair and validator ID. Keys pairs is an `RSA-PKCS1` keys with the following parameters:
-
-- Public exponent: `3`
-- Strength: `1024`
-- Certainty: `25`
+keys pair and validator ID. Keys pair is [RSA-PKCS1](#api-usage-data-encryption) keys:
 
 Validator ID is a `SHA256Digest` hash of the validator public key.
 

@@ -22,6 +22,10 @@ name | type | placement | description | example
 
 For simplicity this metadata item is not shown in every request that requires authorization.
 
+## Guid
+
+Some API objects have string fields that in fact contain [Guid](http://guid.one/guid). Exact format is `xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx`
+
 ## JSON string
 
 Although given API is a gRPC API, some gRPC objects may have string fields that contain some data serialized in the JSON format. Mainly such JSON strings are used
@@ -30,3 +34,18 @@ to represent data that should be signed. Data can be serialized to JSON using an
 ## JSON string timestamp
 
 Since timestamp representation is not fixed in the RFC 8259, give API uses textual representation following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601). Exact format is `yyyy-MM-ddThh:mm:ss.ffffffZ`. Timestamps are always in UTC time zone
+
+## Data encryption
+
+Some data is passed in encrypted form. For symmetrical encryption `AES` algorythm is used. For assymetrical encryption `RSA-PKCS1` algorythm is used.
+
+Parameters of `AES` algorythm are:
+
+* Key bits size: `256`
+* Nonce bits size: `128`
+
+Parameters of `RSA-PKCS1` algorythm are:
+
+* Public exponent: `3`
+* Strength: `1024`
+* Certainty: `25`

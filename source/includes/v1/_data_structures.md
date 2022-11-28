@@ -199,6 +199,14 @@ Not available yet
 }
 ```
 
+path | type | description | example
+---- | ---- | ----------- | -------
+`id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
+`instance` | *string* | ID of the custody component instance that initiated the process | `TODO: get an example`
+`ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
+`threshold` | *int* | Threshold indicating how many approval are need to initialize the root key | `3`
+`timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
+
 ### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
 
 ```json
@@ -210,6 +218,14 @@ Not available yet
 	"timestamp": "2022-11-25T16:22:23.832Z"
 }
 ```
+
+path | type | description | example
+---- | ---- | ----------- | -------
+`id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
+`instance` | *string* | ID of the custody component instance that initiated the process | `TODO: get an example`
+`ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
+`threshold` | *int* | Threshold indicating how many approval are need to rootate the root key | `3`
+`timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
 
 ## Approval request context (JSON string)
 
@@ -231,17 +247,27 @@ Not available yet
 
 ```json
 {
-	"encryptedPart": "string",
-	"partKey": { // root key part AES encryption key
-		"secret": "key", // encrypted by approver public key
-		"nonce": "string"
+	"encryptedPart": "TODO: example",
+	"partKey": {
+		"secret": "TODO: example",
+		"nonce": "TODO: example"
 	},
-	"responseKey": { // used to safetly transfer restored root key part to vault
-		"secret": "key", // encrypted by approver public key
-		"nonce": "string"
+	"responseKey": {
+		"secret": "TODO: example",
+		"nonce": "TODO: example"
 	}
 }
 ```
+
+path | type | description | example
+---- | ---- | ----------- | -------
+`encryptedPart` | *string*, *Base64* | Part of the root key encrypted by the `partKey` [AES](#api-usage-data-encryption) key | TODO: Example
+`partKey` | *object* | [AES](#api-usage-data-encryption) key that `encryptedPart` is encrypted by |
+`partKey.secret` | *string*, *Base64* | Secret part of the key encrypted by the [RSA-PKCS1](#api-usage-data-encryption) public key of the validator |
+`partKey.nonce` | *string*, *Base64* | Nonce part of the key |
+`responseKey` | *object* | [AES](#api-usage-data-encryption) key that should be used to encrypt the root key part send by the validator back to the custody with the *[Approval request resolution context](#data-structures-approval-request-resolution-context-json-string)* `part` field |
+`responseKey.secret` | *string*, *Base64* | Secret part of the key encrypted by the [RSA-PKCS1](#api-usage-data-encryption) public key of the validator |
+`responseKey.nonce` | *string*, *Base64* | Nonce part of the key |
 
 ### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
 
@@ -249,6 +275,8 @@ Not available yet
 {
 }
 ```
+
+Empty
 
 ## Approval request resolution context (JSON string)
 
@@ -270,10 +298,15 @@ Not available yet
 
 ```json
 {
-	"part": "string", // restored root key part encrypted by response key
-	"process": "root-key-initialization-process-context.json"
+	"part": "TODO: example", // restored root key part encrypted by response key
+	"process": "TODO: example"
 }
 ```
+
+path | type | description | example
+---- | ---- | ----------- | -------
+`part` | *string* | Root key part encrypted by the `responseKey` field of the *[Approval request context](#data-structures-approval-request-context-json-string)* | TODO: example
+`process` | *string* | *[Approval process context](#data-structures-approval-process-context-json-string)* serialized as a string | TODO: example
 
 ### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
 
@@ -282,3 +315,7 @@ Not available yet
 	"process": "root-key-rotation-process-context.json"
 }
 ```
+
+path | type | description | example
+---- | ---- | ----------- | -------
+`process` | string | *[Approval process context](#data-structures-approval-process-context-json-string)* serialized as a string | TODO: example
