@@ -476,7 +476,7 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 <p>Although given API is a gRPC API, some gRPC objects may have string fields that contain some data serialized in the JSON format. Mainly such JSON strings are used
 to represent data that should be signed. Data can be serialized to JSON using any serialization options, the only requirement - JSON should follow <a href="https://datatracker.ietf.org/doc/rfc8259">RFC 8259</a></p>
 <h2 id='api-usage-json-string-timestamp'>JSON string timestamp</h2>
-<p>Since timestamp representation is not fixed in the RFC 8259, give API uses textual representation following <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exact format is <code>yyyy-MM-ddThh:mm:ss.ffffffZ</code>. Timestamps are always in UTC time zone</p>
+<p>Since timestamp representation is not fixed in the RFC 8259, given API uses textual representation following <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exact format is <code>yyyy-MM-ddThh:mm:ss.ffffffZ</code>. Timestamps are always in UTC time zone</p>
 <h2 id='api-usage-data-encryption'>Data encryption</h2>
 <p>Some data is passed in encrypted form. For symmetrical encryption <code>AES</code> algorythm is used. For assymetrical encryption <code>RSA-PKCS1</code> algorythm is used.</p>
 
