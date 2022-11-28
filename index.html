@@ -327,10 +327,16 @@
                     <a href="#api-usage-authentication" class="toc-h2 toc-link" data-title="Authentication">Authentication</a>
                   </li>
                   <li>
+                    <a href="#api-usage-guid" class="toc-h2 toc-link" data-title="Guid">Guid</a>
+                  </li>
+                  <li>
                     <a href="#api-usage-json-string" class="toc-h2 toc-link" data-title="JSON string">JSON string</a>
                   </li>
                   <li>
                     <a href="#api-usage-json-string-timestamp" class="toc-h2 toc-link" data-title="JSON string timestamp">JSON string timestamp</a>
+                  </li>
+                  <li>
+                    <a href="#api-usage-data-encryption" class="toc-h2 toc-link" data-title="Data encryption">Data encryption</a>
                   </li>
               </ul>
           </li>
@@ -464,23 +470,36 @@ See <em><a href="#invites">Invites</a></em> section to get more details.</p>
 </tbody></table>
 
 <p>For simplicity this metadata item is not shown in every request that requires authorization.</p>
+<h2 id='api-usage-guid'>Guid</h2>
+<p>Some API objects have string fields that in fact contain <a href="http://guid.one/guid">Guid</a>. Exact format is <code>xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx</code></p>
 <h2 id='api-usage-json-string'>JSON string</h2>
 <p>Although given API is a gRPC API, some gRPC objects may have string fields that contain some data serialized in the JSON format. Mainly such JSON strings are used
 to represent data that should be signed. Data can be serialized to JSON using any serialization options, the only requirement - JSON should follow <a href="https://datatracker.ietf.org/doc/rfc8259">RFC 8259</a></p>
 <h2 id='api-usage-json-string-timestamp'>JSON string timestamp</h2>
 <p>Since timestamp representation is not fixed in the RFC 8259, give API uses textual representation following <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>. Exact format is <code>yyyy-MM-ddThh:mm:ss.ffffffZ</code>. Timestamps are always in UTC time zone</p>
-<h1 id='invites'>Invites</h1>
-<p>Invitation allows to register a validator on a Universe Subscription.
-Inivitation can be generated on the Universe portal. </p>
+<h2 id='api-usage-data-encryption'>Data encryption</h2>
+<p>Some data is passed in encrypted form. For symmetrical encryption <code>AES</code> algorythm is used. For assymetrical encryption <code>RSA-PKCS1</code> algorythm is used.</p>
 
-<p>Before a validator can accept an invitation it needs to generate its
-keys pair and validator ID. Keys pairs is an <code>RSA-PKCS1</code> keys with the following parameters:</p>
+<p>Parameters of <code>AES</code> algorythm are:</p>
+
+<ul>
+<li>Key bits size: <code>256</code></li>
+<li>Nonce bits size: <code>128</code></li>
+</ul>
+
+<p>Parameters of <code>RSA-PKCS1</code> algorythm are:</p>
 
 <ul>
 <li>Public exponent: <code>3</code></li>
 <li>Strength: <code>1024</code></li>
 <li>Certainty: <code>25</code></li>
 </ul>
+<h1 id='invites'>Invites</h1>
+<p>Invitation allows to register a validator on a Universe Subscription.
+Inivitation can be generated on the Universe portal. </p>
+
+<p>Before a validator can accept an invitation it needs to generate its
+keys pair and validator ID. Keys pair is <a href="#api-usage-data-encryption">RSA-PKCS1</a> keys:</p>
 
 <p>Validator ID is a <code>SHA256Digest</code> hash of the validator public key.</p>
 
@@ -2290,14 +2309,94 @@ use it for bluk infromation retrival. If you need to get information about many 
     </span><span class="nl">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
     </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-25T16:22:23.832Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='data-structures-approval-process-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>string</em>, <em>guid</em></td>
+<td>ID of the process</td>
+<td><code>44496481-4343-4d00-bdaf-29714c266a06</code></td>
+</tr>
+<tr>
+<td><code>instance</code></td>
+<td><em>string</em></td>
+<td>ID of the custody component instance that initiated the process</td>
+<td><code>TODO: get an example</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><em>string</em>, <em>ip</em></td>
+<td>IP address of the custody component that initiated the process</td>
+<td><code>234.125.135.334</code></td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td><em>int</em></td>
+<td>Threshold indicating how many approval are need to initialize the root key</td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>timestamp</code></td>
+<td><em>timestamp</em>, <em>ISO 8601</em></td>
+<td>When the process was started</td>
+<td><code>2022-11-25T16:22:23.832Z</code></td>
+</tr>
+</tbody></table>
+<h3 id='data-structures-approval-process-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"44496481-4343-4d00-bdaf-29714c266a06"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"instance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: get an example"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"234.125.135.334"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"threshold"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
     </span><span class="nl">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2022-11-25T16:22:23.832Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2>
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>id</code></td>
+<td><em>string</em>, <em>guid</em></td>
+<td>ID of the process</td>
+<td><code>44496481-4343-4d00-bdaf-29714c266a06</code></td>
+</tr>
+<tr>
+<td><code>instance</code></td>
+<td><em>string</em></td>
+<td>ID of the custody component instance that initiated the process</td>
+<td><code>TODO: get an example</code></td>
+</tr>
+<tr>
+<td><code>ip</code></td>
+<td><em>string</em>, <em>ip</em></td>
+<td>IP address of the custody component that initiated the process</td>
+<td><code>234.125.135.334</code></td>
+</tr>
+<tr>
+<td><code>threshold</code></td>
+<td><em>int</em></td>
+<td>Threshold indicating how many approval are need to rootate the root key</td>
+<td><code>3</code></td>
+</tr>
+<tr>
+<td><code>timestamp</code></td>
+<td><em>timestamp</em>, <em>ISO 8601</em></td>
+<td>When the process was started</td>
+<td><code>2022-11-25T16:22:23.832Z</code></td>
+</tr>
+</tbody></table>
+<h2 id='data-structures-approval-request-context-json-string'>Approval request context (JSON string)</h2>
 <p>Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
 <h3 id='data-structures-approval-request-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
 <p>Not available yet</p>
@@ -2306,19 +2405,73 @@ use it for bluk infromation retrival. If you need to get information about many 
 <h3 id='data-structures-approval-request-context-json-string-approval_process_type_smart_contract_invocation'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</h3>
 <p>Not available yet</p>
 <h3 id='data-structures-approval-request-context-json-string-approval_process_type_root_key_initialization'>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"encryptedPart"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"partKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">AES</span><span class="w"> </span><span class="err">encryption</span><span class="w"> </span><span class="err">key</span><span class="w">
-        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">approver</span><span class="w"> </span><span class="err">public</span><span class="w"> </span><span class="err">key</span><span class="w">
-        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="nl">"encryptedPart"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"partKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="nl">"responseKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">used</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">safetly</span><span class="w"> </span><span class="err">transfer</span><span class="w"> </span><span class="err">restored</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">vault</span><span class="w">
-        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"key"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">approver</span><span class="w"> </span><span class="err">public</span><span class="w"> </span><span class="err">key</span><span class="w">
-        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
+    </span><span class="nl">"responseKey"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"secret"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"nonce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='data-structures-approval-request-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>encryptedPart</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td>Part of the root key encrypted by the <code>partKey</code> <a href="#api-usage-data-encryption">AES</a> key</td>
+<td>TODO: Example</td>
+</tr>
+<tr>
+<td><code>partKey</code></td>
+<td><em>object</em></td>
+<td><a href="#api-usage-data-encryption">AES</a> key that <code>encryptedPart</code> is encrypted by</td>
+<td></td>
+</tr>
+<tr>
+<td><code>partKey.secret</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td>Secret part of the key encrypted by the <a href="#api-usage-data-encryption">RSA-PKCS1</a> public key of the validator</td>
+<td></td>
+</tr>
+<tr>
+<td><code>partKey.nonce</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td>Nonce part of the key</td>
+<td></td>
+</tr>
+<tr>
+<td><code>responseKey</code></td>
+<td><em>object</em></td>
+<td><a href="#api-usage-data-encryption">AES</a> key that should be used to encrypt the root key part send by the validator back to the custody with the <em><a href="#data-structures-approval-request-resolution-context-json-string">Approval request resolution context</a></em> <code>part</code> field</td>
+<td></td>
+</tr>
+<tr>
+<td><code>responseKey.secret</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td>Secret part of the key encrypted by the <a href="#api-usage-data-encryption">RSA-PKCS1</a> public key of the validator</td>
+<td></td>
+</tr>
+<tr>
+<td><code>responseKey.nonce</code></td>
+<td><em>string</em>, <em>Base64</em></td>
+<td>Nonce part of the key</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id='data-structures-approval-request-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='data-structures-approval-request-resolution-context-json-string'>Approval request resolution context (JSON string)</h2>
+</span></code></pre></div>
+<p>Empty</p>
+<h2 id='data-structures-approval-request-resolution-context-json-string'>Approval request resolution context (JSON string)</h2>
 <p>Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus JSON schema depends on the <em><a href="#data-structures-approvalprocess-object">Approval process</a></em> <code>type</code> field value. Below you can find description of the context schema for each <em><a href="#data-structures-approvalprocesstype-enum">Approval process type</a></em></p>
 <h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_transfer'>APPROVAL_PROCESS_TYPE_TRANSFER</h3>
 <p>Not available yet</p>
@@ -2327,13 +2480,51 @@ use it for bluk infromation retrival. If you need to get information about many 
 <h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_smart_contract_invocation'>APPROVAL_PROCESS_TYPE_SMART_CONTRACT_INVOCATION</h3>
 <p>Not available yet</p>
 <h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_root_key_initialization'>APPROVAL_PROCESS_TYPE_ROOT_KEY_INITIALIZATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="nl">"part"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">restored</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">key</span><span class="w">
-    </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root-key-initialization-process-context.json"</span><span class="w">
+    </span><span class="nl">"part"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">restored</span><span class="w"> </span><span class="err">root</span><span class="w"> </span><span class="err">key</span><span class="w"> </span><span class="err">part</span><span class="w"> </span><span class="err">encrypted</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">response</span><span class="w"> </span><span class="err">key</span><span class="w">
+    </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TODO: example"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span></code></pre></div>
+<table><thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>part</code></td>
+<td><em>string</em></td>
+<td>Root key part encrypted by the <code>responseKey</code> field of the <em><a href="#data-structures-approval-request-context-json-string">Approval request context</a></em></td>
+<td>TODO: example</td>
+</tr>
+<tr>
+<td><code>process</code></td>
+<td><em>string</em></td>
+<td><em><a href="#data-structures-approval-process-context-json-string">Approval process context</a></em> serialized as a string</td>
+<td>TODO: example</td>
+</tr>
+</tbody></table>
+<h3 id='data-structures-approval-request-resolution-context-json-string-approval_process_type_root_key_rotation'>APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION</h3><div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"process"</span><span class="p">:</span><span class="w"> </span><span class="s2">"root-key-rotation-process-context.json"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
+<table><thead>
+<tr>
+<th>path</th>
+<th>type</th>
+<th>description</th>
+<th>example</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>process</code></td>
+<td>string</td>
+<td><em><a href="#data-structures-approval-process-context-json-string">Approval process context</a></em> serialized as a string</td>
+<td>TODO: example</td>
+</tr>
+</tbody></table>
+
       </div>
       <div class="dark-box">
           <div class="lang-selector">
