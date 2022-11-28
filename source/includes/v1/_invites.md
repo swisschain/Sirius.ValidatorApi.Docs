@@ -15,7 +15,7 @@ should be submitted to the *[Accept](#invites-accept-an-invitation)* method of A
 
 `swisschain.sirius.validator_api.invites.Invites/Accept`
 
-accepts a validator invitation generated via Universe portal.
+Accepts a validator invitation generated via Universe portal.
 
 ### Request
 
