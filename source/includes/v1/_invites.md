@@ -1,7 +1,7 @@
 # Invites
 
 Invitation allows to register a validator on a Universe Subscription.
-Inivitation can be generated on the Universe portal. 
+Invitation can be generated on the Universe portal. 
 
 Before a validator can accept an invitation it needs to generate its
 keys pair and validator ID. Keys pair is [RSA-PKCS1](#api-usage-data-encryption) keys:
@@ -15,7 +15,7 @@ should be submitted to the *[Accept](#invites-accept-an-invitation)* method of A
 
 `swisschain.sirius.validator_api.invites.Invites/Accept`
 
-Accepts a validator invitation generated via Universe portal.
+accepts a validator invitation generated via Universe portal.
 
 ### Request
 

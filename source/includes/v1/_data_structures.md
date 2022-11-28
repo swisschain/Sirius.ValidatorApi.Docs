@@ -1,6 +1,6 @@
 # Data structures
 
-Here you can see data structures used by different API endpoints groupped by protobuf packages
+Here you can see data structures used by different API endpoints grouped by protobuf packages
 
 ## Error (object)
 
@@ -173,7 +173,7 @@ name | type | description | example
 
 ## Approval process context (JSON string)
 
-Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+Approval process context is a JSON string that contains approval process details specific for the type of the approval process. Thus, JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
 
 ### APPROVAL_PROCESS_TYPE_TRANSFER
 
@@ -224,12 +224,12 @@ path | type | description | example
 `id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
 `instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
 `ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
-`threshold` | *int* | Threshold indicating how many approval are need to rootate the root key | `3`
+`threshold` | *int* | Threshold indicating how many approval are need to rotate the root key | `3`
 `timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
 
 ## Approval request context (JSON string)
 
-Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+Approval request context is a JSON string that contains approval request details specific for the type of the approval process and addressed to a certain validator. Thus, JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
 
 ### APPROVAL_PROCESS_TYPE_TRANSFER
 
@@ -280,7 +280,7 @@ Empty
 
 ## Approval request resolution context (JSON string)
 
-Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
+Approval request resolution context is a JSON string that contains approval request resolution details specific for the type of the approval process formed by a certain validator. Thus, JSON schema depends on the *[Approval process](#data-structures-approvalprocess-object)* `type` field value. Below you can find description of the context schema for each *[Approval process type](#data-structures-approvalprocesstype-enum)*
 
 ### APPROVAL_PROCESS_TYPE_TRANSFER
 
@@ -339,5 +339,5 @@ path | type | description | example
 `process.id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
 `process.instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
 `process.ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
-`process.threshold` | *int* | Threshold indicating how many approval are need to rootate the root key | `3`
+`process.threshold` | *int* | Threshold indicating how many approval are need to rotate the root key | `3`
 `process.timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`

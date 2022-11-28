@@ -37,14 +37,14 @@ Since timestamp representation is not fixed in the RFC 8259, give API uses textu
 
 ## Data encryption
 
-Some data is passed in encrypted form. For symmetrical encryption `AES` algorythm is used. For assymetrical encryption `RSA-PKCS1` algorythm is used.
+Some data is passed in encrypted form. For symmetrical encryption `AES` algorithm is used. For asymetrical encryption `RSA-PKCS1` algorithm is used.
 
-Parameters of `AES` algorythm are:
+Parameters of `AES` algorithm are:
 
 * Key bits size: `256`
 * Nonce bits size: `128`
 
-Parameters of `RSA-PKCS1` algorythm are:
+Parameters of `RSA-PKCS1` algorithm are:
 
 * Public exponent: `3`
 * Strength: `1024`

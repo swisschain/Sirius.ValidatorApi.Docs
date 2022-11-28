@@ -1,9 +1,9 @@
 # Approval requests
 
 Approval requests is what this API all about. Whenever a custody needs an approval from validators it initiates an approval request.
-Each approval request object represents an overall process of approving of something. This object is a general one and it fits all the different
+Each approval request object represents an overall process of approving of something. This object is a general one, and it fits all the different
 approval requests like root key initialization, transfer transaction, smart contract invocation and so on. This is achieved by having a `string context`
-field that contains a approva process type-specific data serialized as a JSON object. Each validator sees its onw representation of an
+field that contains an approval process type-specific data serialized as a JSON object. Each validator sees its own representation of an
 approval request where he sees its own approval status and approval statuses of all other validators separately. Once an approval request
 is approved or rejected it can not become a pending again.
 
@@ -49,9 +49,9 @@ name | type | description
 
 #### Page (object)
 
-name | type | description | contraints | example
----- | ---- | ----------- | ---------- | -------
-`index` | *in32* | Zero-based index of the page to query | `index` >= `0` | `10`
+name | type | description                                      | constraints                       | example
+---- | ---- |--------------------------------------------------|-----------------------------------| -------
+`index` | *in32* | Zero-based index of the page to query            | `index` >= `0`                    | `10`
 `size` | *int32* | Maximum number of items to return in the results | `size` >= `0` and `size` <= `100` | `50`
 
 #### ListApprovalRequestsFilter (object)
@@ -161,7 +161,7 @@ name | value | description
 `Authorization required`
 
 Gets detailed information about a specified approval request. This method is intended to be invoked only for a single approval request, do not
-use it for bluk infromation retrival. If you need to get information about many approval requests, consider using *[Get list of approval requests](#approval-requests-get-list-of-approval-requests)*.
+use it for bulk information retrieval. If you need to get information about many approval requests, consider using *[Get list of approval requests](#approval-requests-get-list-of-approval-requests)*.
 
 ### Request
 
