@@ -192,7 +192,7 @@ Not available yet
 ```json
 {
 	"id": "44496481-4343-4d00-bdaf-29714c266a06",
-	"instance": "TODO: get an example",
+	"instance": "Secure custody A",
 	"ip": "234.125.135.334",
 	"threshold": 3,
 	"timestamp": "2022-11-25T16:22:23.832Z"
@@ -202,7 +202,7 @@ Not available yet
 path | type | description | example
 ---- | ---- | ----------- | -------
 `id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
-`instance` | *string* | ID of the custody component instance that initiated the process | `TODO: get an example`
+`instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
 `ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
 `threshold` | *int* | Threshold indicating how many approval are need to initialize the root key | `3`
 `timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
@@ -212,7 +212,7 @@ path | type | description | example
 ```json
 {
 	"id": "44496481-4343-4d00-bdaf-29714c266a06",
-	"instance": "TODO: get an example",
+	"instance": "Secure custody A",
 	"ip": "234.125.135.334",
 	"threshold": 3,
 	"timestamp": "2022-11-25T16:22:23.832Z"
@@ -222,7 +222,7 @@ path | type | description | example
 path | type | description | example
 ---- | ---- | ----------- | -------
 `id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
-`instance` | *string* | ID of the custody component instance that initiated the process | `TODO: get an example`
+`instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
 `ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
 `threshold` | *int* | Threshold indicating how many approval are need to rootate the root key | `3`
 `timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
@@ -247,27 +247,27 @@ Not available yet
 
 ```json
 {
-	"encryptedPart": "TODO: example",
+	"encryptedPart": "iGKvH2X6+Lr26PcPhIWK9vL+ofRS9Y/U64qgLDb2zHo356TtxqHgDXDEtI9FdwOYRTM/UOtnqV3Ol2Y7zpgGpUjXRVckmPTtwkEsmkPuPlpo1fYc6ktbSMA+K/lVRPZuYIw3x7p0hbKETtbe67gbKHgHb1CEk1Bc9/mQilLratXbVlKraSrc2bG4mBiUUzqY5f2Q/CZAWZPxcOZ5aOkrXn0adpRbQftUueouFZUWvTE=",
 	"partKey": {
-		"secret": "TODO: example",
-		"nonce": "TODO: example"
+		"secret": "aZaG5g/GrqU1etwAzjMCtSz1vbzLNhcpBJdmwb7b6ZRyVBgEFZwMshdDZVBkygS9QfdvwgqfnHUj4QkaF6f1Ds1/+39oO0nk3J5ag5f1+/UqFFGKCQK3rekTCL5b9kzut24dD6wnz85q/XtvT7q5vq0+f5XChkFB6Bc+FiDUCoQ=",
+		"nonce": "hd8XQDHjwaiht637yes6VQ=="
 	},
 	"responseKey": {
-		"secret": "TODO: example",
-		"nonce": "TODO: example"
+		"secret": "RS11UhzGJAGkMdvQ6kFPeI029WZH1y15vSfAQWQcQpCrnxkLKfMc0cB6Nh3/NpnAaad8MqCD65LoLAWQjNcPoYWuPMGOXF4LIao4eKw3K0yd8F7yEo0cswUUu7ma7/QK7BPPHZCRPGyLs8MAjCl58NijPLDJM9d6yPxl1Jr5M6U=",
+		"nonce": "g0pukIMYQI9xnZg3alonDw=="
 	}
 }
 ```
 
 path | type | description | example
 ---- | ---- | ----------- | -------
-`encryptedPart` | *string*, *Base64* | Part of the root key encrypted by the `partKey` [AES](#api-usage-data-encryption) key | TODO: Example
+`encryptedPart` | *string*, *Base64* | Part of the root key encrypted by the `partKey` [AES](#api-usage-data-encryption) key | `iGKvH2X6+Lr26PcPhIWK9vL+ofRS9Y/U64qgLDb2zHo356TtxqHgDXDEtI9FdwOYRTM/UOtnqV3Ol2Y7zpgGpUjXRVckmPTtwkEsmkPuPlpo1fYc6ktbSMA+K/lVRPZuYIw3x7p0hbKETtbe67gbKHgHb1CEk1Bc9/mQilLratXbVlKraSrc2bG4mBiUUzqY5f2Q/CZAWZPxcOZ5aOkrXn0adpRbQftUueouFZUWvTE=`
 `partKey` | *object* | [AES](#api-usage-data-encryption) key that `encryptedPart` is encrypted by |
-`partKey.secret` | *string*, *Base64* | Secret part of the key encrypted by the [RSA-PKCS1](#api-usage-data-encryption) public key of the validator |
-`partKey.nonce` | *string*, *Base64* | Nonce part of the key |
-`responseKey` | *object* | [AES](#api-usage-data-encryption) key that should be used to encrypt the root key part send by the validator back to the custody with the *[Approval request resolution context](#data-structures-approval-request-resolution-context-json-string)* `part` field |
+`partKey.secret` | *string*, *Base64* | Secret part of the key encrypted by the [RSA-PKCS1](#api-usage-data-encryption) public key of the validator | `aZaG5g/GrqU1etwAzjMCtSz1vbzLNhcpBJdmwb7b6ZRyVBgEFZwMshdDZVBkygS9QfdvwgqfnHUj4QkaF6f1Ds1/+39oO0nk3J5ag5f1+/UqFFGKCQK3rekTCL5b9kzut24dD6wnz85q/XtvT7q5vq0+f5XChkFB6Bc+FiDUCoQ=`
+`partKey.nonce` | *string*, *Base64* | Nonce part of the key | `hd8XQDHjwaiht637yes6VQ==`
+`responseKey` | *object* | [AES](#api-usage-data-encryption) key that should be used to encrypt the root key part send by the validator back to the custody with the *[Approval request resolution context](#data-structures-approval-request-resolution-context-json-string)* `part` field | `RS11UhzGJAGkMdvQ6kFPeI029WZH1y15vSfAQWQcQpCrnxkLKfMc0cB6Nh3/NpnAaad8MqCD65LoLAWQjNcPoYWuPMGOXF4LIao4eKw3K0yd8F7yEo0cswUUu7ma7/QK7BPPHZCRPGyLs8MAjCl58NijPLDJM9d6yPxl1Jr5M6U=`
 `responseKey.secret` | *string*, *Base64* | Secret part of the key encrypted by the [RSA-PKCS1](#api-usage-data-encryption) public key of the validator |
-`responseKey.nonce` | *string*, *Base64* | Nonce part of the key |
+`responseKey.nonce` | *string*, *Base64* | Nonce part of the key | `g0pukIMYQI9xnZg3alonDw==`
 
 ### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
 
@@ -298,24 +298,46 @@ Not available yet
 
 ```json
 {
-	"part": "TODO: example", // restored root key part encrypted by response key
-	"process": "TODO: example"
+	"part": "hDXP10Ey+WKYb42hfPb3z5I4RGpRN9ODzg1j0cMPq/fSEFnwVUOH5F2TRAya0SvSzinuD29dp/8loLEcws0zRL50+LsuhDUGw4Y2Yhr0r9cSmuPeCNInBAfHUwuV8XUeK7U+KcSQqF0vKAVCF5/RgOGeJjJWxm2eiHAi7w6x8sXwr991KhrMpQwtPeYtwGGPzSRBKkyJmvzlbTdyRDL7FersvWPz0r0hQMZTGjzv0SF4d4ys0UYYkXpFYKi0kVdj1xeUivPX4pgHQjNndZgtTB6AYZRI8hLTGSK5LfYoZQUnztQc8iO3Tyn7fOiC8YypniHKAYD6p4AdCWFdZ41iwwt6Y/2CLvh6PI4FXfbLyUGnpbgyjBTEobAYh+hV+qqCTZTN9bFxLq9pAj0mdImDe1UmnlBgVH2/5BGchAbD5lWxo/1NxOseTqiqtkElMwfiQvcVj2oZG5uOO/lBmjXbhhmO33+0womgSnL3HHqOlx3bDxsQUhDdD+uPITgzDoqQg2rS1y0Gg4o79iovLzrR0A==",
+	"process": {
+	  "id": "44496481-4343-4d00-bdaf-29714c266a06",
+	  "instance": "Secure custody A",
+	  "ip": "234.125.135.334",
+	  "threshold": 3,
+	  "timestamp": "2022-11-25T16:22:23.832Z"
+  }
 }
 ```
 
 path | type | description | example
 ---- | ---- | ----------- | -------
-`part` | *string* | Root key part encrypted by the `responseKey` field of the *[Approval request context](#data-structures-approval-request-context-json-string)* | TODO: example
-`process` | *string* | *[Approval process context](#data-structures-approval-process-context-json-string)* serialized as a string | TODO: example
+`part` | *string* | Root key part encrypted by the `responseKey` field of the *[Approval request context](#data-structures-approval-request-context-json-string)* | `hDXP10Ey+WKYb42hfPb3z5I4RGpRN9ODzg1j0cMPq/fSEFnwVUOH5F2TRAya0SvSzinuD29dp/8loLEcws0zRL50+LsuhDUGw4Y2Yhr0r9cSmuPeCNInBAfHUwuV8XUeK7U+KcSQqF0vKAVCF5/RgOGeJjJWxm2eiHAi7w6x8sXwr991KhrMpQwtPeYtwGGPzSRBKkyJmvzlbTdyRDL7FersvWPz0r0hQMZTGjzv0SF4d4ys0UYYkXpFYKi0kVdj1xeUivPX4pgHQjNndZgtTB6AYZRI8hLTGSK5LfYoZQUnztQc8iO3Tyn7fOiC8YypniHKAYD6p4AdCWFdZ41iwwt6Y/2CLvh6PI4FXfbLyUGnpbgyjBTEobAYh+hV+qqCTZTN9bFxLq9pAj0mdImDe1UmnlBgVH2/5BGchAbD5lWxo/1NxOseTqiqtkElMwfiQvcVj2oZG5uOO/lBmjXbhhmO33+0womgSnL3HHqOlx3bDxsQUhDdD+uPITgzDoqQg2rS1y0Gg4o79iovLzrR0A==`
+`process` | *object* | *[Approval process context](#data-structures-approval-process-context-json-string)* to which the resolution is related to. Just pass all process fields you've received in the *[Approval process context](#data-structures-approval-process-context-json-string)* |
+`process.id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
+`process.instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
+`process.ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
+`process.threshold` | *int* | Threshold indicating how many approval are need to initialize the root key | `3`
+`process.timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
 
 ### APPROVAL_PROCESS_TYPE_ROOT_KEY_ROTATION
 
 ```json
 {
-	"process": "root-key-rotation-process-context.json"
+	"process": {
+	  "id": "44496481-4343-4d00-bdaf-29714c266a06",
+	  "instance": "Secure custody A",
+	  "ip": "234.125.135.334",
+	  "threshold": 3,
+	  "timestamp": "2022-11-25T16:22:23.832Z"
+  }
 }
 ```
 
 path | type | description | example
 ---- | ---- | ----------- | -------
-`process` | string | *[Approval process context](#data-structures-approval-process-context-json-string)* serialized as a string | TODO: example
+`process` | *object* | *[Approval process context](#data-structures-approval-process-context-json-string)* to which the resolution is related to. Just pass all process fields you've received in the *[Approval process context](#data-structures-approval-process-context-json-string)* |
+`process.id` | *string*, *guid* | ID of the process | `44496481-4343-4d00-bdaf-29714c266a06`
+`process.instance` | *string* | Custody instance name that initiated the process | `Secure custody A`
+`process.ip` | *string*, *ip* | IP address of the custody component that initiated the process | `234.125.135.334`
+`process.threshold` | *int* | Threshold indicating how many approval are need to rootate the root key | `3`
+`process.timestamp` | *timestamp*, *ISO 8601* | When the process was started | `2022-11-25T16:22:23.832Z`
