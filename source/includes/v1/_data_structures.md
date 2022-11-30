@@ -51,6 +51,11 @@ message Page {
 }
 ```
 
+name | type | description                                      | constraints                       | example
+---- | ---- |--------------------------------------------------|-----------------------------------| -------
+`index` | *in32* | Zero-based index of the page to query            | `index` >= `0`                    | `10`
+`size` | *int32* | Maximum number of items to return in the results | `size` >= `0` and `size` <= `100` | `50`
+
 ## ApprovalProcessType (enum)
 
 ```protobuf
