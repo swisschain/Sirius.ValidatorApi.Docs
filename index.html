@@ -392,6 +392,9 @@
                     <a href="#data-structures-errorcode-enum" class="toc-h2 toc-link" data-title="ErrorCode (enum)">ErrorCode (enum)</a>
                   </li>
                   <li>
+                    <a href="#data-structures-page-object" class="toc-h2 toc-link" data-title="Page (object)">Page (object)</a>
+                  </li>
+                  <li>
                     <a href="#data-structures-approvalprocesstype-enum" class="toc-h2 toc-link" data-title="ApprovalProcessType (enum)">ApprovalProcessType (enum)</a>
                   </li>
                   <li>
@@ -783,13 +786,8 @@ This endpoint returns brief information about approval requests. To get detailed
 <span class="err">&gt;</span> <span class="n">Requets</span><span class="o">:</span> <span class="p">(</span><span class="n">application</span><span class="o">/</span><span class="n">grpc</span><span class="p">)</span>
 
 <span class="kd">message</span> <span class="nc">ListApprovalRequestsRequest</span> <span class="p">{</span>
-  <span class="n">Page</span> <span class="na">page</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">swisschain.sirius.keykeeperapi.approvalprocess.common.Page</span> <span class="na">page</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="n">ListApprovalRequestsFilter</span> <span class="na">filter</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>  
-<span class="p">}</span>
-
-<span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
-  <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-  <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
 <span class="p">}</span>
 
 <span class="kd">message</span> <span class="nc">ListApprovalRequestsFilter</span> <span class="p">{</span>
@@ -807,38 +805,13 @@ This endpoint returns brief information about approval requests. To get detailed
 </thead><tbody>
 <tr>
 <td><code>page</code></td>
-<td><em><a href="#approval-requests-get-list-of-approval-requests-request-page-object">Page</a></em></td>
+<td><em><a href="#data-structures-page-object">Page</a></em></td>
 <td>page selector</td>
 </tr>
 <tr>
 <td><code>filter</code></td>
 <td><em><a href="#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object">ListApprovalRequestsFilter</a></em></td>
 <td>filter parameters</td>
-</tr>
-</tbody></table>
-<h4 id='approval-requests-get-list-of-approval-requests-request-page-object'>Page (object)</h4>
-<table><thead>
-<tr>
-<th>name</th>
-<th>type</th>
-<th>description</th>
-<th>constraints</th>
-<th>example</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>index</code></td>
-<td><em>in32</em></td>
-<td>Zero-based index of the page to query</td>
-<td><code>index</code> &gt;= <code>0</code></td>
-<td><code>10</code></td>
-</tr>
-<tr>
-<td><code>size</code></td>
-<td><em>int32</em></td>
-<td>Maximum number of items to return in the results</td>
-<td><code>size</code> &gt;= <code>0</code> and <code>size</code> &lt;= <code>100</code></td>
-<td><code>50</code></td>
 </tr>
 </tbody></table>
 <h4 id='approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object'>ListApprovalRequestsFilter (object)</h4>
@@ -1650,7 +1623,7 @@ use it for bulk information retrieval. If you need to get information about many
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="kt">string</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1683,8 +1656,8 @@ use it for bulk information retrieval. If you need to get information about many
 </tr>
 <tr>
 <td><code>signature</code></td>
-<td><em>string</em>, <em>Base64</em></td>
-<td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
+<td><em>bytes</em></td>
+<td><code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
 <td><code>G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=</code></td>
 </tr>
 <tr>
@@ -1818,7 +1791,7 @@ use it for bulk information retrieval. If you need to get information about many
   <span class="kt">int64</span> <span class="na">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">comment</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">context</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
-  <span class="kt">string</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+  <span class="kt">bytes</span> <span class="na">signature</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">device_info</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
   <span class="kt">string</span> <span class="na">app_version</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span>
 <span class="p">}</span>
@@ -1851,8 +1824,8 @@ use it for bulk information retrieval. If you need to get information about many
 </tr>
 <tr>
 <td><code>signature</code></td>
-<td><em>string</em>, <em>Base64</em></td>
-<td><code>Base64</code>-encoded string containing <code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
+<td><em>bytes</em></td>
+<td><code>SHA256Digest</code> signature of the <code>context</code>, signed with the validator private key</td>
 <td><code>G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=</code></td>
 </tr>
 <tr>
@@ -2045,7 +2018,13 @@ use it for bulk information retrieval. If you need to get information about many
 <td>API key is invalid</td>
 </tr>
 </tbody></table>
-<h2 id='data-structures-approvalprocesstype-enum'>ApprovalProcessType (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+<h2 id='data-structures-page-object'>Page (object)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
+
+<span class="kd">message</span> <span class="nc">Page</span> <span class="p">{</span>
+  <span class="kt">int32</span> <span class="na">index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="kt">int32</span> <span class="na">size</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div><h2 id='data-structures-approvalprocesstype-enum'>ApprovalProcessType (enum)</h2><div class="highlight"><pre class="highlight protobuf tab-protobuf"><code><span class="kn">package</span> <span class="nn">swisschain</span><span class="o">.</span><span class="n">sirius.keykeeperapi.approvalprocess.common</span><span class="p">;</span>
 
 <span class="kd">enum</span> <span class="n">ApprovalProcessType</span> <span class="p">{</span>
   <span class="na">APPROVAL_PROCESS_TYPE_UNKNOWN</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
