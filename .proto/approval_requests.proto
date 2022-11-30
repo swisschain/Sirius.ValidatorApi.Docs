@@ -21,13 +21,8 @@ service ApprovalRequests {
 // List
 
 message ListApprovalRequestsRequest {
-  Page page = 1;
+  swisschain.sirius.keykeeperapi.approvalprocess.common.Page page = 1;
   ListApprovalRequestsFilter filter = 2;  
-}
-
-message Page {
-  int32 index = 1;
-  int32 size = 2;
 }
 
 message ListApprovalRequestsFilter{
@@ -195,7 +190,7 @@ message ApproveApprovalRequestRequest {
   int64 id = 1;
   string comment = 2;
   string context = 3;
-  string signature = 4;
+  bytes signature = 4;
   string device_info = 5;
   string app_version = 6;
 }
@@ -230,7 +225,7 @@ message RejectApprovalRequestRequest {
   int64 id = 1;
   string comment = 2;
   string context = 3;
-  string signature = 4;
+  bytes signature = 4;
   string device_info = 5;
   string app_version = 6;
 }

@@ -26,3 +26,8 @@ enum Decision {
   DECISION_APPROVED = 1;
   DECISION_REJECTED = 2;
 }
+
+message Page {
+  int32 index = 1;
+  int32 size = 2;
+}

@@ -24,13 +24,8 @@ swisschain.sirius.keykeeperapi.approvalrequest.ApprovalRequests/List
 > Requets: (application/grpc)
 
 message ListApprovalRequestsRequest {
-  Page page = 1;
+  swisschain.sirius.keykeeperapi.approvalprocess.common.Page page = 1;
   ListApprovalRequestsFilter filter = 2;  
-}
-
-message Page {
-  int32 index = 1;
-  int32 size = 2;
 }
 
 message ListApprovalRequestsFilter {
@@ -44,15 +39,8 @@ message ListApprovalRequestsFilter {
 
 name | type | description
 ---- | ---- | ----------- 
-`page` | *[Page](#approval-requests-get-list-of-approval-requests-request-page-object)* | page selector
+`page` | *[Page](#data-structures-page-object)* | page selector
 `filter` | *[ListApprovalRequestsFilter](#approval-requests-get-list-of-approval-requests-request-listapprovalrequestsfilter-object)* | filter parameters
-
-#### Page (object)
-
-name | type | description                                      | constraints                       | example
----- | ---- |--------------------------------------------------|-----------------------------------| -------
-`index` | *in32* | Zero-based index of the page to query            | `index` >= `0`                    | `10`
-`size` | *int32* | Maximum number of items to return in the results | `size` >= `0` and `size` <= `100` | `50`
 
 #### ListApprovalRequestsFilter (object)
 
@@ -481,7 +469,7 @@ message ApproveApprovalRequestRequest {
   int64 id = 1;
   string comment = 2;
   string context = 3;
-  string signature = 4;
+  bytes signature = 4;
   string device_info = 5;
   string app_version = 6;
 }
@@ -492,7 +480,7 @@ name | type | description | example
 `id` | int64 | Id of an approval request to approve | `702000453`
 `comment` | *string* | Comment of the validator | `This transaction is correct`
 `context` | *string*, *JSON* | Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string] |
-`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
+`signature` | *bytes* | `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 
@@ -575,7 +563,7 @@ message RejectApprovalRequestRequest {
   int64 id = 1;
   string comment = 2;
   string context = 3;
-  string signature = 4;
+  bytes signature = 4;
   string device_info = 5;
   string app_version = 6;
 }
@@ -586,7 +574,7 @@ name | type | description | example
 `id` | int64 | Id of an approval request to reject | `702000453`
 `comment` | *string* | Comment of the validator | `This transaction is not allowed`
 `context` | *string*, *JSON* | Approval request resolution context. See *(Approval request resolution context)[#data_structures-approval-request-resolution-context-JSON-string] |
-`signature` | *string*, *Base64* | `Base64`-encoded string containing `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
+`signature` | *bytes* | `SHA256Digest` signature of the `context`, signed with the validator private key | `G3M7YVyBKrTBt8FyizW+UPnrg+lkNwlJNjAWUtK90GELylmHRqgbhcgZXM2iEpsFZNe3eT5F3H5hEBCu1+oQ4fDyuPgs9PGkul2oNnKnMBEtLoAak2gXBVtkF9J8pYqKmzMK/DVrwmUSIVxko8+EYAKrBqlGspy4DER2F4PvHbM=`
 `device_info` | *string* | Validator device info | `{"deviceUID":"6616c7824783d341","platform":"Android"}`
 `app_version` | *string* | Validator application version | `Sirius Validator 1.3.4`
 

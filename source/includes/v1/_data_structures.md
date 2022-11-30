@@ -40,6 +40,17 @@ name | value | description
 `EXPIRED_API_KEY` | `3` | API key is expired
 `INVALID_API_KEY` | `4` | API key is invalid
 
+## Page (object)
+
+```protobuf
+package swisschain.sirius.keykeeperapi.approvalprocess.common;
+
+message Page {
+  int32 index = 1;
+  int32 size = 2;
+}
+```
+
 ## ApprovalProcessType (enum)
 
 ```protobuf
