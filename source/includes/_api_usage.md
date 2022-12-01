@@ -14,7 +14,7 @@ All API endpoints marked with
 
 `Authorization required`
 
-require authorization token to be passed as a gRPC metadata item with the key `Bearer`:
+require authorization token to be passed as a gRPC metadata item with the key `Authorization` and value prefix `Bearer `:
 
 name | type | placement | description | example
 ---- | ---- | --------- | ----------- | -------
