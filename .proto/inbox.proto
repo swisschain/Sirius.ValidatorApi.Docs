@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "Swisschain.Sirius.ValidatorApi";
+
+package swisschain.sirius.validator_api.inbox;
+
+import "common.proto";
+import "google/protobuf/wrappers.proto";
+
+service Inbox {
+    rpc Get (GetInboxRequest) returns (GetInboxResponse);
+}
+
+message GetInboxRequest {
+}
+
+message GetInboxResponse {
+    oneof body {
+        GetInboxResponseBody response = 1;
+        .swisschain.sirius.validator_api.common.Error error = 2;
+    }
+}
+
+message GetInboxResponseBody {
+    google.protobuf.StringValue message = 1;
+    google.protobuf.StringValue signature = 2;
+}
